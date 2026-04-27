@@ -34,8 +34,8 @@ export default function HeroSection() {
       >
         <h1 className="leading-[1.2] tracking-tight">
           <span className="block text-[40px] sm:text-[52px] lg:text-[74px]">
-            <span className="font-light text-gray-400">Theo Dõi </span>
-            <span className="font-bold text-gray-900">Lịch Học</span>
+            <span className="font-bold text-gray-900">Lịch Học, </span>
+            <span className="font-bold text-gray-900">Lịch Kiểm Tra</span>
           </span>
           <span className="block text-[40px] sm:text-[52px] lg:text-[74px]">
             <span className="font-light text-gray-400">và </span>

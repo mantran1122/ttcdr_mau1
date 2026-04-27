@@ -98,9 +98,9 @@ export default function Navbar() {
             className="w-11 h-11 flex flex-col items-center justify-center gap-[5px] rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
             aria-label="Menu"
           >
+            <span className="block w-5 h-[1px] bg-gray-700 rounded-full" />
             <span className="block w-5 h-[2px] bg-gray-700 rounded-full" />
-            <span className="block w-5 h-[2px] bg-gray-700 rounded-full" />
-            <span className="block w-5 h-[2px] bg-gray-700 rounded-full" />
+            {/* <span className="block w-5 h-[2px] bg-gray-700 rounded-full" /> */}
           </button>
 
           {/* Dropdown panel */}
