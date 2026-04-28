@@ -47,7 +47,7 @@ const latestNews = [
     category: "HOẠT ĐỘNG SINH VIÊN",
     title: 'Chiến dịch "Xanh campus – Sống xanh mỗi ngày"',
     imageSrc:
-      "https://images.unsplash.com/photo-1542601906897-ecd3a6571bc8?w=600&q=80",
+      "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80",
     imageAlt: "Chiến dịch xanh campus",
   },
   {
