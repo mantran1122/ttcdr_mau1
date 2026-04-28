@@ -221,15 +221,6 @@ export default function ChuanDauRaSection() {
             <br />
             theo chuẩn đầu ra
           </motion.h2>
-
-          <motion.p
-            variants={headerItem}
-            className="mx-auto mt-6 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg"
-          >
-            Những học phần được xây dựng nhằm đáp ứng yêu cầu chuẩn đầu ra,
-            giúp người học phát triển năng lực số, ngoại ngữ, kỹ năng mềm và
-          kỹ năng nghề nghiệp.
-          </motion.p>
         </motion.div>
 
         {/* Desktop card deck — xuất hiện / biến mất theo scroll */}
@@ -353,58 +344,52 @@ export default function ChuanDauRaSection() {
                   </div>
 
                   <div className="flex flex-1 items-center justify-center">
-                    <motion.div
-                      animate={{
-                        y: !desktopInView ? 20 : isActive ? 0 : 20,
-                        opacity: !desktopInView ? 0 : isActive ? 1 : 0,
-                        filter: !desktopInView
-                          ? "blur(8px)"
-                          : isActive
-                            ? "blur(0px)"
-                            : "blur(8px)",
-                      }}
-                      transition={{
-                        duration: 0.45,
-                        ease: EASE,
-                      }}
-                      className="text-center"
-                    >
-                      <p className="text-3xl font-black leading-tight tracking-[-0.045em] text-slate-950">
-                        {card.label}
-                      </p>
-
-                      <motion.span
+                    <div className="text-center">
+                      {/* Label — luôn hiển thị */}
+                      <motion.p
                         animate={{
-                          scaleX: !desktopInView ? 0 : isActive ? 1 : 0,
+                          opacity: desktopInView ? 1 : 0,
+                          y: desktopInView ? 0 : 16,
+                          fontSize: isActive ? "1.75rem" : "1.1rem",
                         }}
-                        transition={{
-                          duration: 0.4,
-                          delay: isActive && desktopInView ? 0.1 : 0,
-                        }}
-                        className="mx-auto mt-5 block h-0.5 w-10 origin-center rounded-full bg-red-500"
-                      />
+                        transition={{ duration: 0.4, ease: EASE }}
+                        className="font-black leading-tight tracking-[-0.04em] text-slate-950"
+                      >
+                        {card.label}
+                      </motion.p>
 
-                      <p className="mt-6 text-sm leading-7 text-slate-600">
-                        {card.description}
-                      </p>
-                    </motion.div>
+                      {/* Divider + Description — luôn hiển thị, mờ → rõ khi hover */}
+                      <div>
+                        <motion.span
+                          animate={{
+                            scaleX: isActive && desktopInView ? 1 : 0,
+                          }}
+                          transition={{
+                            duration: 0.35,
+                            delay: isActive && desktopInView ? 0.08 : 0,
+                          }}
+                          className="mx-auto mt-4 block h-0.5 w-10 origin-center rounded-full bg-red-500"
+                        />
+                        <motion.p
+                          animate={{
+                            filter: desktopInView
+                              ? isActive ? "blur(0px)" : "blur(4px)"
+                              : "blur(8px)",
+                            opacity: desktopInView ? 1 : 0,
+                          }}
+                          transition={{ duration: 0.4, ease: EASE }}
+                          className="mt-5 select-none text-sm leading-7 text-slate-600"
+                        >
+                          {card.description}
+                        </motion.p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.article>
             );
           })}
 
-          <motion.div
-            animate={
-              desktopInView
-                ? { opacity: 1, y: 0, filter: "blur(0px)" }
-                : { opacity: 0, y: 20, filter: "blur(6px)" }
-            }
-            transition={{ duration: 0.6, delay: 0.6, ease: EASE }}
-            className="absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-white/90 px-5 py-3 text-sm font-bold uppercase tracking-[0.08em] text-slate-700 shadow-[0_12px_35px_rgba(15,23,42,0.08)] backdrop-blur-xl"
-          >
-            Đưa chuột vào thẻ để xem nội dung
-          </motion.div>
         </motion.div>
 
         {/* Tablet / Mobile — xuất hiện / biến mất theo scroll */}

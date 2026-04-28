@@ -61,7 +61,7 @@ function GroupPill({
     <motion.div
       initial={{ opacity: 0, y: 36, scale: 0.96, filter: "blur(10px)" }}
       whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-      viewport={{ once: false, amount: 0.35 }}
+      viewport={{ once: true, amount: 0.35 }}
       transition={{
         duration: 0.7,
         delay,
@@ -77,7 +77,7 @@ function GroupPill({
       <motion.div
         initial={{ scale: 0.8, rotate: -10 }}
         whileInView={{ scale: 1, rotate: 0 }}
-        viewport={{ once: false, amount: 0.35 }}
+        viewport={{ once: true, amount: 0.35 }}
         transition={{
           duration: 0.55,
           delay: delay + 0.12,
@@ -105,21 +105,21 @@ export default function LearningGroupsSection() {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: false, amount: 0.25 }}
+        viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         className="absolute left-1/2 top-1/2 -z-10 h-[920px] w-[920px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/45"
       />
       <motion.div
         initial={{ opacity: 0, scale: 0.88 }}
         whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: false, amount: 0.25 }}
+        viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 1.1, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
         className="absolute left-1/2 top-1/2 -z-10 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/45"
       />
       <motion.div
         initial={{ opacity: 0, scale: 0.86 }}
         whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: false, amount: 0.25 }}
+        viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 1.2, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
         className="absolute left-1/2 top-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/45"
       />
@@ -153,7 +153,7 @@ export default function LearningGroupsSection() {
         <motion.div
           initial={{ opacity: 0, y: 32, filter: "blur(10px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: false, amount: 0.35 }}
+          viewport={{ once: true, amount: 0.35 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="relative z-10 mx-auto flex max-w-[760px] flex-col items-center text-center xl:absolute xl:left-1/2 xl:top-[75px] xl:-translate-x-1/2"
         >

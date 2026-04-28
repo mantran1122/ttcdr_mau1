@@ -81,6 +81,26 @@ const lichHoc = [
     date: "05/10/2024",
     href: "/thong-tin/thoi-khoa-bieu",
   },
+  {
+    title: "Lịch học VSTEP tháng 11/2024",
+    date: "01/11/2024",
+    href: "/thong-tin/thoi-khoa-bieu",
+  },
+  {
+    title: "Lịch ôn tập TOEIC 500+ kỳ 2",
+    date: "28/10/2024",
+    href: "/thong-tin/thoi-khoa-bieu",
+  },
+  {
+    title: "Lịch học Tin học Cơ bản tháng 11",
+    date: "25/10/2024",
+    href: "/thong-tin/thoi-khoa-bieu",
+  },
+  {
+    title: "Lịch kỹ năng mềm Khóa K23",
+    date: "20/10/2024",
+    href: "/thong-tin/thoi-khoa-bieu",
+  },
 ];
 
 const lichKiemTra = [
@@ -120,6 +140,42 @@ const lichKiemTra = [
     dateRed: false,
     href: "/thong-tin/lich-kiem-tra",
   },
+  {
+    title: "Kiểm tra cuối kỳ VSTEP tháng 12",
+    tag: "TRUNG TÂM KHẢO THÍ",
+    tagColor: "blue",
+    dateLabel: "NGÀY THI",
+    date: "05/12/2024",
+    dateRed: false,
+    href: "/thong-tin/lich-kiem-tra",
+  },
+  {
+    title: "ĐGNL tiếng Anh đợt 3 năm 2024",
+    tag: "PHÒNG ĐÀO TẠO",
+    tagColor: "gray",
+    dateLabel: "HẠN ĐĂNG KÝ",
+    date: "10/12/2024",
+    dateRed: true,
+    href: "/thong-tin/lich-kiem-tra",
+  },
+  {
+    title: "Kiểm tra tin học đầu ra Khóa K24",
+    tag: "PHÒNG ĐÀO TẠO",
+    tagColor: "gray",
+    dateLabel: "NGÀY THI",
+    date: "18/12/2024",
+    dateRed: false,
+    href: "/thong-tin/lich-kiem-tra",
+  },
+  {
+    title: "Kiểm tra giữa kỳ kỹ năng mềm K24",
+    tag: "KHOA LÝ LUẬN",
+    tagColor: "gray",
+    dateLabel: "NGÀY THI",
+    date: "22/12/2024",
+    dateRed: false,
+    href: "/thong-tin/lich-kiem-tra",
+  },
 ];
 
 const thongBao = [
@@ -156,6 +212,42 @@ const thongBao = [
     tagColor: "red",
     dateLabel: "NGÀY ĐĂNG",
     date: "15/02/2020",
+    dateRed: false,
+    href: "/thong-tin/thong-bao",
+  },
+  {
+    title: "Thông báo đăng ký thi VSTEP tháng 12",
+    tag: "THÔNG BÁO",
+    tagColor: "blue",
+    dateLabel: "NGÀY ĐĂNG",
+    date: "20/11/2024",
+    dateRed: false,
+    href: "/thong-tin/thong-bao",
+  },
+  {
+    title: "Thông báo lịch học bù tháng 12/2024",
+    tag: "THÔNG BÁO",
+    tagColor: "blue",
+    dateLabel: "NGÀY ĐĂNG",
+    date: "18/11/2024",
+    dateRed: false,
+    href: "/thong-tin/thong-bao",
+  },
+  {
+    title: "Thông báo nghỉ lễ 30/04 – 01/05",
+    tag: "QUAN TRỌNG",
+    tagColor: "red",
+    dateLabel: "NGÀY ĐĂNG",
+    date: "25/04/2024",
+    dateRed: false,
+    href: "/thong-tin/thong-bao",
+  },
+  {
+    title: "Thông báo điều chỉnh lịch thi HK2",
+    tag: "QUAN TRỌNG",
+    tagColor: "red",
+    dateLabel: "NGÀY ĐĂNG",
+    date: "10/11/2024",
     dateRed: false,
     href: "/thong-tin/thong-bao",
   },
@@ -208,39 +300,11 @@ export default function ThongTinSection() {
     <section className="py-10">
       
       <div className="container relative mx-auto space-y-5 px-4">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {stats.map((s, i) => (
-            <RevealOnScroll key={s.label} delay={120 + i * 90} y={26}>
-              <a
-                href={s.href}
-                className="group flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
-              >
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-gray-600 transition-transform duration-300 group-hover:scale-110">
-                  <i className={`bi ${s.icon} text-[18px]`} />
-                </span>
-
-                <div className="flex-1">
-                  <p className="text-[13px] font-medium text-gray-400">
-                    {s.label}
-                  </p>
-                  <p className="text-[28px] font-bold leading-[1.2] text-gray-900">
-                    {s.value}{" "}
-                    <span className="text-[16px] font-medium text-gray-500">
-                      {s.unit}
-                    </span>
-                  </p>
-                </div>
-
-                <i className="bi bi-chevron-right text-gray-300 transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#4F46E5]" />
-              </a>
-            </RevealOnScroll>
-          ))}
-        </div>
         {/* ── Two main panels ── */}
-        <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
           {/* Left – Thời khóa biểu */}
           <RevealOnScroll delay={80} y={34}>
-            <div className="overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+            <div className="flex h-[580px] flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
               {/* panel header */}
               <div className="flex h-[56px] items-center gap-6 border-b border-gray-100 px-6">
                 {[
@@ -274,7 +338,7 @@ export default function ThongTinSection() {
               </div>
 
               {/* items */}
-              <div className="divide-y divide-gray-50">
+              <div className="min-h-0 flex-1 divide-y divide-gray-50 overflow-y-auto">
                 {lichHoc.map((item, i) => (
                   <RevealOnScroll key={i} delay={140 + i * 70} y={18}>
                     <a
@@ -282,7 +346,7 @@ export default function ThongTinSection() {
                       className="group flex items-center justify-between gap-4 px-6 py-5 transition-all duration-300 hover:bg-gray-50"
                     >
                       <div className="min-w-0 flex-1">
-                        <p className="text-[16px] font-semibold leading-snug text-gray-900 transition-colors group-hover:text-[#4F46E5]">
+                        <p className="text-[20px] font-semibold leading-snug text-gray-900 transition-colors group-hover:text-[#4F46E5]">
                           {item.title}
                         </p>
                         <p className="mt-2 text-[13px] text-[#4F46E5]">
@@ -307,7 +371,7 @@ export default function ThongTinSection() {
 
           {/* Right – Lịch kiểm tra / Thông báo */}
           <RevealOnScroll delay={180} y={34}>
-            <div className="overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+            <div className="flex h-[580px] flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
               {/* tab header */}
               <div className="flex h-[56px] items-center gap-6 border-b border-gray-100 px-6">
                 {[
@@ -345,7 +409,7 @@ export default function ThongTinSection() {
               </div>
 
               {/* items */}
-              <div key={rightTab} className="divide-y divide-gray-50">
+              <div key={rightTab} className="min-h-0 flex-1 divide-y divide-gray-50 overflow-y-auto">
                 {rightItems.map((item, i) => (
                   <RevealOnScroll
                     key={`${rightTab}-${i}`}
@@ -357,7 +421,7 @@ export default function ThongTinSection() {
                       className="group flex items-start justify-between gap-4 px-6 py-5 transition-all duration-300 hover:bg-gray-50"
                     >
                       <div className="min-w-0 flex-1">
-                        <p className="text-[16px] font-semibold leading-snug text-gray-900 transition-colors group-hover:text-[#4F46E5]">
+                        <p className="text-[20px] font-semibold leading-snug text-gray-900 transition-colors group-hover:text-[#4F46E5]">
                           {item.title}
                         </p>
 

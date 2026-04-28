@@ -28,7 +28,7 @@ const courses = [
   {
     title: "Kỹ năng mềm",
     tag: "Phát triển bản thân",
-    image: "/courses/ky-nang-mem.png",
+    image: "/courses/ky-nang-mem_v2.png",
     href: "/khoa-hoc/ky-nang-mem",
     className: "lg:col-span-4",
     imageClassName: "h-[170px]",
@@ -47,7 +47,7 @@ const tagColorMap: Record<string, string> = {
   "Công nghệ": "bg-blue-100 text-blue-700",
   "Giao tiếp": "bg-orange-100 text-orange-700",
   "Kỹ năng số": "bg-sky-100 text-sky-700",
-  "Phát triển bản thân": "bg-violet-100 text-violet-700",
+  "Phát triển bản thân": "bg-yellow-100 text-yellow-700",
   "Định hướng nghề": "bg-stone-100 text-stone-700",
 };
 
@@ -65,11 +65,6 @@ export default function CoursesShowcaseSection() {
           <h2 className="text-[clamp(2.5rem,4.6vw,5rem)] font-black leading-[1.35] tracking-[-0.06em] text-slate-950">
             Khoá học cho sinh viên
           </h2>
-
-          <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg">
-            Lộ trình học tập được thiết kế theo định hướng năng lực và chuẩn đầu
-            ra.
-          </p>
         </div>
 
         <div className="mx-auto mt-14 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-12">

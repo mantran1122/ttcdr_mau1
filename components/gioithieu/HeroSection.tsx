@@ -32,19 +32,26 @@ export default function HeroSection() {
         transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
         className="mx-auto max-w-5xl"
       >
-        <h1 className="leading-[1.2] tracking-[-0.04em]">
+        <h1 className="leading-[1.3] tracking-[-0.05em] ">
           <span className="block text-[40px] sm:text-[52px] lg:text-[74px]">
-            <span className="font-black text-slate-950">Lịch Học-</span>
-            <span className="font-black text-slate-950">Kiểm Tra</span>
+            <span className="font-black text-slate-950">Kiến tạo Nền tảng</span>
           </span>
           <span className="block text-[40px] sm:text-[52px] lg:text-[74px]">
-            <span className="font-light text-slate-400">và </span>
-            <span className="font-black text-slate-950">Thông Báo Mới Nhất</span>
+            {/* <span className="font-light text-slate-400">và </span> */}
+            <span className="font-black whitespace-nowrap text-slate-950">Vững chắc Chuyên môn</span>
           </span>
         </h1>
       </motion.div>
 
       {/* Subtitle */}
+      <motion.p
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto mt-6 max-w-2xl text-base text-slate-600 sm:text-lg"
+      >
+        Trung tâm Chuẩn đầu ra & Phát triển nguồn nhân lực — Đại học Nam Cần Thơ
+      </motion.p>
     </section>
   );
 }

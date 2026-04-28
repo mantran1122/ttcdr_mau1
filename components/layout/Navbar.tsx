@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 
 const navItems = [
   { label: "Giới thiệu",       href: "/gioi-thieu",                  icon: "bi-house-door" },
@@ -93,19 +94,35 @@ export default function Navbar() {
 
         {/* Hamburger */}
         <div className="relative" ref={menuRef}>
-          <button
+          <motion.button
             onClick={() => { setOpen(!open); setOpenSub(null); }}
-            className="w-11 h-11 flex flex-col items-center justify-center gap-[5px] rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             aria-label="Menu"
+            style={{ borderRadius: "88px", backgroundColor: "#fff", boxShadow: "0 2px 8px rgba(0,0,0,0.10)" }}
+            className="flex h-11 w-[48px] flex-col items-center justify-center gap-[7px] transition-shadow duration-200 hover:shadow-md"
           >
-            <span className="block w-5 h-[1px] bg-gray-700 rounded-full" />
-            <span className="block w-5 h-[2px] bg-gray-700 rounded-full" />
-            {/* <span className="block w-5 h-[2px] bg-gray-700 rounded-full" /> */}
-          </button>
+            {/* Thanh dày */}
+            <motion.span
+              animate={open ? { width: "14px", y: 5.5, rotate: 45 } : { width: "22px", y: 0, rotate: 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              style={{ borderRadius: "10px", backgroundColor: "#000", height: "0.6px", display: "block", originX: "50%", originY: "50%" }}
+            />
+            {/* Thanh mỏng */}
+            <motion.span
+              animate={open ? { width: "14px", y: -5.5, rotate: -45 } : { width: "22px", y: 0, rotate: 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              style={{ borderRadius: "10px", backgroundColor: "#000", height: "0.6px", display: "block", originX: "50%", originY: "50%" }}
+            />
+          </motion.button>
 
           {/* Dropdown panel */}
           {open && (
-            <div
+            <motion.div
+              initial={{ opacity: 0, y: -10, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="absolute right-0 mt-3 bg-white overflow-hidden"
               style={{
                 minWidth: "280px",
@@ -114,10 +131,15 @@ export default function Navbar() {
               }}
             >
               <div className="py-2">
-                {navItems.map((item) => {
+                {navItems.map((item, index) => {
                   const isActive = activeItem === item.label;
                   return (
-                    <div key={item.label}>
+                    <motion.div
+                      key={item.label}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.25, delay: 0.05 + index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                    >
                       <button
                         onClick={() => {
                           if (item.dropdown) {
@@ -159,20 +181,23 @@ export default function Navbar() {
                       {/* Sub dropdown */}
                       {item.dropdown && openSub === item.label && (
                         <div className="bg-gray-50 border-t border-b border-gray-100">
-                          {item.dropdown.map((sub) => (
-                            <a
+                          {item.dropdown.map((sub, subIndex) => (
+                            <motion.a
                               key={sub.href}
                               href={sub.href}
                               onClick={() => setOpen(false)}
+                              initial={{ opacity: 0, x: -8 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.2, delay: subIndex * 0.05, ease: [0.22, 1, 0.36, 1] }}
                               className="flex items-center gap-3 px-14 py-2.5 text-[14px] text-gray-600 hover:text-[#ED1F25] transition-colors"
                             >
                               <span className="w-1 h-1 rounded-full bg-gray-400 shrink-0" />
                               {sub.label}
-                            </a>
+                            </motion.a>
                           ))}
                         </div>
                       )}
-                    </div>
+                    </motion.div>
                   );
                 })}
 
@@ -180,8 +205,11 @@ export default function Navbar() {
                 <div className="mx-4 my-1 border-t border-gray-100" />
 
                 {/* Register */}
-                <a
+                <motion.a
                   href="https://dkhp.nctu.edu.vn/"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.25, delay: 0.05 + navItems.length * 0.06, ease: [0.22, 1, 0.36, 1] }}
                   className="flex items-center gap-4 mx-3 my-1 px-4 py-3 rounded-xl transition-colors hover:opacity-90"
                   style={{ background: "#FFF0F0" }}
                   onClick={() => setOpen(false)}
@@ -199,9 +227,9 @@ export default function Navbar() {
                     Đăng ký
                   </span>
                   <i className="bi bi-arrow-right text-[#ED1F25]" />
-                </a>
+                </motion.a>
               </div>
-            </div>
+            </motion.div>
           )}
         </div>
       </div>
