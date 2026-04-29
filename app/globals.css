@@ -8,13 +8,18 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans), 'Be Vietnam Pro', sans-serif;
+  --font-sans: 'Momo Trust Sans', sans-serif;
+  --width-container: 1200px;
 }
 
 *,
 *::before,
 *::after {
-  font-family: var(--font-sans), 'Be Vietnam Pro', sans-serif;
+  font-family: 'Momo Trust Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
 }
 
 html {

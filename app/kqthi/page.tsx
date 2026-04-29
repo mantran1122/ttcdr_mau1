@@ -46,7 +46,7 @@ export default function KqThiPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* ── Hero ── */}
-      <section className="pb-10 pt-10 lg:pb-14 lg:pt-14">
+      <section className="pb-10 pt-20 lg:pb-14 lg:pt-24">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -66,9 +66,6 @@ export default function KqThiPage() {
             <h1 className="text-[clamp(2.4rem,4vw,3.8rem)] font-black leading-[1.3] tracking-[-0.05em] text-slate-950">
               Kết quả thi ĐGNLNN
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
-              Tra cứu kết quả thi Đánh giá Năng lực Ngoại ngữ (TOEIC, VSTEP) theo MSSV hoặc họ tên.
-            </p>
           </motion.div>
         </div>
       </section>

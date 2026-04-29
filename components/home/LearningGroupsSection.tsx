@@ -107,21 +107,21 @@ export default function LearningGroupsSection() {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute left-1/2 top-1/2 -z-10 h-[920px] w-[920px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/45"
+        className="absolute left-1/2 top-1/2 -z-10 h-[920px] w-[920px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-green-300"
       />
       <motion.div
         initial={{ opacity: 0, scale: 0.88 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 1.1, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute left-1/2 top-1/2 -z-10 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/45"
+        className="absolute left-1/2 top-1/2 -z-10 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-green-300"
       />
       <motion.div
         initial={{ opacity: 0, scale: 0.86 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 1.2, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute left-1/2 top-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/45"
+        className="absolute left-1/2 top-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-green-300"
       />
 
       <div className="container relative mx-auto h-auto px-4 xl:h-[700px]">

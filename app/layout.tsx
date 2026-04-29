@@ -1,15 +1,7 @@
 import type { Metadata } from "next";
-import { Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-
-const beVietnamPro = Be_Vietnam_Pro({
-  subsets: ["latin", "vietnamese"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-sans",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Trung tâm Chuẩn đầu ra | Trường Đại học Nam Cần Thơ",
@@ -21,8 +13,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="vi" className={`h-full ${beVietnamPro.variable}`}>
+    <html lang="vi" className="h-full">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Momo+Trust+Sans:wght@200..800&display=swap"
+          rel="stylesheet"
+        />
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"

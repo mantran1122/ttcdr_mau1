@@ -3,55 +3,59 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
 export default function HeroSection() {
   return (
-    <section className="relative flex min-h-[60vh] flex-col items-center justify-center overflow-hidden px-4 py-20 text-center sm:py-24">
-      {/* Badge with small logo */}
+    <section className="relative pb-10 lg:pb-14">
+
+      {/* Banner – full bleed, absolute from top */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="mb-8 inline-flex max-w-[90%] items-center gap-2.5 rounded-full border border-white/40 bg-white/50 px-4 py-2 shadow-sm backdrop-blur-md sm:px-5 sm:py-2.5"
+        transition={{ duration: 0.65, ease: EASE }}
+        className="absolute inset-x-0 top-0 overflow-hidden"
       >
         <Image
-          src="/logo_don.png"
-          alt=""
-          width={20}
-          height={20}
-          className="h-5 w-auto shrink-0 rounded-sm"
+          src="/banner.png"
+          alt="Banner Trung tâm Chuẩn đầu ra"
+          width={1920}
+          height={600}
+          className="h-[280px] w-full object-cover sm:h-[400px] lg:h-[500px]"
+          priority
         />
-        <span className="text-xs font-semibold text-slate-700 sm:text-sm">
-          Trung tâm Chuẩn đầu ra &amp; Phát triển nguồn nhân lực
-        </span>
       </motion.div>
 
-      {/* Main headline */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto max-w-5xl"
-      >
-        <h1 className="leading-[1.3] tracking-[-0.05em] ">
-          <span className="block text-[40px] sm:text-[52px] lg:text-[74px]">
-            <span className="font-black text-slate-950">Kiến tạo Nền tảng</span>
-          </span>
-          <span className="block text-[40px] sm:text-[52px] lg:text-[74px]">
-            {/* <span className="font-light text-slate-400">và </span> */}
-            <span className="font-black whitespace-nowrap text-slate-950">Vững chắc Chuyên môn</span>
-          </span>
-        </h1>
-      </motion.div>
+      {/* Title */}
+      <div className="container relative mx-auto px-4 pt-[300px] sm:pt-[420px] lg:pt-[530px]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.18, ease: EASE }}
+          className="mt-10 text-center"
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
+            className="mb-5 inline-flex items-center gap-2.5 rounded-full border border-slate-200 bg-white/80 px-4 py-2 shadow-sm backdrop-blur-md sm:px-5 sm:py-2.5"
+          >
+            <Image src="/logo_don.png" alt="" width={20} height={20} className="h-5 w-auto shrink-0 rounded-sm" />
+            <span className="text-xs font-semibold text-slate-700 sm:text-sm">
+              Giới thiệu
+            </span>
+          </motion.div>
 
-      {/* Subtitle */}
-      <motion.p
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto mt-6 max-w-2xl text-base text-slate-600 sm:text-lg"
-      >
-        Trung tâm Chuẩn đầu ra & Phát triển nguồn nhân lực — Đại học Nam Cần Thơ
-      </motion.p>
+          <h1 className="text-[clamp(2.4rem,4vw,3.8rem)] font-black leading-[1.3] tracking-[-0.05em] text-slate-950">
+            Kiến tạo Nền tảng Vững chắc Chuyên môn
+          </h1>
+{/* 
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
+            Trung tâm Chuẩn đầu ra &amp; Phát triển nguồn nhân lực — Đại học Nam Cần Thơ
+          </p> */}
+        </motion.div>
+      </div>
+
     </section>
   );
 }

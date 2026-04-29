@@ -47,7 +47,7 @@ export default function ThiSinhPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* ── Hero ── */}
-      <section className="pb-10 pt-10 lg:pb-14 lg:pt-14">
+      <section className="pb-10 pt-20 lg:pb-14 lg:pt-24">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

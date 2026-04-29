@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 
 const outcomeCards = [
   {
@@ -10,8 +10,15 @@ const outcomeCards = [
     iconClassName: "bg-violet-500",
     shadowClassName: "shadow-[0_22px_55px_rgba(139,92,246,0.16)]",
     label: "Trí tuệ nhân tạo (AI)",
-    description:
-      "Định hướng ngườihọc biết khai thác công cụ AI trong học tập và công việc, đồng thờisử dụng công nghệ có trách nhiệm, có kiểm chứng và phù hợp bối cảnh.",
+    description: "Khai thác công cụ AI trong học tập và công việc có trách nhiệm.",
+    regulation: {
+      ref: "Quyết định 127/QĐ-TTg · Chiến lược quốc gia về AI",
+      items: [
+        { label: "Yêu cầu", text: "Sinh viên cần biết sử dụng các công cụ AI hỗ trợ học tập, nghiên cứu và giải quyết vấn đề thực tiễn." },
+        { label: "Tiêu chuẩn", text: "Sử dụng AI có kiểm chứng, trích dẫn nguồn, không vi phạm đạo đức học thuật và bảo mật thông tin." },
+        { label: "Lưu ý", text: "Bộ GD&ĐT đang xây dựng khung năng lực AI cho người học; nhà trường áp dụng theo hướng dẫn cập nhật nhất." },
+      ],
+    },
   },
   {
     number: "02",
@@ -19,8 +26,15 @@ const outcomeCards = [
     iconClassName: "bg-red-500",
     shadowClassName: "shadow-[0_22px_55px_rgba(239,68,68,0.16)]",
     label: "Ngoại ngữ",
-    description:
-      "Hỗ trợ ngườihọc đáp ứng yêu cầu ngoại ngữ theo chuẩn đầu ra của chương trình đào tạo, tăng khả năng giao tiếp, đọc hiểu tài liệu và hội nhập nghề nghiệp.",
+    description: "Đáp ứng chuẩn đầu ra ngoại ngữ, tăng khả năng giao tiếp và hội nhập nghề nghiệp.",
+    regulation: {
+      ref: "Thông tư 05/2021/TT-BGDĐT · Khung NLNN 6 bậc",
+      items: [
+        { label: "Yêu cầu tối thiểu", text: "Bậc 3/6 theo Khung năng lực ngoại ngữ 6 bậc dùng cho Việt Nam (tương đương B1 CEFR)." },
+        { label: "Hình thức kiểm tra", text: "Thi VSTEP, IELTS, TOEIC hoặc các chứng chỉ được Bộ GD&ĐT công nhận tương đương." },
+        { label: "Lưu ý", text: "Chứng chỉ còn hiệu lực trong vòng 2 năm tính đến ngày nộp hồ sơ xét tốt nghiệp." },
+      ],
+    },
   },
   {
     number: "03",
@@ -28,8 +42,15 @@ const outcomeCards = [
     iconClassName: "bg-blue-500",
     shadowClassName: "shadow-[0_22px_55px_rgba(59,130,246,0.16)]",
     label: "Tin học",
-    description:
-      "Đáp ứng yêu cầu kỹ năng công nghệ thông tin cơ bản theo chuẩn đầu ra; hỗ trợ học tập, xử lý dữ liệu và làm việc hiệu quả trong môi trường số.",
+    description: "Đáp ứng chuẩn kỹ năng CNTT cơ bản, hỗ trợ học tập và làm việc trong môi trường số.",
+    regulation: {
+      ref: "Thông tư 03/2014/TT-BTTTT · Thông tư 11/2022/TT-BTTTT",
+      items: [
+        { label: "Yêu cầu tối thiểu", text: "Đạt chuẩn kỹ năng sử dụng CNTT cơ bản theo Thông tư 03/2014 của Bộ TT&TT." },
+        { label: "Nội dung kiểm tra", text: "Kỹ năng soạn thảo văn bản, bảng tính, trình chiếu, sử dụng Internet và bảo mật thông tin." },
+        { label: "Chứng chỉ", text: "IC3, MOS, ICDL hoặc chứng chỉ tin học ứng dụng được cơ sở đào tạo được Bộ cấp phép cấp." },
+      ],
+    },
   },
   {
     number: "04",
@@ -37,8 +58,15 @@ const outcomeCards = [
     iconClassName: "bg-teal-400",
     shadowClassName: "shadow-[0_22px_55px_rgba(20,184,166,0.16)]",
     label: "Kỹ năng mềm",
-    description:
-      "Phát triển giao tiếp, làm việc nhóm, tư duy phản biện và giải quyết vấn đề; giúp ngườihọc thích ứng tốt hơn với môi trường học tập và làm việc thực tế.",
+    description: "Phát triển giao tiếp, làm việc nhóm và tư duy phản biện cho môi trường thực tế.",
+    regulation: {
+      ref: "Luật GDĐH 2018 · Thông tư 17/2021/TT-BGDĐT",
+      items: [
+        { label: "Yêu cầu", text: "Chuẩn đầu ra chương trình đào tạo phải bao gồm năng lực giao tiếp, làm việc nhóm và giải quyết vấn đề." },
+        { label: "Đánh giá", text: "Thông qua các học phần kỹ năng mềm bắt buộc và đánh giá tích hợp trong quá trình học." },
+        { label: "Chuẩn tham chiếu", text: "Khung năng lực nghề nghiệp quốc gia và yêu cầu của doanh nghiệp trong lĩnh vực đào tạo." },
+      ],
+    },
   },
   {
     number: "05",
@@ -46,8 +74,15 @@ const outcomeCards = [
     iconClassName: "bg-amber-400",
     shadowClassName: "shadow-[0_22px_55px_rgba(245,158,11,0.18)]",
     label: "Kỹ năng nghề nghiệp",
-    description:
-      "Tăng cường tác phong, thái độ nghề nghiệp và kỹ năng thực hành, giúp ngườihọc đáp ứng tốt hơn yêu cầu của doanh nghiệp và đơn vị sử dụng lao động.",
+    description: "Tăng tác phong và kỹ năng thực hành, đáp ứng yêu cầu của doanh nghiệp.",
+    regulation: {
+      ref: "Luật Giáo dục nghề nghiệp 2014 · Thông tư 17/2021/TT-BGDĐT",
+      items: [
+        { label: "Yêu cầu", text: "Sinh viên đáp ứng ít nhất 70% yêu cầu năng lực nghề nghiệp theo chuẩn đầu ra chương trình." },
+        { label: "Hình thức đánh giá", text: "Thực tập nghề nghiệp, dự án thực tế tại doanh nghiệp và bảo vệ báo cáo cuối khóa." },
+        { label: "Liên kết doanh nghiệp", text: "Nhà trường phối hợp doanh nghiệp xây dựng chuẩn đầu ra theo Điều 7 Thông tư 17/2021." },
+      ],
+    },
   },
 ];
 
@@ -61,19 +96,6 @@ const desktopPositions = [
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-/* ---------- variants ---------- */
-const ringVariants = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: (i: number) => ({
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 1 + i * 0.1,
-      delay: i * 0.12,
-      ease: EASE,
-    },
-  }),
-};
 
 const headerContainer = {
   hidden: {},
@@ -139,35 +161,29 @@ const mobileCardItem = (index: number) => ({
 
 export default function ChuanDauRaSection() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   const titleRef = useRef<HTMLDivElement>(null);
   const desktopRef = useRef<HTMLDivElement>(null);
   const mobileRef = useRef<HTMLDivElement>(null);
 
-  const titleInView = useInView(titleRef, { once: false, amount: 0.35 });
-  const desktopInView = useInView(desktopRef, { once: false, amount: 0.2 });
-  const mobileInView = useInView(mobileRef, { once: false, amount: 0.15 });
+  const titleInView = useInView(titleRef, { once: true, amount: 0.35 });
+  const desktopInView = useInView(desktopRef, { once: true, amount: 0.2 });
+  const mobileInView = useInView(mobileRef, { once: true, amount: 0.15 });
+  const selectedCard = activeIndex !== null ? outcomeCards[activeIndex] : null;
+
+  const openCardDetail = (index: number) => {
+    setActiveIndex(index);
+    setShowModal(true);
+  };
+
+  const closeCardDetail = () => {
+    setShowModal(false);
+    setActiveIndex(null);
+  };
 
   return (
     <section className="relative isolate overflow-hidden py-24 xl:py-28">
-      {/* Decorative rings — xuất hiện / biến mất theo scroll */}
-      {[920, 700, 500].map((size, i) => (
-        <motion.div
-          key={size}
-          custom={i}
-          variants={ringVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: false, amount: 0.25 }}
-          className="absolute left-1/2 top-1/2 -z-10 rounded-full border border-white/45"
-          style={{
-            width: size,
-            height: size,
-            translateX: "-50%",
-            translateY: "-50%",
-          }}
-        />
-      ))}
 
       <div className="container relative mx-auto px-4">
         {/* Title — xuất hiện / biến mất theo scroll */}
@@ -229,7 +245,6 @@ export default function ChuanDauRaSection() {
           variants={cardContainer}
           initial="hidden"
           animate={desktopInView ? "visible" : "hidden"}
-          onMouseLeave={() => setActiveIndex(null)}
           className="relative mx-auto mt-16 hidden h-[520px] w-full xl:block"
           style={{ perspective: 1200 }}
         >
@@ -243,7 +258,7 @@ export default function ChuanDauRaSection() {
                 key={card.label ?? index}
                 custom={index}
                 variants={cardItem}
-                onMouseEnter={() => setActiveIndex(index)}
+                onClick={() => setActiveIndex(activeIndex === index ? null : index)}
                 animate={{
                   y: !desktopInView
                     ? 70
@@ -358,31 +373,20 @@ export default function ChuanDauRaSection() {
                         {card.label}
                       </motion.p>
 
-                      {/* Divider + Description — luôn hiển thị, mờ → rõ khi hover */}
-                      <div>
-                        <motion.span
-                          animate={{
-                            scaleX: isActive && desktopInView ? 1 : 0,
-                          }}
-                          transition={{
-                            duration: 0.35,
-                            delay: isActive && desktopInView ? 0.08 : 0,
-                          }}
-                          className="mx-auto mt-4 block h-0.5 w-10 origin-center rounded-full bg-red-500"
-                        />
-                        <motion.p
-                          animate={{
-                            filter: desktopInView
-                              ? isActive ? "blur(0px)" : "blur(4px)"
-                              : "blur(8px)",
-                            opacity: desktopInView ? 1 : 0,
-                          }}
-                          transition={{ duration: 0.4, ease: EASE }}
-                          className="mt-5 select-none text-sm leading-7 text-slate-600"
+                      {/* Divider + Description — chỉ hiện khi click */}
+                      {isActive && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 8 }}
+                          transition={{ duration: 0.3, ease: EASE }}
                         >
-                          {card.description}
-                        </motion.p>
-                      </div>
+                          <span className="mx-auto mt-4 block h-0.5 w-10 rounded-full bg-red-500" />
+                          <p className="mt-4 text-sm leading-6 text-slate-600">
+                            {card.description}
+                          </p>
+                        </motion.div>
+                      )}
                     </div>
                   </div>
                 </div>

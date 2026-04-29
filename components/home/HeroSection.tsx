@@ -1,50 +1,92 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Image from "next/image";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.07, delayChildren: 0.1 },
+  },
+};
+
+const wordVariants = {
+  hidden: { opacity: 0, y: 32, filter: "blur(10px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.65, ease: EASE },
+  },
+};
+
+function AnimatedLine({
+  text,
+  className,
+}: {
+  text: string;
+  className?: string;
+}) {
+  return (
+    <span className={["block overflow-hidden", className].join(" ")}>
+      {text.split(" ").map((word, i) => (
+        <motion.span
+          key={i}
+          variants={wordVariants}
+          className="inline-block mr-[0.25em]"
+        >
+          {word}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
 
 export default function HeroSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  const opacity = useTransform(scrollYProgress, [0.3, 1], [1, 0]);
+  const y = useTransform(scrollYProgress, [0.3, 1], [0, -40]);
+
   return (
-    <section className="relative flex min-h-[60vh] flex-col items-center justify-center overflow-hidden px-4 py-20 text-center sm:py-24">
-      {/* Badge with small logo */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="mb-8 inline-flex max-w-[90%] items-center gap-2.5 rounded-full border border-white/40 bg-white/50 px-4 py-2 shadow-sm backdrop-blur-md sm:px-5 sm:py-2.5"
-      >
-        <Image
-          src="/logo_don.png"
-          alt=""
-          width={20}
-          height={20}
-          className="h-5 w-auto shrink-0 rounded-sm"
-        />
-        <span className="text-xs font-semibold text-slate-700 sm:text-sm">
-          Trung tâm Chuẩn đầu ra &amp; Phát triển nguồn nhân lực
-        </span>
-      </motion.div>
-
-      {/* Main headline */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto max-w-5xl"
-      >
-        <h1 className="leading-[1.2] tracking-[-0.04em]">
-          <span className="block text-[40px] sm:text-[52px] lg:text-[74px]">
-            <span className="font-black text-slate-950">Lịch Học-</span>
-            <span className="font-black text-slate-950">Kiểm Tra</span>
-          </span>
-          <span className="block text-[40px] sm:text-[52px] lg:text-[74px]">
-            <span className="font-light text-slate-400">và </span>
-            <span className="font-black text-slate-950">Thông Báo Mới Nhất</span>
-          </span>
-        </h1>
-      </motion.div>
-
-      {/* Subtitle */}
+    <section ref={sectionRef} className="relative pt-[20vh] pb-[34vh]">
+      <div className="container relative mx-auto px-4">
+        <motion.div
+          style={{ opacity, y }}
+          className="flex flex-col items-center justify-center text-center"
+        >
+          <motion.h1
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="mx-auto max-w-5xl leading-[1.2] tracking-[-0.04em]"
+          >
+            <AnimatedLine
+              text="Trung tâm Chuẩn đầu ra"
+              className="text-[36px] font-black text-slate-950 sm:text-[52px] lg:text-[68px]"
+            />
+            <span className="block text-[36px] font-black text-slate-950 sm:text-[52px] lg:text-[68px]">
+              <motion.span
+                variants={wordVariants}
+                className="inline-block mr-[0.25em] font-light text-slate-400"
+              >
+                &amp;
+              </motion.span>
+              <AnimatedLine
+                text="Phát triển nguồn nhân lực"
+                className="inline text-[36px] font-black text-slate-950 sm:text-[52px] lg:text-[68px]"
+              />
+            </span>
+          </motion.h1>
+        </motion.div>
+      </div>
     </section>
   );
 }

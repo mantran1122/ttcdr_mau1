@@ -4,116 +4,116 @@ const courses = [
   {
     title: "Trí tuệ nhân tạo (AI)",
     tag: "Công nghệ",
+    badge: "Khóa học nổi bật",
     image: "/courses/ai.png",
     href: "/khoa-hoc/tri-tue-nhan-tao",
-    className: "lg:col-span-6",
-    imageClassName: "h-[220px] sm:h-[250px]",
+    col: "lg:col-span-7",
+    rowH: "h-[340px]",
+    textPos: "center" as const,
   },
   {
     title: "Ngoại ngữ",
     tag: "Giao tiếp",
     image: "/courses/ngoai-ngu.png",
     href: "/khoa-hoc/ngoai-ngu",
-    className: "lg:col-span-6",
-    imageClassName: "h-[220px] sm:h-[250px]",
+    col: "lg:col-span-5",
+    rowH: "h-[340px]",
+    textPos: "center" as const,
   },
   {
     title: "Tin học",
     tag: "Kỹ năng số",
     image: "/courses/tin-hoc.png",
     href: "/khoa-hoc/tin-hoc",
-    className: "lg:col-span-4",
-    imageClassName: "h-[170px]",
+    col: "lg:col-span-4",
+    rowH: "h-[280px]",
   },
   {
     title: "Kỹ năng mềm",
     tag: "Phát triển bản thân",
     image: "/courses/ky-nang-mem_v2.png",
     href: "/khoa-hoc/ky-nang-mem",
-    className: "lg:col-span-4",
-    imageClassName: "h-[170px]",
+    col: "lg:col-span-4",
+    rowH: "h-[280px]",
   },
   {
     title: "Kỹ năng nghề nghiệp",
     tag: "Định hướng nghề",
     image: "/courses/ky-nang-nghe-nghiep.png",
     href: "/khoa-hoc/ky-nang-nghe-nghiep",
-    className: "lg:col-span-4",
-    imageClassName: "h-[170px]",
+    col: "lg:col-span-4",
+    rowH: "h-[280px]",
   },
 ];
 
-const tagColorMap: Record<string, string> = {
-  "Công nghệ": "bg-blue-100 text-blue-700",
-  "Giao tiếp": "bg-orange-100 text-orange-700",
-  "Kỹ năng số": "bg-sky-100 text-sky-700",
-  "Phát triển bản thân": "bg-yellow-100 text-yellow-700",
-  "Định hướng nghề": "bg-stone-100 text-stone-700",
-};
-
 export default function CoursesShowcaseSection() {
   return (
-    <section className="relative isolate overflow-hidden py-24 xl:py-28">
-      <div className="container relative mx-auto px-4">
-        <div className="text-center">
-          <div className="mb-5 flex items-center justify-center gap-4 font-serif text-xl italic text-slate-500 sm:text-2xl">
+    <section className="relative py-24 xl:py-28 bg-background">
+      <div className="container mx-auto px-4">
+
+        {/* Header */}
+        <div className="mb-14 text-center">
+          <div className="mb-4 flex items-center justify-center gap-4 font-serif text-xl italic text-slate-500 sm:text-2xl">
             <span className="hidden h-px w-16 bg-slate-300 sm:block" />
             <span>Khóa học tại Trung tâm</span>
             <span className="hidden h-px w-16 bg-slate-300 sm:block" />
           </div>
-
-          <h2 className="text-[clamp(2.5rem,4.6vw,5rem)] font-black leading-[1.35] tracking-[-0.06em] text-slate-950">
+          <h2 className="text-[clamp(2.5rem,4.6vw,5rem)] font-black leading-[1.15] tracking-[-0.05em] text-slate-950">
             Khoá học cho sinh viên
           </h2>
         </div>
 
-        <div className="mx-auto mt-14 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-12">
+        {/* Bento grid */}
+        <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12">
           {courses.map((course) => (
             <a
               key={course.title}
               href={course.href}
               className={[
-                "group overflow-hidden rounded-[1.75rem] bg-white p-3 shadow-[0_22px_70px_rgba(15,23,42,0.08)] ring-1 ring-slate-200/70",
-                "transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_90px_rgba(15,23,42,0.13)]",
-                course.className,
+                "group relative overflow-hidden rounded-[1.6rem]",
+                "transition-all duration-400 hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(15,23,42,0.15)]",
+                course.col,
+                course.rowH,
               ].join(" ")}
             >
-              <div
-                className={[
-                  "relative overflow-hidden rounded-[1.35rem] bg-slate-100",
-                  course.imageClassName,
-                ].join(" ")}
-              >
-                <Image
-                  src={course.image}
-                  alt={course.title}
-                  fill
-                  className="object-cover transition duration-700 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
+              {/* Background image */}
+              <Image
+                src={course.image}
+                alt={course.title}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
 
-                <div className="absolute inset-0 bg-white/0 transition duration-500 group-hover:bg-white/10" />
-              </div>
+              {/* Gradient overlay — bottom so text is readable */}
+              <div className="absolute inset-0 " />
 
-              <div className="px-5 pb-5 pt-6">
-                <h3 className="text-[1.65rem] font-black leading-[1.25] tracking-[-0.04em] text-slate-950">
-                  {course.title}
-                </h3>
+              {/* Badge top-left */}
+              {course.badge && (
+                <span
+                  className="absolute left-4 top-4 z-10 flex items-center gap-1.5 rounded-full px-3 py-1 text-[12px] font-semibold"
+                  style={{ background: "rgba(255,255,255,0.88)", color: "#374151", backdropFilter: "blur(6px)" }}
+                >
+                  ★ {course.badge}
+                </span>
+              )}
 
-                <div className="mt-5 flex items-center justify-between">
-                  <span
-                    className={[
-                      "inline-flex h-9 items-center rounded-full px-4 text-sm font-bold",
-                      tagColorMap[course.tag],
-                    ].join(" ")}
-                  >
-                    {course.tag}
+              {/* Title + tag */}
+              <div className={[
+                "absolute left-0 right-0 z-10 p-5",
+                course.textPos === "center"
+                  ? "inset-0 flex flex-col justify-center"
+                  : "bottom-0",
+              ].join(" ")}>
+                {course.textPos === "center" ? (
+                  <h3 className="text-[1.45rem] leading-[1.2] tracking-[-0.03em] text-black drop-shadow-sm" style={{ fontWeight: 400 }}>
+                    {course.title}
+                  </h3>
+                ) : (
+                  <span className="inline-block rounded-2xl bg-white px-4 py-2 text-[1.45rem] leading-[1.2] tracking-[-0.03em] text-black" style={{ fontWeight: 400 }}>
+                    {course.title}
                   </span>
-
-                  <span className="flex h-9 w-9 translate-x-2 items-center justify-center rounded-full bg-slate-950 text-white opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100">
-                    →
-                  </span>
-                </div>
+                )}
               </div>
             </a>
           ))}

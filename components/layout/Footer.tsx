@@ -3,7 +3,7 @@ import { MapPin, Phone, Mail } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-300/70 bg-background">
+    <footer className="border-t border-gray-200 bg-white">
       <div className="container mx-auto px-4 py-10 lg:py-12">
         <div className="flex flex-col items-start gap-8 lg:flex-row lg:items-start lg:justify-between">
           {/* Left: Social + University */}

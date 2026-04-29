@@ -1,225 +1,157 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const featuredArticle = {
-  href: "/news/workshop-ai-ung-dung-trong-giao-duc",
-  imageSrc:
-    "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=900&q=80",
-  imageAlt: "Workshop AI ứng dụng trong giảng dạy và học tập",
-  category: "ĐÀO TẠO",
-  title: "Workshop: Ứng dụng AI trong giảng dạy và học tập",
-};
-
-const sideArticles = [
+const articles = [
+  {
+    href: "/news/workshop-ai-ung-dung-trong-giao-duc",
+    imageSrc: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=700&q=80",
+    imageAlt: "Workshop AI ứng dụng trong giảng dạy và học tập",
+    category: "Đào tạo",
+    title: "Workshop: Ứng dụng AI trong giảng dạy và học tập",
+    date: "28 tháng 4, 2025",
+  },
   {
     href: "/news/le-tot-nghiep-khoa-2024",
-    category: "SINH VIÊN",
+    imageSrc: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=700&q=80",
+    imageAlt: "Lễ tốt nghiệp khóa 2024",
+    category: "Sinh viên",
     title: "Lễ tốt nghiệp khóa 2024: Hành trình tri thức, tương lai rộng mở",
-  },
-  {
-    href: "/news/giao-luu-dai-hoc-sunway",
-    category: "HỢP TÁC QUỐC TẾ",
-    title: "Giao lưu học thuật với Đại học Sunway, Malaysia",
-  },
-  {
-    href: "/news/khoa-ky-nang-giao-tiep-thuyet-trinh",
-    category: "KỸ NĂNG MỀM",
-    title: "Khóa kỹ năng: Giao tiếp & Thuyết trình hiệu quả",
-  },
-];
-
-const latestNews = [
-  {
-    href: "/news/hoi-thao-giao-duc-ben-vung",
-    category: "NGHIÊN CỨU",
-    title: 'Hội thảo khoa học "Giáo dục bền vững trong kỷ nguyên số"',
-    imageSrc:
-      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80",
-    imageAlt: "Hội thảo khoa học giáo dục bền vững",
+    date: "20 tháng 4, 2025",
   },
   {
     href: "/news/chien-dich-xanh-campus",
-    category: "HOẠT ĐỘNG SINH VIÊN",
-    title: 'Chiến dịch "Xanh campus – Sống xanh mỗi ngày"',
-    imageSrc:
-      "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80",
+    imageSrc: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=700&q=80",
     imageAlt: "Chiến dịch xanh campus",
+    category: "Hoạt động sinh viên",
+    title: 'Chiến dịch "Xanh campus – Sống xanh mỗi ngày"',
+    date: "15 tháng 4, 2025",
   },
   {
     href: "/news/nen-tang-hoc-tap-truc-tuyen",
-    category: "CÔNG NGHỆ GIÁO DỤC",
-    title: "Nền tảng học tập trực tuyến mới chính thức ra mắt",
-    imageSrc:
-      "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=600&q=80",
+    imageSrc: "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=700&q=80",
     imageAlt: "Nền tảng học tập trực tuyến",
+    category: "Công nghệ giáo dục",
+    title: "Nền tảng học tập trực tuyến mới chính thức ra mắt",
+    date: "10 tháng 4, 2025",
+  },
+  {
+    href: "/news/hoi-thao-ky-nang-mem",
+    imageSrc: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=700&q=80",
+    imageAlt: "Hội thảo kỹ năng mềm",
+    category: "Kỹ năng",
+    title: "Hội thảo kỹ năng mềm dành cho sinh viên năm nhất",
+    date: "5 tháng 4, 2025",
+  },
+  {
+    href: "/news/cuoc-thi-tieng-anh-2025",
+    imageSrc: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=700&q=80",
+    imageAlt: "Cuộc thi Tiếng Anh 2025",
+    category: "Ngoại ngữ",
+    title: "Cuộc thi Tiếng Anh toàn trường 2025 chính thức khởi động",
+    date: "1 tháng 4, 2025",
   },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: i * 0.08, ease: EASE },
-  }),
-};
+const PAGE_SIZE = 4;
 
 export default function TinTucSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.08 });
+  const [page, setPage] = useState(0);
+  const totalPages = Math.ceil(articles.length / PAGE_SIZE);
+  const visible = articles.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
 
   return (
-    /* Nền khớp màu site #E8E9EE */
-    <section ref={sectionRef} className="py-20 lg:py-28" style={{ background: "#E8E9EE" }}>
-      {/* Container căn theo navbar: container mx-auto px-4 */}
+    <section className="py-20 lg:py-28">
       <div className="container mx-auto px-4">
 
-        {/* ── Label + Heading ── */}
-        <div className="mb-10 text-center lg:mb-12">
+        {/* ── Heading row ── */}
+        <div className="relative mb-10 text-center">
           <motion.div
-            custom={0}
-            variants={fadeUp}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="mb-5 flex items-center justify-center gap-4 font-serif text-xl italic text-slate-500 sm:text-2xl"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.55, ease: EASE }}
           >
-            <span className="hidden h-px w-16 bg-slate-300 sm:block" />
-            <span>Tin tức &amp; Sự kiện</span>
-            <span className="hidden h-px w-16 bg-slate-300 sm:block" />
+            <div className="mb-5 flex items-center justify-center gap-4 font-serif text-xl italic text-slate-500 sm:text-2xl">
+              <span className="hidden h-px w-16 bg-slate-300 sm:block" />
+              <span>Tin tức &amp; Sự kiện</span>
+              <span className="hidden h-px w-16 bg-slate-300 sm:block" />
+            </div>
+            <h2 className="text-[clamp(2.5rem,4.6vw,5rem)] font-black leading-[1.35] tracking-[-0.06em] text-slate-950">
+              Tin tức gần đây
+            </h2>
           </motion.div>
 
-          <motion.h2
-            custom={1}
-            variants={fadeUp}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="text-[clamp(2.2rem,4.2vw,4.4rem)] font-black leading-[1.35] tracking-[-0.06em] text-slate-950"
-          >
-            Điểm nổi bật gần đây
-          </motion.h2>
-        </div>
-
-        {/* ── PHẦN 1: Featured + Side (2 box trắng) ── */}
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
-
-          {/* Box trái: Tin chính */}
           <motion.a
-            href={featuredArticle.href}
-            custom={2}
-            variants={fadeUp}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="group block overflow-hidden rounded-2xl bg-white shadow-sm transition-shadow duration-300 hover:shadow-md lg:col-span-7"
+            href="/news"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.15, ease: EASE }}
+            className="absolute bottom-0 right-0 text-sm font-semibold text-slate-700 transition-colors hover:text-slate-950"
           >
-            {/* Ảnh */}
-            <div className="overflow-hidden">
-              <img
-                src={featuredArticle.imageSrc}
-                alt={featuredArticle.imageAlt}
-                className="h-[260px] w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-[320px] lg:h-[380px]"
-              />
-            </div>
-            {/* Nội dung */}
-            <div className="p-5 lg:p-6">
-              <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-red-600">
-                {featuredArticle.category}
-              </p>
-              <h3 className="text-lg font-bold leading-snug text-gray-900 transition-colors duration-200 group-hover:text-red-600 lg:text-xl">
-                {featuredArticle.title}
-              </h3>
-            </div>
+            Xem tất cả →
           </motion.a>
-
-          {/* Box phải: 3 tin nhỏ */}
-          <motion.div
-            custom={3}
-            variants={fadeUp}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="flex flex-col divide-y divide-gray-100 overflow-hidden rounded-2xl bg-white shadow-sm lg:col-span-5"
-          >
-            {sideArticles.map((article) => (
-              <a
-                key={article.href}
-                href={article.href}
-                className="group flex flex-1 flex-col justify-center px-5 py-6 transition-colors duration-200 hover:bg-gray-50 lg:px-6"
-              >
-                <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-red-600">
-                  {article.category}
-                </p>
-                <h3 className="text-base font-semibold leading-snug text-gray-800 transition-colors duration-200 group-hover:text-red-600">
-                  {article.title}
-                </h3>
-              </a>
-            ))}
-          </motion.div>
         </div>
 
-        {/* ── PHẦN 2: Tin tức mới nhất (1 box trắng) ── */}
-        <div className="mt-6">
-          <motion.div
-            custom={6}
-            variants={fadeUp}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="overflow-hidden rounded-2xl bg-white shadow-sm"
-          >
-            {/* Header của box */}
-            <div className="flex items-center justify-between border-b border-gray-100 px-5 py-4 lg:px-6">
-              <div>
-                <h2 className="text-lg font-bold text-gray-900 lg:text-xl">
-                  Tin tức mới nhất
-                </h2>
-                <div className="mt-1 h-[3px] w-10 rounded-full bg-red-600" />
+        {/* ── 4-card grid ── */}
+        <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+          {visible.map((a, i) => (
+            <motion.a
+              key={a.href}
+              href={a.href}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: i * 0.08, ease: EASE }}
+              className="group flex flex-col"
+            >
+              {/* Image */}
+              <div className="overflow-hidden rounded-2xl">
+                <img
+                  src={a.imageSrc}
+                  alt={a.imageAlt}
+                  className="h-[320px] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                />
               </div>
-              <a
-                href="/news"
-                className="flex items-center gap-1.5 text-sm font-semibold text-red-600 transition-opacity duration-200 hover:opacity-70"
-              >
-                Xem tất cả tin tức
-                <ArrowRight className="h-4 w-4" />
-              </a>
-            </div>
 
-            {/* Danh sách tin */}
-            <div className="divide-y divide-gray-100">
-              {latestNews.map((item, i) => (
-                <motion.a
-                  key={item.href}
-                  href={item.href}
-                  custom={7 + i}
-                  variants={fadeUp}
-                  initial="hidden"
-                  animate={isInView ? "visible" : "hidden"}
-                  className="group flex items-center gap-5 px-5 py-5 transition-colors duration-200 hover:bg-gray-50 lg:px-6"
-                >
-                  {/* Text */}
-                  <div className="min-w-0 flex-1">
-                    <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-red-600">
-                      {item.category}
-                    </p>
-                    <h3 className="text-[0.95rem] font-semibold leading-snug text-gray-800 transition-colors duration-200 group-hover:text-red-600 sm:text-base">
-                      {item.title}
-                    </h3>
-                  </div>
+              {/* Text */}
+              <div className="mt-5 flex flex-1 flex-col">
+                <h3 className="flex-1 text-xl font-bold leading-snug text-slate-900 transition-colors group-hover:text-red-600">
+                  {a.title}
+                </h3>
+                <div className="mt-4 flex items-center gap-2 text-sm text-slate-400">
+                  <span>{a.date}</span>
+                  <span>·</span>
+                  <span>{a.category}</span>
+                </div>
+                <span className="mt-2 text-sm font-semibold text-slate-600 transition-colors group-hover:text-red-600">
+                  Đọc thêm &rsaquo;
+                </span>
+              </div>
+            </motion.a>
+          ))}
+        </div>
 
-                  {/* Thumbnail */}
-                  <div className="h-[90px] w-[150px] shrink-0 overflow-hidden rounded-xl sm:h-[110px] sm:w-[200px] lg:h-[120px] lg:w-[240px]">
-                    <img
-                      src={item.imageSrc}
-                      alt={item.imageAlt}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
+        {/* ── Navigation arrows ── */}
+        <div className="mt-10 flex items-center gap-3">
+          <button
+            onClick={() => setPage((p) => Math.max(0, p - 1))}
+            disabled={page === 0}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-slate-600 transition-all hover:border-slate-500 hover:text-slate-900 disabled:opacity-30"
+          >
+            <i className="bi bi-chevron-left text-sm" />
+          </button>
+          <button
+            onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+            disabled={page === totalPages - 1}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-slate-600 transition-all hover:border-slate-500 hover:text-slate-900 disabled:opacity-30"
+          >
+            <i className="bi bi-chevron-right text-sm" />
+          </button>
         </div>
 
       </div>
