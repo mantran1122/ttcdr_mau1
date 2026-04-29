@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useState, useRef } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
 const outcomeCards = [
   {
@@ -11,6 +11,8 @@ const outcomeCards = [
     shadowClassName: "shadow-[0_22px_55px_rgba(139,92,246,0.16)]",
     label: "Trí tuệ nhân tạo (AI)",
     description: "Khai thác công cụ AI trong học tập và công việc có trách nhiệm.",
+    regulationText:
+      "Theo định hướng của Bộ GD&ĐT, sinh viên sử dụng AI phải có kiểm chứng, trích dẫn nguồn và bảo đảm đạo đức học thuật.",
     regulation: {
       ref: "Quyết định 127/QĐ-TTg · Chiến lược quốc gia về AI",
       items: [
@@ -27,6 +29,8 @@ const outcomeCards = [
     shadowClassName: "shadow-[0_22px_55px_rgba(239,68,68,0.16)]",
     label: "Ngoại ngữ",
     description: "Đáp ứng chuẩn đầu ra ngoại ngữ, tăng khả năng giao tiếp và hội nhập nghề nghiệp.",
+    regulationText:
+      "Bậc Đại học: đạt chuẩn Anh văn theo quy định chuẩn đầu ra của Trường Đại học Nam Cần Thơ; ngành Ngôn ngữ Anh: từ bậc 3 (B1) trở lên theo Khung NLNN 6 bậc.",
     regulation: {
       ref: "Thông tư 05/2021/TT-BGDĐT · Khung NLNN 6 bậc",
       items: [
@@ -43,6 +47,8 @@ const outcomeCards = [
     shadowClassName: "shadow-[0_22px_55px_rgba(59,130,246,0.16)]",
     label: "Tin học",
     description: "Đáp ứng chuẩn kỹ năng CNTT cơ bản, hỗ trợ học tập và làm việc trong môi trường số.",
+    regulationText:
+      "Sinh viên phải đạt chuẩn kỹ năng sử dụng CNTT cơ bản theo quy định tại Thông tư 03/2014/TT-BTTTT.",
     regulation: {
       ref: "Thông tư 03/2014/TT-BTTTT · Thông tư 11/2022/TT-BTTTT",
       items: [
@@ -59,6 +65,8 @@ const outcomeCards = [
     shadowClassName: "shadow-[0_22px_55px_rgba(20,184,166,0.16)]",
     label: "Kỹ năng mềm",
     description: "Phát triển giao tiếp, làm việc nhóm và tư duy phản biện cho môi trường thực tế.",
+    regulationText:
+      "Chuẩn đầu ra phải có năng lực giao tiếp, làm việc nhóm và giải quyết vấn đề theo định hướng của Bộ GD&ĐT.",
     regulation: {
       ref: "Luật GDĐH 2018 · Thông tư 17/2021/TT-BGDĐT",
       items: [
@@ -75,6 +83,8 @@ const outcomeCards = [
     shadowClassName: "shadow-[0_22px_55px_rgba(245,158,11,0.18)]",
     label: "Kỹ năng nghề nghiệp",
     description: "Tăng tác phong và kỹ năng thực hành, đáp ứng yêu cầu của doanh nghiệp.",
+    regulationText:
+      "Sinh viên phải đáp ứng yêu cầu năng lực nghề nghiệp thông qua thực tập, dự án thực tế và đánh giá cuối khóa.",
     regulation: {
       ref: "Luật Giáo dục nghề nghiệp 2014 · Thông tư 17/2021/TT-BGDĐT",
       items: [
@@ -161,7 +171,6 @@ const mobileCardItem = (index: number) => ({
 
 export default function ChuanDauRaSection() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [showModal, setShowModal] = useState(false);
 
   const titleRef = useRef<HTMLDivElement>(null);
   const desktopRef = useRef<HTMLDivElement>(null);
@@ -170,17 +179,6 @@ export default function ChuanDauRaSection() {
   const titleInView = useInView(titleRef, { once: true, amount: 0.35 });
   const desktopInView = useInView(desktopRef, { once: true, amount: 0.2 });
   const mobileInView = useInView(mobileRef, { once: true, amount: 0.15 });
-  const selectedCard = activeIndex !== null ? outcomeCards[activeIndex] : null;
-
-  const openCardDetail = (index: number) => {
-    setActiveIndex(index);
-    setShowModal(true);
-  };
-
-  const closeCardDetail = () => {
-    setShowModal(false);
-    setActiveIndex(null);
-  };
 
   return (
     <section className="relative isolate overflow-hidden py-24 xl:py-28">
@@ -233,7 +231,7 @@ export default function ChuanDauRaSection() {
             variants={headerItem}
             className="text-center text-[clamp(2.6rem,4vw,4.3rem)] font-black leading-[1.35] tracking-[-0.055em] text-slate-950"
           >
-            Định hướng năng lực
+            Yêu cầu năng lực
             <br />
             theo chuẩn đầu ra
           </motion.h2>
@@ -373,20 +371,16 @@ export default function ChuanDauRaSection() {
                         {card.label}
                       </motion.p>
 
-                      {/* Divider + Description — chỉ hiện khi click */}
-                      {isActive && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 8 }}
-                          transition={{ duration: 0.3, ease: EASE }}
-                        >
-                          <span className="mx-auto mt-4 block h-0.5 w-10 rounded-full bg-red-500" />
-                          <p className="mt-4 text-sm leading-6 text-slate-600">
-                            {card.description}
-                          </p>
-                        </motion.div>
-                      )}
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, ease: EASE }}
+                      >
+                        <span className="mx-auto mt-4 block h-0.5 w-10 rounded-full bg-red-500" />
+                        <p className="mt-4 text-sm leading-6 text-slate-600">
+                          {isActive ? card.regulationText : card.description}
+                        </p>
+                      </motion.div>
                     </div>
                   </div>
                 </div>
@@ -408,6 +402,7 @@ export default function ChuanDauRaSection() {
             <motion.article
               key={card.label ?? index}
               variants={mobileCardItem(index)}
+              onClick={() => setActiveIndex(activeIndex === index ? null : index)}
               whileHover={{
                 y: -6,
                 scale: 1.02,
@@ -419,6 +414,9 @@ export default function ChuanDauRaSection() {
                 card.shadowClassName,
               ].join(" ")}
             >
+              {/*
+                Giữ nguyên layout mobile hiện tại, chỉ đổi nội dung mô tả theo trạng thái active.
+              */}
               <div className="flex items-start justify-between">
                 <motion.span
                   animate={
@@ -475,7 +473,7 @@ export default function ChuanDauRaSection() {
                 />
 
                 <p className="mt-5 text-sm leading-7 text-slate-600">
-                  {card.description}
+                  {activeIndex === index ? card.regulationText : card.description}
                 </p>
               </motion.div>
             </motion.article>

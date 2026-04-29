@@ -15,7 +15,7 @@ export default function BannerSection() {
         className="h-full min-h-[90vh] overflow-hidden"
       >
         <Image
-          src="/banner.png"
+          src="/courses/banner_mau.png"
           alt="Banner Trung tâm Chuẩn đầu ra & Phát triển nguồn nhân lực"
           width={1920}
           height={1080}

@@ -70,7 +70,7 @@ export default function Navbar() {
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
         scrolled
           ? "bg-white shadow-[0_2px_20px_rgba(0,0,0,0.08)]"
-          : "bg-black/25 backdrop-blur-md",
+          : "bg-white/25 backdrop-blur-md",
       ].join(" ")}
     >
       <div className="container mx-auto flex items-center justify-between px-8 h-24">
@@ -104,7 +104,7 @@ export default function Navbar() {
                   "flex items-center gap-2 px-5 py-4 rounded-lg text-[16px] font-semibold transition-colors",
                   scrolled
                     ? "text-gray-700 hover:text-[#ED1F25] hover:bg-gray-50"
-                    : "text-white hover:text-white hover:bg-white/20",
+                    : "text-[#1C2B5E] hover:text-[#1C2B5E] hover:bg-white/20",
                 ].join(" ")}
               >
                 {item.label}
@@ -151,7 +151,7 @@ export default function Navbar() {
             href="/search"
             className={[
               "hidden lg:flex w-12 h-12 items-center justify-center rounded-full transition-colors",
-              scrolled ? "text-gray-600 hover:bg-gray-100" : "text-white hover:bg-white/20",
+              scrolled ? "text-gray-600 hover:bg-gray-100" : "text-[#1C2B5E] hover:bg-white/20",
             ].join(" ")}
           >
             <i className="bi bi-search text-[20px]" />
@@ -161,7 +161,7 @@ export default function Navbar() {
           <button
             className={[
               "hidden lg:flex w-12 h-12 items-center justify-center rounded-full transition-colors",
-              scrolled ? "text-gray-600 hover:bg-gray-100" : "text-white hover:bg-white/20",
+              scrolled ? "text-gray-600 hover:bg-gray-100" : "text-[#1C2B5E] hover:bg-white/20",
             ].join(" ")}
           >
             <i className="bi bi-translate text-[20px]" />
@@ -189,12 +189,12 @@ export default function Navbar() {
             <motion.span
               animate={mobileOpen ? { width: "14px", y: 5, rotate: 45 } : { width: "20px", y: 0, rotate: 0 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              style={{ borderRadius: "10px", backgroundColor: scrolled ? "#111" : "#fff", height: "1.5px", display: "block", originX: "50%", originY: "50%" }}
+              style={{ borderRadius: "10px", backgroundColor: scrolled ? "#111" : "#1C2B5E", height: "1.5px", display: "block", originX: "50%", originY: "50%" }}
             />
             <motion.span
               animate={mobileOpen ? { width: "14px", y: -5, rotate: -45 } : { width: "20px", y: 0, rotate: 0 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              style={{ borderRadius: "10px", backgroundColor: scrolled ? "#111" : "#fff", height: "1.5px", display: "block", originX: "50%", originY: "50%" }}
+              style={{ borderRadius: "10px", backgroundColor: scrolled ? "#111" : "#1C2B5E", height: "1.5px", display: "block", originX: "50%", originY: "50%" }}
             />
           </button>
         </div>
