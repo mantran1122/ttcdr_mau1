@@ -106,17 +106,16 @@ export default function CoursesShowcaseSection() {
                     boxShadow: "0 4px 20px rgba(15,23,42,0.14), 0 1px 4px rgba(15,23,42,0.08)",
                   }}
                 >
-                  {/* Circular yellow icon */}
+                  {/* Circular icon — vàng → đỏ, mũi tên xoay 90° */}
                   <span
-                    className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full"
-                    style={{ background: "linear-gradient(135deg, #FFD84D 0%, #FFB800 100%)" }}
+                    className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#FFB800] transition-colors duration-300 group-hover:bg-[#CC0000]"
                   >
                     <svg
                       width="15" height="15" viewBox="0 0 15 15" fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="transition-transform duration-300 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]"
+                      className="transition-transform duration-300 group-hover:rotate-45"
                     >
-                      <path d="M3.5 11.5L11 4M11 4H5.5M11 4V9.5" stroke="#1a1a1a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M3.5 11.5L11 4M11 4H5.5M11 4V9.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </span>
                   {/* Label text */}
