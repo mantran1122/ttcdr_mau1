@@ -9,7 +9,6 @@ const courses = [
     href: "/khoa-hoc/tri-tue-nhan-tao",
     col: "lg:col-span-7",
     rowH: "h-[340px]",
-    textPos: "center" as const,
   },
   {
     title: "Ngoại ngữ",
@@ -18,7 +17,6 @@ const courses = [
     href: "/khoa-hoc/ngoai-ngu",
     col: "lg:col-span-5",
     rowH: "h-[340px]",
-    textPos: "center" as const,
   },
   {
     title: "Tin học",
@@ -98,22 +96,34 @@ export default function CoursesShowcaseSection() {
                 </span>
               )}
 
-              {/* Title + tag */}
-              <div className={[
-                "absolute left-0 right-0 z-10 p-5",
-                course.textPos === "center"
-                  ? "inset-0 flex flex-col justify-center"
-                  : "bottom-0",
-              ].join(" ")}>
-                {course.textPos === "center" ? (
-                  <h3 className="text-[1.45rem] leading-[1.2] tracking-[-0.03em] text-black drop-shadow-sm" style={{ fontWeight: 400 }}>
-                    {course.title}
-                  </h3>
-                ) : (
-                  <span className="inline-block rounded-2xl bg-white px-4 py-2 text-[1.45rem] leading-[1.2] tracking-[-0.03em] text-black" style={{ fontWeight: 400 }}>
+              {/* Floating navigation pill button — bottom-left */}
+              <div className="absolute bottom-4 left-4 z-10">
+                <div
+                  className="flex items-center gap-2.5 rounded-full px-2 py-2 pr-4"
+                  style={{
+                    background: "rgba(255,255,255,0.92)",
+                    backdropFilter: "blur(10px)",
+                    boxShadow: "0 4px 20px rgba(15,23,42,0.14), 0 1px 4px rgba(15,23,42,0.08)",
+                  }}
+                >
+                  {/* Circular yellow icon */}
+                  <span
+                    className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full"
+                    style={{ background: "linear-gradient(135deg, #FFD84D 0%, #FFB800 100%)" }}
+                  >
+                    <svg
+                      width="15" height="15" viewBox="0 0 15 15" fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="transition-transform duration-300 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]"
+                    >
+                      <path d="M3.5 11.5L11 4M11 4H5.5M11 4V9.5" stroke="#1a1a1a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                  {/* Label text */}
+                  <span className="text-[0.85rem] font-semibold leading-none tracking-[-0.01em] text-slate-800">
                     {course.title}
                   </span>
-                )}
+                </div>
               </div>
             </a>
           ))}

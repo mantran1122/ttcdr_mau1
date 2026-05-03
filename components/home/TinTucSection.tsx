@@ -91,14 +91,14 @@ export default function TinTucSection() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.5, delay: 0.15, ease: EASE }}
-            className="absolute bottom-0 right-0 text-sm font-semibold text-slate-700 transition-colors hover:text-slate-950"
+            className="mt-3 block text-sm font-semibold text-slate-700 transition-colors hover:text-slate-950 sm:absolute sm:bottom-0 sm:right-0 sm:mt-0"
           >
             Xem tất cả →
           </motion.a>
         </div>
 
         {/* ── 4-card grid ── */}
-        <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
           {visible.map((a, i) => (
             <motion.a
               key={a.href}
@@ -110,25 +110,25 @@ export default function TinTucSection() {
               className="group flex flex-col"
             >
               {/* Image */}
-              <div className="overflow-hidden rounded-2xl">
+              <div className="overflow-hidden rounded-xl sm:rounded-2xl">
                 <img
                   src={a.imageSrc}
                   alt={a.imageAlt}
-                  className="h-[320px] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                  className="h-[150px] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] sm:h-[240px] lg:h-[320px]"
                 />
               </div>
 
               {/* Text */}
-              <div className="mt-5 flex flex-1 flex-col">
-                <h3 className="flex-1 text-xl font-bold leading-snug text-slate-900 transition-colors group-hover:text-red-600">
+              <div className="mt-3 flex flex-1 flex-col sm:mt-5">
+                <h3 className="flex-1 text-sm font-bold leading-snug text-slate-900 transition-colors group-hover:text-red-600 sm:text-base lg:text-xl">
                   {a.title}
                 </h3>
-                <div className="mt-4 flex items-center gap-2 text-sm text-slate-400">
+                <div className="mt-2 flex flex-wrap items-center gap-1 text-xs text-slate-400 sm:mt-4 sm:gap-2 sm:text-sm">
                   <span>{a.date}</span>
                   <span>·</span>
                   <span>{a.category}</span>
                 </div>
-                <span className="mt-2 text-sm font-semibold text-slate-600 transition-colors group-hover:text-red-600">
+                <span className="mt-1 text-xs font-semibold text-slate-600 transition-colors group-hover:text-red-600 sm:mt-2 sm:text-sm">
                   Đọc thêm &rsaquo;
                 </span>
               </div>

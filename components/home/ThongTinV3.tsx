@@ -76,7 +76,7 @@ function UnderlineTab({ label, active, onClick }: { label: string; active: boole
   return (
     <button
       onClick={onClick}
-      className="pb-3 text-[13px] font-bold uppercase tracking-wider transition-colors duration-200"
+      className="pb-3 text-[11px] font-bold uppercase tracking-wider transition-colors duration-200 sm:text-[13px]"
       style={{
         color: active ? BLUE : "#94A3B8",
         borderBottom: active ? `2px solid ${BLUE}` : "2px solid transparent",
@@ -146,7 +146,7 @@ export default function ThongTinV3() {
   const [rightTab, setRightTab] = useState<"lkt" | "tb">("tb");
 
   return (
-    <section className="relative overflow-hidden py-24 bg-background">
+    <section className="relative overflow-hidden py-24 bg-background-alt">
 
       {/* ══ Decoratives ══════════════════════════════════════════ */}
 
@@ -272,14 +272,14 @@ export default function ThongTinV3() {
           {/* LEFT card */}
           <Reveal delay={0.1} className="flex">
             <div
-              className="flex w-full flex-col rounded-[32px] bg-white p-8"
+              className="flex w-full flex-col rounded-[24px] bg-white p-4 sm:rounded-[32px] sm:p-8"
               style={{ border: "1px solid rgba(0,0,0,0.05)", boxShadow: "0 8px 50px rgba(15,23,42,0.07)" }}
             >
               <div className="mb-1 flex items-center gap-4">
                 {/* <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full" style={{ background: "#DBEAFE" }}>
                   <CalendarDays size={20} color={BLUE} strokeWidth={1.7} />
                 </span> */}
-                <div className="flex gap-6">
+                <div className="flex gap-3 sm:gap-6">
                   <UnderlineTab label="Thời khóa biểu" active={leftTab === "tkb"} onClick={() => setLeftTab("tkb")} />
                   <UnderlineTab label="Hướng dẫn"      active={leftTab === "hd"}  onClick={() => setLeftTab("hd")} />
                 </div>
@@ -304,20 +304,20 @@ export default function ThongTinV3() {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true, amount: 0.3 }}
                       transition={{ duration: 0.45, delay: 0.15 + i * 0.07, ease: EASE }}
-                      className="flex items-center gap-4 py-4"
+                      className="flex items-center gap-3 py-3 sm:gap-4 sm:py-4"
                     >
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full" style={{ background: style.iconBg }}>
-                        <Icon size={20} color={style.iconColor} strokeWidth={1.7} />
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full sm:h-11 sm:w-11" style={{ background: style.iconBg }}>
+                        <Icon size={17} color={style.iconColor} strokeWidth={1.7} />
                       </span>
                       <div className="min-w-0 flex-1">
-                        <p className="text-[14.5px] font-bold leading-snug text-slate-900">{item.title}</p>
-                        <a href={item.href} className="mt-0.5 text-[12px] font-semibold" style={{ color: BLUE }}>
+                        <p className="text-[13px] font-bold leading-snug text-slate-900 sm:text-[14.5px]">{item.title}</p>
+                        <a href={item.href} className="mt-0.5 text-[11px] font-semibold sm:text-[12px]" style={{ color: BLUE }}>
                           Chi tiết và Phụ lục ↗
                         </a>
                       </div>
-                      <div className="w-[96px] shrink-0 text-right">
-                        <p className="text-[10px] font-semibold uppercase tracking-widest text-red-400">Mới</p>
-                        <p className="mt-0.5 text-[13px] font-bold text-slate-700">{item.date}</p>
+                      <div className="w-[76px] shrink-0 text-right sm:w-[96px]">
+                        <p className="text-[9px] font-semibold uppercase tracking-widest text-red-400 sm:text-[10px]">Mới</p>
+                        <p className="mt-0.5 text-[12px] font-bold text-slate-700 sm:text-[13px]">{item.date}</p>
                       </div>
                     </motion.div>
                   );
@@ -331,14 +331,14 @@ export default function ThongTinV3() {
           {/* RIGHT card */}
           <Reveal delay={0.2} className="flex">
             <div
-              className="flex w-full flex-col rounded-[32px] bg-white p-8"
+              className="flex w-full flex-col rounded-[24px] bg-white p-4 sm:rounded-[32px] sm:p-8"
               style={{ border: "1px solid rgba(0,0,0,0.05)", boxShadow: "0 8px 50px rgba(15,23,42,0.07)" }}
             >
               <div className="mb-1 flex items-center gap-4">
                 {/* <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full" style={{ background: "#DBEAFE" }}>
                   <Bell size={20} color={BLUE} strokeWidth={1.7} />
                 </span> */}
-                <div className="flex gap-6">
+                <div className="flex gap-3 sm:gap-6">
                   <UnderlineTab label="Lịch kiểm tra" active={rightTab === "lkt"} onClick={() => setRightTab("lkt")} />
                   <UnderlineTab label="Thông báo"     active={rightTab === "tb"}  onClick={() => setRightTab("tb")} />
                 </div>
@@ -364,13 +364,13 @@ export default function ThongTinV3() {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true, amount: 0.3 }}
                       transition={{ duration: 0.45, delay: 0.15 + i * 0.07, ease: EASE }}
-                      className="flex items-center gap-4 py-4"
+                      className="flex items-center gap-3 py-3 sm:gap-4 sm:py-4"
                     >
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full" style={{ background: style.iconBg }}>
-                        <Icon size={20} color={style.iconColor} strokeWidth={1.7} />
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full sm:h-11 sm:w-11" style={{ background: style.iconBg }}>
+                        <Icon size={17} color={style.iconColor} strokeWidth={1.7} />
                       </span>
                       <div className="min-w-0 flex-1">
-                        <p className="line-clamp-2 text-[14.5px] font-bold leading-snug text-slate-900">{item.title}</p>
+                        <p className="line-clamp-2 text-[13px] font-bold leading-snug text-slate-900 sm:text-[14.5px]">{item.title}</p>
                         {/* <span
                           className="mt-1.5 inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide"
                           style={{ background: tagStyle.bg, color: tagStyle.color }}
@@ -378,9 +378,9 @@ export default function ThongTinV3() {
                           {item.tag}
                         </span> */}
                       </div>
-                      <div className="w-[96px] shrink-0 text-right">
-                        <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">{item.dateLabel}</p>
-                        <p className="mt-0.5 text-[13px] font-bold" style={{ color: item.dateRed ? "#DC2626" : "#334155" }}>{item.date}</p>
+                      <div className="w-[76px] shrink-0 text-right sm:w-[96px]">
+                        <p className="text-[9px] font-semibold uppercase tracking-widest text-slate-400 sm:text-[10px]">{item.dateLabel}</p>
+                        <p className="mt-0.5 text-[12px] font-bold sm:text-[13px]" style={{ color: item.dateRed ? "#DC2626" : "#334155" }}>{item.date}</p>
                       </div>
                     </motion.div>
                   );

@@ -102,7 +102,7 @@ export default function LearningGroupsSection() {
   return (
     <section className="relative isolate overflow-hidden py-24 xl:py-28">
       {/* Decorative rings only - không set màu nền riêng */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, amount: 0.25 }}
@@ -122,7 +122,7 @@ export default function LearningGroupsSection() {
         viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 1.2, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
         className="absolute left-1/2 top-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-slate-300"
-      />
+      /> */}
 
       <div className="container relative mx-auto h-auto px-4 xl:h-[700px]">
         {/* Desktop floating pills */}

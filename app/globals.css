@@ -1,12 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #E8E9EE;
+  /* --background: #E8E9EE; */
+  /* --background: #FFFDF8; */
+  --background: #F7F1E4;
+  --background-alt: #FDF8EF;
+  --background-light: #FFFDF8;
   --foreground: #1F2937;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-alt: var(--background-alt);
+  --color-background-light: var(--background-light);
   --color-foreground: var(--foreground);
   --font-sans: 'Momo Trust Sans', sans-serif;
   --width-container: 1200px;
