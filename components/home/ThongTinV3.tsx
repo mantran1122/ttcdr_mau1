@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useAnimation } from "framer-motion";
 import {
   BookOpen,
   MessageSquare,
@@ -79,6 +79,24 @@ const thongBao = [
   { title: "Thông báo đăng ký thi VSTEP tháng 12",                 tag: "THÔNG BÁO",  tagColor: "blue",   dateLabel: "NGÀY ĐĂNG", date: "20/11/2024", dateRed: false, href: "/thong-tin/thong-bao" },
   { title: "Thông báo đăng ký thi VSTEP tháng 12",                 tag: "THÔNG BÁO",  tagColor: "blue",   dateLabel: "NGÀY ĐĂNG", date: "20/11/2024", dateRed: false, href: "/thong-tin/thong-bao" },
 ];
+
+/* ─── WiggleLink ────────────────────────────────────────────── */
+
+function WiggleLink({ href, className, style, children }: { href: string; className: string; style?: React.CSSProperties; children: React.ReactNode }) {
+  const controls = useAnimation();
+  return (
+    <motion.a
+      href={href}
+      className={className}
+      style={style}
+      animate={controls}
+      onHoverStart={() => controls.start({ rotate: [0, -7, 7, -7, 7, 0], transition: { type: "tween", duration: 0.45 } })}
+      onHoverEnd={() => controls.start({ rotate: 0, transition: { duration: 0.15 } })}
+    >
+      {children}
+    </motion.a>
+  );
+}
 
 /* ─── Tab ───────────────────────────────────────────────────── */
 
@@ -175,52 +193,27 @@ export default function ThongTinV3() {
 
       {/* Left illustration cluster */}
       <div className="pointer-events-none absolute left-4 top-[42%] hidden -translate-y-1/2 flex-col items-center gap-3 lg:flex" style={{ width: 120 }}>
-        <motion.a
-          href="/thong-tin/thoi-khoa-bieu"
-          className="pointer-events-auto relative flex h-[88px] w-[88px] cursor-pointer items-center justify-center rounded-2xl bg-white shadow-lg"
-          style={{ border: "1px solid #DBEAFE" }}
-          whileHover={{ rotate: [0, -7, 7, -7, 7, 0], transition: { duration: 0.45 } }}
-        >
+        <WiggleLink href="/thong-tin/thoi-khoa-bieu" className="pointer-events-auto relative flex h-[88px] w-[88px] cursor-pointer items-center justify-center rounded-2xl bg-white shadow-lg" style={{ border: "1px solid #DBEAFE" }}>
           <CalendarDays size={42} color={BLUE} strokeWidth={1.4} />
           <div className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-red-400" />
-        </motion.a>
-        <motion.a
-          href="/thong-tin/thoi-khoa-bieu"
-          className="pointer-events-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white shadow-md"
-          style={{ border: "1px solid #DBEAFE" }}
-          whileHover={{ rotate: [0, -7, 7, -7, 7, 0], transition: { duration: 0.45 } }}
-        >
+        </WiggleLink>
+        <WiggleLink href="/thong-tin/thoi-khoa-bieu" className="pointer-events-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white shadow-md" style={{ border: "1px solid #DBEAFE" }}>
           <Clock size={20} color="#EA580C" strokeWidth={1.6} />
-        </motion.a>
+        </WiggleLink>
         <div className="h-2.5 w-2.5 rounded-full" style={{ background: "#93C5FD" }} />
       </div>
 
       {/* Right illustration cluster */}
       <div className="pointer-events-none absolute right-4 top-[46%] hidden -translate-y-1/2 flex-col items-center gap-3 lg:flex" style={{ width: 120 }}>
-        <motion.a
-          href="/thong-tin/thong-bao"
-          className="pointer-events-auto flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-2xl bg-white shadow-lg"
-          style={{ border: "1px solid #DBEAFE" }}
-          whileHover={{ rotate: [0, -7, 7, -7, 7, 0], transition: { duration: 0.45 } }}
-        >
+        <WiggleLink href="/thong-tin/thong-bao" className="pointer-events-auto flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-2xl bg-white shadow-lg" style={{ border: "1px solid #DBEAFE" }}>
           <Bell size={36} color={BLUE} strokeWidth={1.4} />
-        </motion.a>
-        <motion.a
-          href="/thong-tin/lich-kiem-tra"
-          className="pointer-events-auto flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-white shadow-md"
-          style={{ border: "1px solid #DBEAFE" }}
-          whileHover={{ rotate: [0, -7, 7, -7, 7, 0], transition: { duration: 0.45 } }}
-        >
+        </WiggleLink>
+        <WiggleLink href="/thong-tin/lich-kiem-tra" className="pointer-events-auto flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-white shadow-md" style={{ border: "1px solid #DBEAFE" }}>
           <GraduationCap size={24} color="#059669" strokeWidth={1.5} />
-        </motion.a>
-        <motion.a
-          href="/thong-tin/lich-kiem-tra"
-          className="pointer-events-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white shadow-md"
-          style={{ border: "1px solid #DBEAFE" }}
-          whileHover={{ rotate: [0, -7, 7, -7, 7, 0], transition: { duration: 0.45 } }}
-        >
+        </WiggleLink>
+        <WiggleLink href="/thong-tin/lich-kiem-tra" className="pointer-events-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white shadow-md" style={{ border: "1px solid #DBEAFE" }}>
           <ClipboardList size={20} color="#EA580C" strokeWidth={1.5} />
-        </motion.a>
+        </WiggleLink>
       </div>
 
       {/* Teal circle outline top-right */}
