@@ -56,7 +56,7 @@ export default function HeroSection() {
   const y = useTransform(scrollYProgress, [0.3, 1], [0, -40]);
 
   return (
-    <section ref={sectionRef} className="relative pt-[20vh] pb-[34vh]">
+    <section ref={sectionRef} className="relative pt-16 pb-24 sm:pt-[16vh] sm:pb-[28vh] lg:pt-[20vh] lg:pb-[34vh]">
       <div className="container relative mx-auto px-4">
         <motion.div
           style={{ opacity, y }}
@@ -66,7 +66,7 @@ export default function HeroSection() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="mx-auto max-w-5xl leading-[1.2] tracking-[-0.04em]"
+            className="mx-auto max-w-5xl leading-[1.2] tracking-[-0.02em] sm:tracking-[-0.04em]"
           >
             <AnimatedLine
               text="Trung tâm Chuẩn đầu ra"

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const HERO_BANNER_HEIGHT = "h-[54vh] min-h-[320px] sm:h-[70vh] lg:h-[92vh]";
+const HERO_BANNER_HEIGHT = "h-[48vh] min-h-[280px] sm:h-[62vh] md:h-[76vh] lg:h-[92vh]";
 
 export default function HeroSection() {
   return (

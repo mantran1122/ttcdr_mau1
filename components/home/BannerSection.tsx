@@ -7,7 +7,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function BannerSection() {
   return (
-    <section className="relative h-[52vh] min-h-[320px] sm:h-[68vh] md:h-[82vh] lg:h-[95vh]">
+    <section className="relative w-full aspect-video max-h-[95vh]">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -19,7 +19,7 @@ export default function BannerSection() {
           alt="Banner Trung tâm Chuẩn đầu ra & Phát triển nguồn nhân lực"
           width={1920}
           height={1080}
-          className="h-full w-full object-cover object-[center_top] sm:object-center"
+          className="h-full w-full object-cover object-center"
           sizes="100vw"
           loading="eager"
           fetchPriority="high"

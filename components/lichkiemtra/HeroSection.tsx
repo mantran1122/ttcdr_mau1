@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const HERO_BANNER_HEIGHT = "h-[54vh] min-h-[340px] sm:h-[70vh] lg:h-[92vh]";
+const HERO_BANNER_HEIGHT = "h-[48vh] min-h-[280px] sm:h-[62vh] md:h-[76vh] lg:h-[92vh]";
 
 export default function HeroSection() {
   return (
@@ -27,7 +27,7 @@ export default function HeroSection() {
         />
       </motion.div>
 
-      <div className="container relative z-40 mx-auto flex h-full items-end justify-center px-4 pb-10 sm:pb-16 md:pb-20">
+      <div className="container relative z-40 mx-auto flex h-full items-end justify-center px-4 pb-16 sm:pb-20 md:pb-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
