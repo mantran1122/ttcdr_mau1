@@ -7,7 +7,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function BannerSection() {
   return (
-    <section className="relative w-full aspect-video max-h-[95vh]">
+    <section className="relative w-full aspect-video max-h-[95vh] lg:aspect-auto lg:h-[95vh]">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

@@ -1,10 +1,10 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const HERO_BANNER_HEIGHT = "aspect-video max-h-[95vh]";
+const HERO_BANNER_HEIGHT = "aspect-video max-h-[95vh] lg:aspect-auto lg:h-[92vh]";
 
 export default function HeroSection() {
   return (
@@ -16,7 +16,7 @@ export default function HeroSection() {
         className="h-full w-full overflow-hidden"
       >
         <Image
-          src="/courses/bannerthongtin3.png"
+          src="/courses/bannerthongtin4.png"
           alt="Banner trang thông báo"
           width={1920}
           height={1080}
