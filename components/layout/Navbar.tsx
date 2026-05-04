@@ -80,7 +80,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex shrink-0 items-center gap-3 sm:gap-5">
           <Image
-            src="/logo_truong_3.png"
+            src="/logo_don.png"
             alt="Logo NCT"
             width={64}
             height={64}
