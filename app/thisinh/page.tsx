@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -18,16 +18,16 @@ type Candidate = {
 };
 
 const DATA: Candidate[] = [
-  { mssv: "2051060001", name: "NguyÃ¡Â»â€¦n VÃ„Æ’n An",      dob: "15/03/2002", group: "TN01", subject: "TOEIC",      session: "Ca 1 Ã¢â‚¬â€œ 7:30", room: "A201", sbd: "001", status: "confirmed" },
-  { mssv: "2051060002", name: "TrÃ¡ÂºÂ§n ThÃ¡Â»â€¹ BÃƒÂ¬nh",      dob: "22/07/2003", group: "TN01", subject: "TOEIC",      session: "Ca 1 Ã¢â‚¬â€œ 7:30", room: "A201", sbd: "002", status: "confirmed" },
-  { mssv: "2051060015", name: "LÃƒÂª VÃ„Æ’n CÃ†Â°Ã¡Â»Âng",       dob: "10/11/2002", group: "TN03", subject: "VSTEP B1",   session: "Ca 2 Ã¢â‚¬â€œ 9:30", room: "A202", sbd: "015", status: "confirmed" },
-  { mssv: "2051060023", name: "PhÃ¡ÂºÂ¡m ThÃ¡Â»â€¹ Dung",      dob: "05/06/2003", group: "TN03", subject: "VSTEP B1",   session: "Ca 2 Ã¢â‚¬â€œ 9:30", room: "A202", sbd: "016", status: "confirmed" },
-  { mssv: "2051060031", name: "HoÃƒÂ ng Minh Ã„ÂÃ¡Â»Â©c",     dob: "18/09/2002", group: "TN07", subject: "TOEIC NÃƒÂ¢ng cao", session: "Ca 3 Ã¢â‚¬â€œ 13:30", room: "A201", sbd: "031", status: "pending" },
-  { mssv: "2051060044", name: "VÃ…Â© ThÃ¡Â»â€¹ HÃƒÂ ",          dob: "30/01/2003", group: "TN08", subject: "VSTEP B2",   session: "Ca 2 Ã¢â‚¬â€œ 9:30", room: "A202", sbd: "044", status: "confirmed" },
-  { mssv: "2051060058", name: "NgÃƒÂ´ Thanh HÃƒÂ¹ng",     dob: "12/04/2002", group: "TN10", subject: "TOEIC TÃ„Æ’ng tÃ¡Â»â€˜c", session: "Ca 1 Ã¢â‚¬â€œ 7:30", room: "A201", sbd: "058", status: "confirmed" },
-  { mssv: "2051060067", name: "Ã„Âinh ThÃ¡Â»â€¹ Kim",       dob: "27/08/2003", group: "TN09", subject: "NgoÃ¡ÂºÂ¡i ngÃ¡Â»Â¯ giao tiÃ¡ÂºÂ¿p", session: "Ca 6 Ã¢â‚¬â€œ 19:30", room: "A203", sbd: "067", status: "pending" },
-  { mssv: "2051060072", name: "BÃƒÂ¹i QuÃ¡Â»â€˜c KhÃƒÂ¡nh",     dob: "03/12/2002", group: "TN02", subject: "TOEIC",      session: "Ca 1 Ã¢â‚¬â€œ 7:30", room: "A201", sbd: "072", status: "confirmed" },
-  { mssv: "2051060089", name: "LÃƒÂ½ ThÃ¡Â»â€¹ Lan",         dob: "16/05/2003", group: "TN04", subject: "VSTEP B1",   session: "Ca 1 Ã¢â‚¬â€œ 7:30", room: "A202", sbd: "089", status: "confirmed" },
+  { mssv: "2051060001", name: "Nguyễn Văn An",      dob: "15/03/2002", group: "TN01", subject: "TOEIC",               session: "Ca 1 – 7:30",  room: "A201", sbd: "001", status: "confirmed" },
+  { mssv: "2051060002", name: "Trần Thị Bình",       dob: "22/07/2003", group: "TN01", subject: "TOEIC",               session: "Ca 1 – 7:30",  room: "A201", sbd: "002", status: "confirmed" },
+  { mssv: "2051060015", name: "Lê Văn Cường",        dob: "10/11/2002", group: "TN03", subject: "VSTEP B1",            session: "Ca 2 – 9:30",  room: "A202", sbd: "015", status: "confirmed" },
+  { mssv: "2051060023", name: "Phạm Thị Dung",       dob: "05/06/2003", group: "TN03", subject: "VSTEP B1",            session: "Ca 2 – 9:30",  room: "A202", sbd: "016", status: "confirmed" },
+  { mssv: "2051060031", name: "Hoàng Minh Đức",      dob: "18/09/2002", group: "TN07", subject: "TOEIC Nâng cao",      session: "Ca 3 – 13:30", room: "A201", sbd: "031", status: "pending"    },
+  { mssv: "2051060044", name: "Vũ Thị Hà",           dob: "30/01/2003", group: "TN08", subject: "VSTEP B2",            session: "Ca 2 – 9:30",  room: "A202", sbd: "044", status: "confirmed" },
+  { mssv: "2051060058", name: "Ngô Thanh Hùng",      dob: "12/04/2002", group: "TN10", subject: "TOEIC Tăng tốc",      session: "Ca 1 – 7:30",  room: "A201", sbd: "058", status: "confirmed" },
+  { mssv: "2051060067", name: "Đinh Thị Kim",        dob: "27/08/2003", group: "TN09", subject: "Ngoại ngữ giao tiếp", session: "Ca 6 – 19:30", room: "A203", sbd: "067", status: "pending"    },
+  { mssv: "2051060072", name: "Bùi Quốc Khánh",      dob: "03/12/2002", group: "TN02", subject: "TOEIC",               session: "Ca 1 – 7:30",  room: "A201", sbd: "072", status: "confirmed" },
+  { mssv: "2051060089", name: "Lý Thị Lan",          dob: "16/05/2003", group: "TN04", subject: "VSTEP B1",            session: "Ca 1 – 7:30",  room: "A202", sbd: "089", status: "confirmed" },
 ];
 
 export default function ThiSinhPage() {
@@ -46,7 +46,7 @@ export default function ThiSinhPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Ã¢â€â‚¬Ã¢â€â‚¬ Hero Ã¢â€â‚¬Ã¢â€â‚¬ */}
+      {/* ── Hero ── */}
       <section className="pb-10 pt-24 sm:pt-28 lg:pb-14 lg:pt-28">
         <div className="container mx-auto px-4">
           <motion.div
@@ -59,19 +59,19 @@ export default function ThiSinhPage() {
               <span className="hidden h-px w-12 bg-slate-300 sm:block" />
               <span className="h-2 w-2 rotate-45 bg-red-500" />
               <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-red-600">
-                Tra cÃ¡Â»Â©u
+                Tra cứu
               </span>
               <span className="h-2 w-2 rotate-45 bg-red-500" />
               <span className="hidden h-px w-12 bg-slate-300 sm:block" />
             </div>
             <h1 className="text-[clamp(1.9rem,4vw,3.8rem)] font-black leading-[1.3] tracking-[-0.05em] text-slate-950">
-              ThÃƒÂ´ng tin thÃƒÂ­ sinh
+              Thông tin thí sinh
             </h1>
           </motion.div>
         </div>
       </section>
 
-      {/* Ã¢â€â‚¬Ã¢â€â‚¬ Search form Ã¢â€â‚¬Ã¢â€â‚¬ */}
+      {/* ── Search form ── */}
       <section className="pb-8">
         <div className="container mx-auto px-4">
           <motion.div
@@ -86,14 +86,14 @@ export default function ThiSinhPage() {
             >
               <div className="p-6 sm:p-8">
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
-                  MSSV hoÃ¡ÂºÂ·c HÃ¡Â»Â vÃƒÂ  tÃƒÂªn
+                  MSSV hoặc Họ và tên
                 </label>
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="NhÃ¡ÂºÂ­p MSSV hoÃ¡ÂºÂ·c hÃ¡Â»Â tÃƒÂªn thÃƒÂ­ sinh..."
+                    placeholder="Nhập MSSV hoặc họ tên thí sinh..."
                     className="w-full flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-red-400 focus:ring-2 focus:ring-red-100"
                   />
                   <button
@@ -101,7 +101,7 @@ export default function ThiSinhPage() {
                     className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700 sm:w-auto"
                   >
                     <i className="bi bi-search" />
-                    <span>Tra cÃ¡Â»Â©u</span>
+                    <span>Tra cứu</span>
                   </button>
                 </div>
                 <p className="mt-3 text-[11px] text-slate-400">
@@ -113,7 +113,7 @@ export default function ThiSinhPage() {
         </div>
       </section>
 
-      {/* Ã¢â€â‚¬Ã¢â€â‚¬ Results Ã¢â€â‚¬Ã¢â€â‚¬ */}
+      {/* ── Results ── */}
       <section className="pb-24 lg:pb-32">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-5xl">
@@ -124,13 +124,13 @@ export default function ThiSinhPage() {
                 transition={{ duration: 0.45, ease: EASE }}
               >
                 <p className="mb-3 text-sm text-slate-500">
-                  TÃƒÂ¬m thÃ¡ÂºÂ¥y <span className="font-bold text-slate-900">{results.length}</span> kÃ¡ÂºÂ¿t quÃ¡ÂºÂ£ cho &quot;{submitted}&quot;
+                  Tìm thấy <span className="font-bold text-slate-900">{results.length}</span> kết quả cho &quot;{submitted}&quot;
                 </p>
                 <div className="hidden overflow-x-auto rounded-2xl bg-white shadow-sm ring-1 ring-slate-900/5 md:block">
                   <table className="w-full min-w-[700px] border-collapse text-sm">
                     <thead>
                       <tr className="border-b border-slate-100 bg-slate-50">
-                        {["MSSV", "HÃ¡Â»Â vÃƒÂ  tÃƒÂªn", "NgÃƒÂ y sinh", "NhÃƒÂ³m", "MÃƒÂ´n thi", "Ca thi", "PhÃƒÂ²ng", "SBD", "TrÃ¡ÂºÂ¡ng thÃƒÂ¡i"].map((h) => (
+                        {["MSSV", "Họ và tên", "Ngày sinh", "Nhóm", "Môn thi", "Ca thi", "Phòng", "SBD", "Trạng thái"].map((h) => (
                           <th key={h} className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wide text-slate-500">
                             {h}
                           </th>
@@ -155,7 +155,7 @@ export default function ThiSinhPage() {
                                 ? "bg-green-50 text-green-700 ring-green-200"
                                 : "bg-amber-50 text-amber-700 ring-amber-200",
                             ].join(" ")}>
-                              {c.status === "confirmed" ? "Ã„ÂÃƒÂ£ xÃƒÂ¡c nhÃ¡ÂºÂ­n" : "ChÃ¡Â»Â xÃ¡Â»Â­ lÃƒÂ½"}
+                              {c.status === "confirmed" ? "Đã xác nhận" : "Chờ xử lý"}
                             </span>
                           </td>
                         </tr>
@@ -183,16 +183,16 @@ export default function ThiSinhPage() {
                               : "bg-amber-50 text-amber-700 ring-amber-200",
                           ].join(" ")}
                         >
-                          {c.status === "confirmed" ? "Ã„ÂÃƒÂ£ xÃƒÂ¡c nhÃ¡ÂºÂ­n" : "ChÃ¡Â»Â xÃ¡Â»Â­ lÃƒÂ½"}
+                          {c.status === "confirmed" ? "Đã xác nhận" : "Chờ xử lý"}
                         </span>
                       </div>
 
                       <div className="mt-3 space-y-1.5 text-sm text-slate-600">
-                        <p>NgÃƒÂ y sinh: {c.dob}</p>
-                        <p>NhÃƒÂ³m: {c.group}</p>
-                        <p>MÃƒÂ´n thi: {c.subject}</p>
+                        <p>Ngày sinh: {c.dob}</p>
+                        <p>Nhóm: {c.group}</p>
+                        <p>Môn thi: {c.subject}</p>
                         <p>Ca thi: {c.session}</p>
-                        <p>PhÃƒÂ²ng: {c.room}</p>
+                        <p>Phòng: {c.room}</p>
                         <p className="font-semibold text-red-600">SBD: {c.sbd}</p>
                       </div>
                     </div>
@@ -209,9 +209,9 @@ export default function ThiSinhPage() {
                 className="rounded-2xl bg-white py-16 text-center shadow-sm ring-1 ring-slate-900/5"
               >
                 <i className="bi bi-person-x text-4xl text-slate-300" />
-                <p className="mt-3 font-semibold text-slate-700">KhÃƒÂ´ng tÃƒÂ¬m thÃ¡ÂºÂ¥y thÃƒÂ´ng tin thÃƒÂ­ sinh</p>
+                <p className="mt-3 font-semibold text-slate-700">Không tìm thấy thông tin thí sinh</p>
                 <p className="mt-1 text-sm text-slate-400">
-                  Vui lÃƒÂ²ng kiÃ¡Â»Æ’m tra lÃ¡ÂºÂ¡i MSSV hoÃ¡ÂºÂ·c hÃ¡Â»Â tÃƒÂªn, hoÃ¡ÂºÂ·c liÃƒÂªn hÃ¡Â»â€¡ Trung tÃƒÂ¢m Ã„â€˜Ã¡Â»Æ’ Ã„â€˜Ã†Â°Ã¡Â»Â£c hÃ¡Â»â€” trÃ¡Â»Â£.
+                  Vui lòng kiểm tra lại MSSV hoặc họ tên, hoặc liên hệ Trung tâm để được hỗ trợ.
                 </p>
               </motion.div>
             )}
@@ -232,10 +232,10 @@ export default function ThiSinhPage() {
                       <i className="bi bi-question-circle text-[18px] text-red-600" />
                     </span>
                     <div>
-                      <p className="text-sm font-bold text-slate-900 sm:text-base">KhÃƒÂ´ng tÃƒÂ¬m thÃ¡ÂºÂ¥y thÃƒÂ´ng tin?</p>
+                      <p className="text-sm font-bold text-slate-900 sm:text-base">Không tìm thấy thông tin?</p>
                       <p className="mt-1 max-w-lg text-sm leading-relaxed text-slate-600">
-                        NÃ¡ÂºÂ¿u bÃ¡ÂºÂ¡n Ã„â€˜ÃƒÂ£ Ã„â€˜Ã„Æ’ng kÃƒÂ½ nhÃ†Â°ng khÃƒÂ´ng tÃƒÂ¬m thÃ¡ÂºÂ¥y thÃƒÂ´ng tin, hÃƒÂ£y liÃƒÂªn hÃ¡Â»â€¡ trÃ¡Â»Â±c tiÃ¡ÂºÂ¿p
-                        Trung tÃƒÂ¢m Ã„â€˜Ã¡Â»Æ’ Ã„â€˜Ã†Â°Ã¡Â»Â£c hÃ¡Â»â€” trÃ¡Â»Â£ sÃ¡Â»â€ºm nhÃ¡ÂºÂ¥t.
+                        Nếu bạn đã đăng ký nhưng không tìm thấy thông tin, hãy liên hệ trực tiếp
+                        Trung tâm để được hỗ trợ sớm nhất.
                       </p>
                     </div>
                   </div>
@@ -245,7 +245,7 @@ export default function ThiSinhPage() {
                     rel="noopener noreferrer"
                     className="mt-2 inline-flex shrink-0 items-center gap-2 rounded-xl bg-red-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700 sm:mt-0"
                   >
-                    CÃ¡Â»â€¢ng tra cÃ¡Â»Â©u chÃƒÂ­nh thÃ¡Â»Â©c
+                    Cổng tra cứu chính thức
                     <i className="bi bi-arrow-up-right" />
                   </a>
                 </div>
@@ -257,5 +257,3 @@ export default function ThiSinhPage() {
     </div>
   );
 }
-
-
