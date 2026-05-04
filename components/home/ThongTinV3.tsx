@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import Link from "next/link";
 import {
   BookOpen,
   MessageSquare,
@@ -54,7 +55,7 @@ const TAG_MAP: Record<string, { bg: string; color: string }> = {
 };
 
 const lichHoc = [
-  { title: "Lịch học các lớp ANH VĂN 2026",          date: "12/10/2024", href: "/thong-tin/thoi-khoa-bieu/lich-hoc-cac-lop-anh-van-2025" },
+  { title: "Lịch học các lớp ANH VĂN 2026",          date: "12/10/2024", href: "/thong-tin/thoi-khoa-bieu" },
   { title: "Lịch học lớp IELTS Intermediate – K12",   date: "10/10/2024", href: "/thong-tin/thoi-khoa-bieu" },
   { title: "Lịch học lớp IELTS Intermediate – K13",   date: "10/10/2024", href: "/thong-tin/thoi-khoa-bieu" },
   { title: "Thời khóa biểu Giáo dục thể chất – HK1", date: "08/10/2024", href: "/thong-tin/thoi-khoa-bieu" },
@@ -84,9 +85,9 @@ const thongBao = [
 
 function WiggleLink({ href, className, style, children }: { href: string; className: string; style?: React.CSSProperties; children: React.ReactNode }) {
   return (
-    <a href={href} className={`wiggle-icon ${className}`} style={style}>
+    <Link href={href} className={`wiggle-icon ${className}`} style={style}>
       {children}
-    </a>
+    </Link>
   );
 }
 
@@ -177,7 +178,11 @@ export default function ThongTinV3() {
           60%      { transform: rotate(-7deg); }
           80%      { transform: rotate(7deg); }
         }
-        .wiggle-icon:hover { animation: wiggle-shake 0.45s ease-in-out; }
+        .wiggle-icon:hover,
+        .wiggle-icon:active,
+        .wiggle-icon:focus-visible {
+          animation: wiggle-shake 0.45s ease-in-out;
+        }
       `}</style>
 
       {/* ══ Decoratives ══════════════════════════════════════════ */}
@@ -194,26 +199,26 @@ export default function ThongTinV3() {
       </svg>
 
       {/* Left illustration cluster */}
-      <div className="pointer-events-none absolute left-4 top-[42%] hidden -translate-y-1/2 flex-col items-center gap-3 lg:flex" style={{ width: 120 }}>
-        <WiggleLink href="/thong-tin/thoi-khoa-bieu" className="pointer-events-auto relative flex h-[88px] w-[88px] cursor-pointer items-center justify-center rounded-2xl bg-white shadow-lg" style={{ border: "1px solid #DBEAFE" }}>
+      <div className="absolute left-4 top-[42%] z-20 hidden -translate-y-1/2 flex-col items-center gap-3 lg:flex" style={{ width: 120 }}>
+        <WiggleLink href="/thong-tin/thoi-khoa-bieu" className="relative flex h-[88px] w-[88px] cursor-pointer items-center justify-center rounded-2xl bg-white shadow-lg" style={{ border: "1px solid #DBEAFE" }}>
           <CalendarDays size={42} color={BLUE} strokeWidth={1.4} />
-          <div className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-red-400" />
+          <div className="pointer-events-none absolute -right-1 -top-1 h-4 w-4 rounded-full bg-red-400" />
         </WiggleLink>
-        <WiggleLink href="/thong-tin/thoi-khoa-bieu" className="pointer-events-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white shadow-md" style={{ border: "1px solid #DBEAFE" }}>
+        <WiggleLink href="/thong-tin/thoi-khoa-bieu" className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white shadow-md" style={{ border: "1px solid #DBEAFE" }}>
           <Clock size={20} color="#EA580C" strokeWidth={1.6} />
         </WiggleLink>
-        <div className="h-2.5 w-2.5 rounded-full" style={{ background: "#93C5FD" }} />
+        <div className="pointer-events-none h-2.5 w-2.5 rounded-full" style={{ background: "#93C5FD" }} />
       </div>
 
       {/* Right illustration cluster */}
-      <div className="pointer-events-none absolute right-4 top-[46%] hidden -translate-y-1/2 flex-col items-center gap-3 lg:flex" style={{ width: 120 }}>
-        <WiggleLink href="/thong-tin/thong-bao" className="pointer-events-auto flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-2xl bg-white shadow-lg" style={{ border: "1px solid #DBEAFE" }}>
+      <div className="absolute right-4 top-[46%] z-20 hidden -translate-y-1/2 flex-col items-center gap-3 lg:flex" style={{ width: 120 }}>
+        <WiggleLink href="/thong-tin/thong-bao" className="flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-2xl bg-white shadow-lg" style={{ border: "1px solid #DBEAFE" }}>
           <Bell size={36} color={BLUE} strokeWidth={1.4} />
         </WiggleLink>
-        <WiggleLink href="/thong-tin/lich-kiem-tra" className="pointer-events-auto flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-white shadow-md" style={{ border: "1px solid #DBEAFE" }}>
+        <WiggleLink href="/thong-tin/lich-kiem-tra" className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-white shadow-md" style={{ border: "1px solid #DBEAFE" }}>
           <GraduationCap size={24} color="#059669" strokeWidth={1.5} />
         </WiggleLink>
-        <WiggleLink href="/thong-tin/lich-kiem-tra" className="pointer-events-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white shadow-md" style={{ border: "1px solid #DBEAFE" }}>
+        <WiggleLink href="/thong-tin/lich-kiem-tra" className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white shadow-md" style={{ border: "1px solid #DBEAFE" }}>
           <ClipboardList size={20} color="#EA580C" strokeWidth={1.5} />
         </WiggleLink>
       </div>
@@ -357,9 +362,9 @@ export default function ThongTinV3() {
                       </span>
                       <div className="min-w-0 flex-1">
                         <p className="text-[13px] font-bold leading-snug text-slate-900 sm:text-[14.5px]">{item.title}</p>
-                        <a href={item.href} className="mt-0.5 text-[11px] font-semibold sm:text-[12px]" style={{ color: BLUE }}>
+                        <Link href={item.href} className="mt-0.5 text-[11px] font-semibold sm:text-[12px]" style={{ color: BLUE }}>
                           Chi tiết và Phụ lục ↗
-                        </a>
+                        </Link>
                       </div>
                       <div className="w-[76px] shrink-0 text-right sm:w-[96px]">
                         <p className="text-[9px] font-semibold uppercase tracking-widest text-red-400 sm:text-[10px]">Mới</p>
