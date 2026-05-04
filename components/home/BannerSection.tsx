@@ -7,7 +7,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function BannerSection() {
   return (
-    <section className="relative h-[60vh] sm:h-[75vh] md:h-[105vh]">
+    <section className="relative h-[52vh] min-h-[320px] sm:h-[68vh] md:h-[82vh] lg:h-[95vh]">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -19,9 +19,10 @@ export default function BannerSection() {
           alt="Banner Trung tâm Chuẩn đầu ra & Phát triển nguồn nhân lực"
           width={1920}
           height={1080}
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full object-cover object-[center_top] sm:object-center"
           sizes="100vw"
-          priority
+          loading="eager"
+          fetchPriority="high"
         />
       </motion.div>
 
@@ -31,7 +32,7 @@ export default function BannerSection() {
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 z-10"
         style={{
-          height: "clamp(120px, 20vw, 260px)",
+          height: "clamp(84px, 16vw, 210px)",
           background:
             "linear-gradient(to bottom, transparent 0%, rgba(247,241,228,0.35) 40%, rgba(247,241,228,0.82) 72%, #F7F1E4 100%)",
         }}
@@ -39,7 +40,7 @@ export default function BannerSection() {
 
       {/* Wave tầng 1 — teal pastel nhạt, lệch pha */}
       <svg
-        className="pointer-events-none absolute inset-x-0 bottom-[28px] z-20 w-full sm:bottom-[36px] md:bottom-[44px]"
+        className="pointer-events-none absolute inset-x-0 bottom-[14px] z-20 w-full sm:bottom-[26px] md:bottom-[34px]"
         viewBox="0 0 1440 70"
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="none"

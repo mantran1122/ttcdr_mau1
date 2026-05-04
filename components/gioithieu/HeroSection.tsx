@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const HERO_BANNER_HEIGHT = "h-[105vh]";
+const HERO_BANNER_HEIGHT = "h-[54vh] min-h-[320px] sm:h-[70vh] lg:h-[92vh]";
 
 export default function HeroSection() {
   return (
@@ -21,9 +21,10 @@ export default function HeroSection() {
           alt="Banner Trung tâm Chuẩn đầu ra"
           width={1920}
           height={1080}
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full object-cover object-[center_top] sm:object-center"
           sizes="100vw"
-          priority
+          loading="eager"
+          fetchPriority="high"
         />
       </motion.div>
 
@@ -31,14 +32,14 @@ export default function HeroSection() {
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 z-10"
         style={{
-          height: "clamp(120px, 20vw, 260px)",
+          height: "clamp(84px, 16vw, 210px)",
           background:
             "linear-gradient(to bottom, transparent 0%, rgba(247,241,228,0.35) 40%, rgba(247,241,228,0.82) 72%, #F7F1E4 100%)",
         }}
       />
 
       <svg
-        className="pointer-events-none absolute inset-x-0 bottom-[28px] z-20 w-full sm:bottom-[36px] md:bottom-[44px]"
+        className="pointer-events-none absolute inset-x-0 bottom-[14px] z-20 w-full sm:bottom-[26px] md:bottom-[34px]"
         viewBox="0 0 1440 70"
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="none"

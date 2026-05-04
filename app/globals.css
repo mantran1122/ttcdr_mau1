@@ -14,14 +14,14 @@
   --color-background-alt: var(--background-alt);
   --color-background-light: var(--background-light);
   --color-foreground: var(--foreground);
-  --font-sans: 'Momo Trust Sans', sans-serif;
+  --font-sans: "Momo Trust Sans", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --width-container: 1200px;
 }
 
 *,
 *::before,
 *::after {
-  font-family: 'Momo Trust Sans', sans-serif;
+  font-family: "Momo Trust Sans", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -30,12 +30,21 @@ h1, h2, h3, h4, h5, h6 {
 
 html {
   background: var(--background);
+  overflow-x: hidden;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   min-height: 100vh;
+  overflow-x: hidden;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
 }
 
 /* ── Scroll reveal ── */

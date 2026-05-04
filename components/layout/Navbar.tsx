@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import Image from "next/image";
 
 const navItems = [
   { label: "Giới thiệu",       href: "/gioi-thieu",                  icon: "bi-house-door" },
@@ -73,21 +75,25 @@ export default function Navbar() {
           : "bg-white/25 backdrop-blur-md",
       ].join(" ")}
     >
-      <div className="container mx-auto flex items-center justify-between px-8 h-24">
+      <div className="container mx-auto flex h-20 items-center justify-between px-4 sm:h-24 sm:px-6 lg:px-8">
 
         {/* Logo */}
-        <a href="/" className="flex items-center gap-5 shrink-0">
-          <img
-            src="https://ttcdr.nctu.edu.vn/dist/upload/logo_truong_only.webp"
+        <Link href="/" className="flex shrink-0 items-center gap-3 sm:gap-5">
+          <Image
+            src="/logo_truong_3.png"
             alt="Logo NCT"
-            className="h-16 w-auto"
+            width={64}
+            height={64}
+            className="h-12 w-auto sm:h-16"
+            sizes="64px"
+            priority
           />
           <span
-            className="font-bold leading-[24px] text-[18px] text-[#ED1F25] hidden md:block"
+            className="hidden text-[15px] font-bold leading-[20px] text-[#ED1F25] md:block lg:text-[18px] lg:leading-[24px]"
           >
             Trung tâm Chuẩn đầu ra <br />& Phát triển nguồn nhân lực
           </span>
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-2">
@@ -145,7 +151,7 @@ export default function Navbar() {
         </nav>
 
         {/* Right actions */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           {/* Search */}
           <a
             href="/search"
@@ -181,7 +187,7 @@ export default function Navbar() {
           <button
             onClick={() => { setMobileOpen(!mobileOpen); setMobileSub(null); }}
             className={[
-              "lg:hidden flex flex-col items-center justify-center gap-[8px] w-14 h-14 rounded-full transition-all",
+              "lg:hidden flex h-11 w-11 flex-col items-center justify-center gap-[6px] rounded-full transition-all sm:h-14 sm:w-14 sm:gap-[8px]",
               scrolled ? "bg-gray-100" : "bg-white/20",
             ].join(" ")}
             aria-label="Menu"
@@ -227,12 +233,12 @@ export default function Navbar() {
                         window.location.href = item.href;
                       }
                     }}
-                    className="w-full flex items-center gap-5 px-6 py-5 text-left hover:bg-gray-50 transition-colors"
+                    className="flex w-full items-center gap-3 px-4 py-4 text-left transition-colors hover:bg-gray-50 sm:gap-5 sm:px-6 sm:py-5"
                   >
-                    <span className="w-12 h-12 flex items-center justify-center rounded-lg bg-gray-100 shrink-0">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-100 sm:h-12 sm:w-12">
                       <i className={`bi ${item.icon} text-[18px] text-gray-600`} />
                     </span>
-                    <span className="flex-1 text-[17px] font-semibold text-gray-800">{item.label}</span>
+                    <span className="flex-1 text-[15px] font-semibold text-gray-800 sm:text-[17px]">{item.label}</span>
                     {item.dropdown && (
                       <i className={`bi ${mobileSub === item.label ? "bi-chevron-up" : "bi-chevron-down"} text-base text-gray-400`} />
                     )}
@@ -248,7 +254,7 @@ export default function Navbar() {
                           initial={{ opacity: 0, x: -8 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ duration: 0.15, delay: si * 0.04 }}
-                          className="flex items-center gap-4 px-18 py-4 text-[16px] text-gray-600 hover:text-[#ED1F25] transition-colors"
+                          className="flex items-center gap-3 py-3.5 pl-14 pr-4 text-[14px] text-gray-600 transition-colors hover:text-[#ED1F25] sm:gap-4 sm:py-4 sm:pl-[4.5rem] sm:pr-6 sm:text-[16px]"
                         >
                           <span className="w-2 h-2 rounded-full bg-gray-400 shrink-0" />
                           {sub.label}
@@ -264,13 +270,13 @@ export default function Navbar() {
               <a
                 href="https://dkhp.nctu.edu.vn/"
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-5 mx-5 my-3 px-6 py-5 rounded-xl hover:opacity-90 transition-opacity"
+                className="mx-4 my-3 flex items-center gap-3 rounded-xl px-4 py-4 transition-opacity hover:opacity-90 sm:mx-5 sm:gap-5 sm:px-6 sm:py-5"
                 style={{ background: "#FFF0F0" }}
               >
-                <span className="w-12 h-12 flex items-center justify-center rounded-lg shrink-0" style={{ background: "#FFE0E0" }}>
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg sm:h-12 sm:w-12" style={{ background: "#FFE0E0" }}>
                   <i className="bi bi-person-plus text-[18px]" style={{ color: "#ED1F25" }} />
                 </span>
-                <span className="flex-1 text-[17px] font-semibold" style={{ color: "#ED1F25" }}>Đăng ký</span>
+                <span className="flex-1 text-[15px] font-semibold sm:text-[17px]" style={{ color: "#ED1F25" }}>Đăng ký</span>
                 <i className="bi bi-arrow-right text-[#ED1F25]" />
               </a>
             </div>

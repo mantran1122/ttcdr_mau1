@@ -11,31 +11,29 @@ type Step = {
   subtext?: string;
 };
 
-const SECTION_TITLE = "Quy tr\u00ecnh \u0111\u0103ng k\u00fd h\u1ecdc t\u1ea1i Trung t\u00e2m \u0110TC\u0110R&PTNNL";
-const SECTION_SUBTITLE = "Th\u1ef1c hi\u1ec7n theo 4 b\u01b0\u1edbc \u0111\u01a1n gi\u1ea3n v\u00e0 xem video h\u01b0\u1edbng d\u1eabn b\u00ean d\u01b0\u1edbi";
-const VIDEO_LABEL = "VIDEO H\u01af\u1edaNG D\u1eaaN";
-const VIDEO_DESC =
-  "Xem video h\u01b0\u1edbng d\u1eabn chi ti\u1ebft \u0111\u1ec3 n\u1eafm r\u00f5 quy tr\u00ecnh \u0111\u0103ng k\u00fd h\u1ecdc t\u1ea1i Trung t\u00e2m \u0110TC\u0110R&PTNNL.";
-const VIDEO_FALLBACK = "Tr\u00ecnh duy\u1ec7t c\u1ee7a b\u1ea1n kh\u00f4ng h\u1ed7 tr\u1ee3 ph\u00e1t video.";
+const SECTION_TITLE = "Quy trình đăng ký học tại Trung tâm CĐR&PTNNL";
+const SECTION_SUBTITLE = "Thực hiện theo 4 bước đơn giản và xem video hướng dẫn bên dưới";
+const VIDEO_LABEL = "VIDEO HƯỚNG DẪN";
+const VIDEO_FALLBACK = "Trình duyệt của bạn không hỗ trợ phát video.";
 
 const STEPS: Step[] = [
   {
     num: "01",
-    heading: "Nh\u1eadn phi\u1ebfu \u0111\u0103ng k\u00fd h\u1ecdc t\u1ea1i Trung t\u00e2m \u0110TC\u0110R&PTNNL",
-    subtext: "C\u00f3 th\u1ec3 \u0111\u0103ng k\u00fd c\u00e1 nh\u00e2n, theo nh\u00f3m ho\u1eb7c theo l\u1edbp",
+    heading: "Nhận phiếu đăng ký học tại Trung tâm ĐTCĐR&PTNNL",
+    subtext: "Có thể đăng ký cá nhân, theo nhóm hoặc theo lớp",
   },
   {
     num: "02",
-    heading: "\u0110i\u1ec1n \u0111\u1ea7y \u0111\u1ee7 th\u00f4ng tin v\u00e0 d\u00e1n 2 \u1ea3nh 3x4 v\u00e0o phi\u1ebfu \u0111\u0103ng k\u00fd",
+    heading: "Điền đầy đủ thông tin và dán 2 ảnh 3x4 vào phiếu đăng ký",
   },
   {
     num: "03",
-    heading: "\u0110\u00f3ng l\u1ec7 ph\u00ed h\u1ecdc t\u1ea1i ph\u00f2ng T\u00e0i ch\u00ednh \u2013 K\u1ebf ho\u1ea1ch v\u00e0 n\u1ed9p l\u1ea1i phi\u1ebfu cho Trung t\u00e2m",
+    heading: "Đóng lệ phí học tại phòng Tài chính – Kế hoạch và nộp lại phiếu cho Trung tâm",
   },
   {
     num: "04",
     heading:
-      "Sau khi \u0111\u00f3ng l\u1ec7 ph\u00ed, sinh vi\u00ean c\u1eadp nh\u1eadt l\u1ecbch h\u1ecdc t\u1ea1i website c\u1ee7a Trung t\u00e2m v\u00e0o m\u1ed7i tu\u1ea7n",
+      "Sau khi đóng lệ phí, sinh viên cập nhật lịch học tại website của Trung tâm vào mỗi tuần",
   },
 ];
 
@@ -141,7 +139,6 @@ export default function GuideSection() {
               <i className="bi bi-play-fill text-lg" />
             </div>
             <p className="text-xl font-black tracking-[0.04em] text-[#d41f2c]">{VIDEO_LABEL}</p>
-            <p className="mt-2 text-sm leading-relaxed text-[#4f5a70]">{VIDEO_DESC}</p>
           </div>
 
           <div className="overflow-hidden rounded-2xl border border-[#decebb] bg-[#ebdfd0] shadow-[0_16px_28px_rgba(25,19,14,0.2)]">

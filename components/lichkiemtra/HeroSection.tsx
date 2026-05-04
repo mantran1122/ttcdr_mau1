@@ -1,10 +1,10 @@
-﻿"use client";
+"use client";
 
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const HERO_BANNER_HEIGHT = "h-[105vh]";
+const HERO_BANNER_HEIGHT = "h-[54vh] min-h-[340px] sm:h-[70vh] lg:h-[92vh]";
 
 export default function HeroSection() {
   return (
@@ -20,13 +20,14 @@ export default function HeroSection() {
           alt="Banner trang lịch kiểm tra"
           width={1920}
           height={1080}
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full object-cover object-[center_top] sm:object-center"
           sizes="100vw"
-          priority
+          loading="eager"
+          fetchPriority="high"
         />
       </motion.div>
 
-      <div className="container relative z-40 mx-auto flex h-full items-end justify-center px-4 pb-20 sm:pb-24 md:pb-28">
+      <div className="container relative z-40 mx-auto flex h-full items-end justify-center px-4 pb-10 sm:pb-16 md:pb-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -42,7 +43,7 @@ export default function HeroSection() {
             <span className="h-2 w-2 rotate-45 bg-red-500" />
             <span className="hidden h-px w-12 bg-slate-300/80 sm:block" />
           </div>
-          <h1 className="text-[clamp(2.4rem,4vw,3.8rem)] font-black leading-[1.3] tracking-[-0.05em] text-slate-950">
+          <h1 className="text-[clamp(1.7rem,4vw,3.6rem)] font-black leading-[1.25] tracking-[-0.05em] text-slate-950">
             Lịch kiểm tra
           </h1>
         </motion.div>
@@ -51,14 +52,14 @@ export default function HeroSection() {
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 z-10"
         style={{
-          height: "clamp(120px, 20vw, 260px)",
+          height: "clamp(84px, 16vw, 210px)",
           background:
             "linear-gradient(to bottom, transparent 0%, rgba(247,241,228,0.35) 40%, rgba(247,241,228,0.82) 72%, #F7F1E4 100%)",
         }}
       />
 
       <svg
-        className="pointer-events-none absolute inset-x-0 bottom-[28px] z-20 w-full sm:bottom-[36px] md:bottom-[44px]"
+        className="pointer-events-none absolute inset-x-0 bottom-[14px] z-20 w-full sm:bottom-[26px] md:bottom-[34px]"
         viewBox="0 0 1440 70"
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="none"

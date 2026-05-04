@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { useState } from "react";
@@ -88,7 +88,7 @@ export default function EducationFeatureSection() {
         dotClass="bg-[#07142F]/70"
       />
 
-      <div className="container mx-auto px-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-9 lg:min-h-[620px] lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-4">
             <div className="space-y-8">
