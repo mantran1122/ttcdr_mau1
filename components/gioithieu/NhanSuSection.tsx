@@ -16,7 +16,7 @@ export default function NhanSuSection() {
           transition={{ duration: 0.6, ease: EASE }}
           className="mb-14 text-center"
         >
-          <div className="mb-3 flex items-center justify-center gap-3">
+          {/* <div className="mb-3 flex items-center justify-center gap-3">
             <span className="hidden h-px w-12 bg-slate-300 sm:block" />
             <span className="h-2 w-2 rotate-45 bg-red-500" />
             <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-red-600">
@@ -24,8 +24,8 @@ export default function NhanSuSection() {
             </span>
             <span className="h-2 w-2 rotate-45 bg-red-500" />
             <span className="hidden h-px w-12 bg-slate-300 sm:block" />
-          </div>
-          <h2 className="text-[clamp(2.4rem,4vw,3.8rem)] font-black leading-[1.3] tracking-[-0.05em] text-slate-950">
+          </div> */}
+          <h2 className="text-[50px] font-black leading-[1.2] tracking-[-0.05em] text-slate-950">
             Nhân sự Trung tâm
           </h2>
         </motion.div>
@@ -36,7 +36,7 @@ export default function NhanSuSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, ease: EASE }}
-          className="mx-auto max-w-[920px] overflow-hidden"
+          className="mx-auto max-w-[1080px] overflow-hidden"
         >
           <img
             src="/courses/nhansu2.png"

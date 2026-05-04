@@ -147,7 +147,7 @@ function RoadmapCard({ step }: { step: RoadmapStep }) {
     <motion.article
       whileHover={{ y: -7, rotate: 0 }}
       transition={{ duration: 0.28 }}
-      className={`group relative z-10 h-[21.6rem] rounded-[1.95rem] border border-[#ebe3d7] bg-[#fffcf8] px-6 pb-8 pt-10 text-center text-[#0d245f] shadow-[0_26px_34px_-24px_rgba(19,33,79,0.55),0_10px_18px_-14px_rgba(19,33,79,0.35)] transition-all duration-300 hover:shadow-[0_36px_40px_-24px_rgba(19,33,79,0.58),0_15px_20px_-14px_rgba(19,33,79,0.35)] sm:px-7 ${step.tiltClass}`}
+      className={`group relative z-10 h-[16.2rem] rounded-[1.95rem] border border-[#ebe3d7] bg-[#fffcf8] px-6 pb-8 pt-10 text-center text-[#0d245f] shadow-[0_26px_34px_-24px_rgba(19,33,79,0.55),0_10px_18px_-14px_rgba(19,33,79,0.35)] transition-all duration-300 hover:shadow-[0_36px_40px_-24px_rgba(19,33,79,0.58),0_15px_20px_-14px_rgba(19,33,79,0.35)] sm:px-7 ${step.tiltClass}`}
     >
       {step.decoration === "pin" ? (
         <div className={`absolute left-1/2 top-2 z-20 h-6 w-6 -translate-x-1/2 rounded-full border border-black/10 ${step.pinClass} shadow-[0_8px_10px_-6px_rgba(0,0,0,0.5)]`}>
@@ -157,19 +157,19 @@ function RoadmapCard({ step }: { step: RoadmapStep }) {
         <div className={`absolute left-1/2 top-2 z-20 h-6 w-24 -translate-x-1/2 rotate-[-8deg] rounded-sm border border-[#dcccb8] ${step.tapeClass} opacity-95 shadow-sm`} />
       )}
 
-      <p className={`font-serif text-[4.75rem] font-semibold leading-none tracking-tight ${step.colorClass}`}>
+      <p className={`font-serif text-[2.8rem] font-semibold leading-none tracking-tight ${step.colorClass}`}>
         {step.num}
       </p>
 
-      <div className="mx-auto mt-3 flex w-20 items-center gap-2">
+      <div className="mx-auto mt-2 flex w-20 items-center gap-2">
         <span className={`h-px flex-1 ${step.colorClass} bg-current/35`} />
         <span className={`h-2 w-2 rounded-full ${step.colorClass} bg-current`} />
         <span className={`h-px flex-1 ${step.colorClass} bg-current/35`} />
       </div>
 
-      <Icon className={`mx-auto mt-6 h-12 w-12 ${step.colorClass}`} strokeWidth={1.9} />
+      <Icon className={`mx-auto mt-4 h-9 w-9 ${step.colorClass}`} strokeWidth={1.9} />
 
-      <h3 className="mt-5 font-serif text-[2.55rem] font-semibold leading-[0.95] tracking-tight text-[#0b1f58] sm:text-[2.7rem]">
+      <h3 className="mt-4 font-serif text-[1.2rem] font-semibold leading-[0.95] tracking-tight text-[#0b1f58] sm:text-[1.8rem]">
         {step.title}
       </h3>
 
@@ -207,7 +207,7 @@ function Connector() {
 export function DevelopmentRoadmapSection() {
   return (
     <section className="overflow-hidden bg-transparent py-20 lg:py-24">
-      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -219,15 +219,15 @@ export function DevelopmentRoadmapSection() {
             <AcademicCrest />
           </div> */}
 
-          <h2 className="text-[clamp(2.4rem,4vw,3.8rem)] font-black leading-[1.3] tracking-[-0.05em] text-slate-950">
+          <h2 className="text-[50px] font-black leading-[1.2] tracking-[-0.05em] text-slate-950">
             Định hướng phát triển
           </h2>
 
           <div className="mx-auto mt-4 h-1 w-[4.8rem] rounded-full bg-[#d72c2e]" />
 
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
+          {/* <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
             Chiến lược phát triển toàn diện, hướng tới nâng cao chất lượng đào tạo và hội nhập quốc tế.
-          </p>
+          </p> */}
         </motion.div>
 
         <div className="hidden lg:block">

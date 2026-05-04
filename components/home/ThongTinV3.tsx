@@ -24,6 +24,16 @@ const BLUE = "#2453FF";
 const RED = "#DC2626";
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+const headerItem = {
+  hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.65, ease: EASE },
+  },
+};
+
 const ROW_ICONS = [BookOpen, MessageSquare, Dumbbell, Headphones, FileText, Megaphone, CalendarDays, ClipboardList];
 const ROW_STYLES = [
   { iconBg: "#DBEAFE", iconColor: "#2563EB" },
@@ -144,6 +154,8 @@ function Reveal({ children, delay = 0, className = "" }: { children: React.React
 export default function ThongTinV3() {
   const [leftTab, setLeftTab]   = useState<"tkb" | "hd">("tkb");
   const [rightTab, setRightTab] = useState<"lkt" | "tb">("tb");
+  const titleRef = useRef<HTMLDivElement>(null);
+  const titleInView = useInView(titleRef, { once: true, amount: 0.35 });
 
   return (
     <section className="relative overflow-hidden py-24 bg-background-alt">
@@ -163,27 +175,52 @@ export default function ThongTinV3() {
 
       {/* Left illustration cluster */}
       <div className="pointer-events-none absolute left-4 top-[42%] hidden -translate-y-1/2 flex-col items-center gap-3 lg:flex" style={{ width: 120 }}>
-        <div className="relative flex h-[88px] w-[88px] items-center justify-center rounded-2xl bg-white shadow-lg" style={{ border: "1px solid #DBEAFE" }}>
+        <motion.a
+          href="/thong-tin/thoi-khoa-bieu"
+          className="pointer-events-auto relative flex h-[88px] w-[88px] cursor-pointer items-center justify-center rounded-2xl bg-white shadow-lg"
+          style={{ border: "1px solid #DBEAFE" }}
+          whileHover={{ rotate: [0, -7, 7, -7, 7, 0], transition: { duration: 0.45 } }}
+        >
           <CalendarDays size={42} color={BLUE} strokeWidth={1.4} />
           <div className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-red-400" />
-        </div>
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md" style={{ border: "1px solid #DBEAFE" }}>
+        </motion.a>
+        <motion.a
+          href="/thong-tin/thoi-khoa-bieu"
+          className="pointer-events-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white shadow-md"
+          style={{ border: "1px solid #DBEAFE" }}
+          whileHover={{ rotate: [0, -7, 7, -7, 7, 0], transition: { duration: 0.45 } }}
+        >
           <Clock size={20} color="#EA580C" strokeWidth={1.6} />
-        </div>
+        </motion.a>
         <div className="h-2.5 w-2.5 rounded-full" style={{ background: "#93C5FD" }} />
       </div>
 
       {/* Right illustration cluster */}
       <div className="pointer-events-none absolute right-4 top-[46%] hidden -translate-y-1/2 flex-col items-center gap-3 lg:flex" style={{ width: 120 }}>
-        <div className="flex h-[76px] w-[76px] items-center justify-center rounded-2xl bg-white shadow-lg" style={{ border: "1px solid #DBEAFE" }}>
+        <motion.a
+          href="/thong-tin/thong-bao"
+          className="pointer-events-auto flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-2xl bg-white shadow-lg"
+          style={{ border: "1px solid #DBEAFE" }}
+          whileHover={{ rotate: [0, -7, 7, -7, 7, 0], transition: { duration: 0.45 } }}
+        >
           <Bell size={36} color={BLUE} strokeWidth={1.4} />
-        </div>
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md" style={{ border: "1px solid #DBEAFE" }}>
+        </motion.a>
+        <motion.a
+          href="/thong-tin/lich-kiem-tra"
+          className="pointer-events-auto flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-white shadow-md"
+          style={{ border: "1px solid #DBEAFE" }}
+          whileHover={{ rotate: [0, -7, 7, -7, 7, 0], transition: { duration: 0.45 } }}
+        >
           <GraduationCap size={24} color="#059669" strokeWidth={1.5} />
-        </div>
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md" style={{ border: "1px solid #DBEAFE" }}>
+        </motion.a>
+        <motion.a
+          href="/thong-tin/lich-kiem-tra"
+          className="pointer-events-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white shadow-md"
+          style={{ border: "1px solid #DBEAFE" }}
+          whileHover={{ rotate: [0, -7, 7, -7, 7, 0], transition: { duration: 0.45 } }}
+        >
           <ClipboardList size={20} color="#EA580C" strokeWidth={1.5} />
-        </div>
+        </motion.a>
       </div>
 
       {/* Teal circle outline top-right */}
@@ -223,47 +260,61 @@ export default function ThongTinV3() {
 
         {/* ── Header ── */}
         <Reveal delay={0}>
-          <div className="mb-14 text-center">
+          <motion.div
+            ref={titleRef}
+            initial="hidden"
+            animate={titleInView ? "visible" : "hidden"}
+            className="mb-14 text-center"
+          >
 
             {/* Eyebrow */}
-            <div className="mb-5 flex items-center justify-center gap-3">
-              <div className="h-px w-20 rounded-full" style={{ background: "linear-gradient(90deg, transparent, #93C5FD)" }} />
-              <span className="text-[13px] font-bold uppercase tracking-[0.22em]" style={{ color:RED }}>
-                ◆ Cập nhật mới nhất ◆
-              </span>
-              <div className="h-px w-20 rounded-full" style={{ background: "linear-gradient(90deg, #93C5FD, transparent)" }} />
-            </div>
+            <motion.div
+              variants={headerItem}
+              className="mb-8 flex items-center justify-center gap-4 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700 sm:text-sm"
+            >
+              <motion.span
+                animate={titleInView ? { scaleX: 1 } : { scaleX: 0 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
+                className="hidden h-px w-16 origin-right bg-slate-300 sm:block"
+              />
+              <motion.span
+                animate={titleInView ? { scale: 1, rotate: 45 } : { scale: 0, rotate: 0 }}
+                transition={{ duration: 0.4, delay: 0.35, type: "spring", stiffness: 300 }}
+                className="h-2 w-2 bg-red-500"
+              />
+              <span className="text-center">Cập nhật mới nhất</span>
+              <motion.span
+                animate={titleInView ? { scale: 1, rotate: 45 } : { scale: 0, rotate: 0 }}
+                transition={{ duration: 0.4, delay: 0.4, type: "spring", stiffness: 300 }}
+                className="h-2 w-2 bg-red-500"
+              />
+              <motion.span
+                animate={titleInView ? { scaleX: 1 } : { scaleX: 0 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
+                className="hidden h-px w-16 origin-left bg-slate-300 sm:block"
+              />
+            </motion.div>
 
             {/* Title */}
-            <h2
+            <motion.h2
+              variants={headerItem}
               className="relative inline-block font-black leading-[1.1] tracking-[-0.04em]"
-              style={{ fontSize: "clamp(42px, 7vw, 82px)", color: "#0B1230" }}
+              style={{ fontSize: "50px", color: "#0B1A3B" }}
             >
-              Thông tin{" "}
-              <span
-                style={{
-                  background: "black",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                &amp;
-              </span>{" "}
-              Lịch học
+              Thông tin &amp; Lịch học
               <svg className="absolute -right-6 -top-3 hidden sm:block" width="24" height="24" viewBox="0 0 24 24">
                 <path d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z" fill="#FBBF24" />
               </svg>
-            </h2>
+            </motion.h2>
 
             {/* Capsule indicator */}
             <div className="mt-5 flex items-center justify-center gap-2">
-              <div className="h-2.5 w-10 rounded-full" style={{ background: RED }} />
+              {/* <div className="h-2.5 w-10 rounded-full" style={{ background: RED }} /> */}
               <div className="h-2.5 w-2.5 rounded-full" style={{ background: "#fd9393" }} />
               <div className="h-2.5 w-2.5 rounded-full" style={{ background: "#fd9393" }} />
               <div className="h-2.5 w-2.5 rounded-full" style={{ background: "#fd9393" }} />
             </div>
-          </div>
+          </motion.div>
         </Reveal>
 
         {/* ── Cards ── */}
@@ -283,12 +334,12 @@ export default function ThongTinV3() {
                   <UnderlineTab label="Thời khóa biểu" active={leftTab === "tkb"} onClick={() => setLeftTab("tkb")} />
                   <UnderlineTab label="Hướng dẫn"      active={leftTab === "hd"}  onClick={() => setLeftTab("hd")} />
                 </div>
-                <button
+                {/* <button
                   className="ml-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition hover:bg-slate-50"
                   style={{ border: "1.5px solid #E2E8F0" }}
                 >
                   <Plus size={15} color="#94A3B8" />
-                </button>
+                </button> */}
               </div>
 
               <div className="mb-2 h-px w-full bg-slate-100" />
@@ -342,12 +393,12 @@ export default function ThongTinV3() {
                   <UnderlineTab label="Lịch kiểm tra" active={rightTab === "lkt"} onClick={() => setRightTab("lkt")} />
                   <UnderlineTab label="Thông báo"     active={rightTab === "tb"}  onClick={() => setRightTab("tb")} />
                 </div>
-                <button
+                {/* <button
                   className="ml-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition hover:bg-slate-50"
                   style={{ border: "1.5px solid #E2E8F0" }}
                 >
                   <Plus size={15} color="#94A3B8" />
-                </button>
+                </button> */}
               </div>
 
               <div className="mb-2 h-px w-full bg-slate-100" />

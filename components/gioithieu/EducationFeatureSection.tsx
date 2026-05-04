@@ -68,16 +68,6 @@ export default function EducationFeatureSection() {
 
   return (
     <section className="relative overflow-hidden bg-background py-16 lg:py-20" aria-labelledby="education-feature-heading">
-      <div
-        className="pointer-events-none absolute -bottom-28 -left-24 hidden h-[260px] w-[360px] border-[5px] border-[#07142F] bg-[#F04A2A] xl:block"
-        style={{ clipPath: "polygon(0 28%, 28% 22%, 34% 30%, 47% 24%, 62% 32%, 72% 72%, 56% 100%, 0 100%)" }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute bottom-12 left-24 hidden h-24 w-28 border-[5px] border-[#07142F] bg-[#22AFCB] xl:block"
-        style={{ clipPath: "polygon(0 20%, 88% 0, 100% 40%, 42% 100%)" }}
-        aria-hidden="true"
-      />
 
       <DottedPattern
         className="pointer-events-none absolute right-14 top-16 hidden grid-cols-4 gap-2 xl:grid"
@@ -144,7 +134,7 @@ export default function EducationFeatureSection() {
                 <div className="pt-8 sm:pt-10 lg:pt-10">
                   <h2
                     id="education-feature-heading"
-                    className="text-[clamp(2.25rem,4.85vw,4.4rem)] font-semibold leading-[0.92] tracking-[-0.03em] text-[#07142F]"
+                    className="text-[50px] font-semibold leading-[0.92] tracking-[-0.03em] text-[#07142F]"
                     style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
                   >
                     <span className="block">Nâng cao</span>

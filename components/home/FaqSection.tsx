@@ -81,7 +81,7 @@ export default function QuyDinhSection() {
         >
             <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <h2 className="text-[30px] font-black uppercase leading-[1.35] tracking-[-0.03em] text-slate-950 lg:text-[42px]">
+                <h2 className="text-[50px] font-black uppercase leading-[1.35] tracking-[-0.03em] text-[#0B1A3B]">
                   Quy định chuẩn đầu ra
                 </h2>
               </div>

@@ -229,7 +229,7 @@ export default function ChuanDauRaSection() {
 
           <motion.h2
             variants={headerItem}
-            className="text-center text-[clamp(2.6rem,4vw,4.3rem)] font-black leading-[1.35] tracking-[-0.055em] text-slate-950"
+            className="text-center text-[50px] font-black leading-[1.35] tracking-[-0.055em] text-[#0B1A3B]"
           >
             Yêu cầu năng lực
             <br />

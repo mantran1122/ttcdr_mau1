@@ -1,4 +1,20 @@
+"use client";
+
+import { useRef } from "react";
 import Image from "next/image";
+import { motion, useInView } from "framer-motion";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+const headerItem = {
+  hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.65, ease: EASE },
+  },
+};
 
 const courses = [
   {
@@ -45,21 +61,53 @@ const courses = [
 ];
 
 export default function CoursesShowcaseSection() {
+  const titleRef = useRef<HTMLDivElement>(null);
+  const titleInView = useInView(titleRef, { once: true, amount: 0.35 });
+
   return (
     <section className="relative py-24 xl:py-28 bg-background">
       <div className="container mx-auto px-4">
 
         {/* Header */}
-        <div className="mb-14 text-center">
-          <div className="mb-4 flex items-center justify-center gap-4 font-serif text-xl italic text-slate-500 sm:text-2xl">
-            <span className="hidden h-px w-16 bg-slate-300 sm:block" />
-            <span>Khóa học tại Trung tâm</span>
-            <span className="hidden h-px w-16 bg-slate-300 sm:block" />
-          </div>
-          <h2 className="text-[clamp(2.5rem,4.6vw,5rem)] font-black leading-[1.15] tracking-[-0.05em] text-slate-950">
+        <motion.div
+          ref={titleRef}
+          initial="hidden"
+          animate={titleInView ? "visible" : "hidden"}
+          className="mb-14 text-center"
+        >
+          <motion.div
+            variants={headerItem}
+            className="mb-8 flex items-center justify-center gap-4 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700 sm:text-sm"
+          >
+            <motion.span
+              animate={titleInView ? { scaleX: 1 } : { scaleX: 0 }}
+              transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
+              className="hidden h-px w-16 origin-right bg-slate-300 sm:block"
+            />
+            <motion.span
+              animate={titleInView ? { scale: 1, rotate: 45 } : { scale: 0, rotate: 0 }}
+              transition={{ duration: 0.4, delay: 0.35, type: "spring", stiffness: 300 }}
+              className="h-2 w-2 bg-red-500"
+            />
+            <span className="text-center">Khóa học tại Trung tâm</span>
+            <motion.span
+              animate={titleInView ? { scale: 1, rotate: 45 } : { scale: 0, rotate: 0 }}
+              transition={{ duration: 0.4, delay: 0.4, type: "spring", stiffness: 300 }}
+              className="h-2 w-2 bg-red-500"
+            />
+            <motion.span
+              animate={titleInView ? { scaleX: 1 } : { scaleX: 0 }}
+              transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
+              className="hidden h-px w-16 origin-left bg-slate-300 sm:block"
+            />
+          </motion.div>
+          <motion.h2
+            variants={headerItem}
+            className="text-[50px] font-black leading-[1.15] tracking-[-0.05em] text-[#0B1A3B]"
+          >
             Khoá học cho sinh viên
-          </h2>
-        </div>
+          </motion.h2>
+        </motion.div>
 
         {/* Bento grid */}
         <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12">

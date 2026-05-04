@@ -165,7 +165,7 @@ export default function LearningGroupsSection() {
             <span className="hidden h-px w-16 bg-slate-300 sm:block" />
           </div>
 
-          <h2 className="mt-0 text-center text-[clamp(2.6rem,4vw,4.3rem)] font-black leading-[1.35] tracking-[-0.055em] text-slate-950">
+          <h2 className="mt-0 text-center text-[50px] font-black leading-[1.35] tracking-[-0.055em] text-[#0B1A3B]">
             5 nhóm học phần
             <br />
             nổi bật tại Trung tâm

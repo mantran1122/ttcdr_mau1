@@ -1,9 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
+
+const headerItem = {
+  hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.65, ease: EASE },
+  },
+};
 
 const articles = [
   {
@@ -60,6 +70,8 @@ const PAGE_SIZE = 4;
 
 export default function TinTucSection() {
   const [page, setPage] = useState(0);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const titleInView = useInView(titleRef, { once: true, amount: 0.35 });
   const totalPages = Math.ceil(articles.length / PAGE_SIZE);
   const visible = articles.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
 
@@ -70,19 +82,42 @@ export default function TinTucSection() {
         {/* ── Heading row ── */}
         <div className="relative mb-10 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.55, ease: EASE }}
+            ref={titleRef}
+            initial="hidden"
+            animate={titleInView ? "visible" : "hidden"}
           >
-            <div className="mb-5 flex items-center justify-center gap-4 font-serif text-xl italic text-slate-500 sm:text-2xl">
-              <span className="hidden h-px w-16 bg-slate-300 sm:block" />
-              <span>Tin tức &amp; Sự kiện</span>
-              <span className="hidden h-px w-16 bg-slate-300 sm:block" />
-            </div>
-            <h2 className="text-[clamp(2.5rem,4.6vw,5rem)] font-black leading-[1.35] tracking-[-0.06em] text-slate-950">
+            <motion.div
+              variants={headerItem}
+              className="mb-8 flex items-center justify-center gap-4 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700 sm:text-sm"
+            >
+              <motion.span
+                animate={titleInView ? { scaleX: 1 } : { scaleX: 0 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
+                className="hidden h-px w-16 origin-right bg-slate-300 sm:block"
+              />
+              <motion.span
+                animate={titleInView ? { scale: 1, rotate: 45 } : { scale: 0, rotate: 0 }}
+                transition={{ duration: 0.4, delay: 0.35, type: "spring", stiffness: 300 }}
+                className="h-2 w-2 bg-red-500"
+              />
+              <span className="text-center">Tin tức &amp; Sự kiện</span>
+              <motion.span
+                animate={titleInView ? { scale: 1, rotate: 45 } : { scale: 0, rotate: 0 }}
+                transition={{ duration: 0.4, delay: 0.4, type: "spring", stiffness: 300 }}
+                className="h-2 w-2 bg-red-500"
+              />
+              <motion.span
+                animate={titleInView ? { scaleX: 1 } : { scaleX: 0 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
+                className="hidden h-px w-16 origin-left bg-slate-300 sm:block"
+              />
+            </motion.div>
+            <motion.h2
+              variants={headerItem}
+              className="text-[50px] font-black leading-[1.35] tracking-[-0.06em] text-[#0B1A3B]"
+            >
               Tin tức gần đây
-            </h2>
+            </motion.h2>
           </motion.div>
 
           <motion.a

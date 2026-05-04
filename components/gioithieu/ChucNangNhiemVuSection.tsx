@@ -1,6 +1,7 @@
 ﻿"use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -103,6 +104,8 @@ function CoreAreaIcon({ icon }: { icon: CoreIcon }) {
 }
 
 export default function ChucNangNhiemVuSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
   return (
     <section className="bg-background py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -113,7 +116,7 @@ export default function ChucNangNhiemVuSection() {
           transition={{ duration: 0.6, ease: EASE }}
           className="mx-auto max-w-3xl text-center"
         >
-          <h2 className="text-balance text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+          <h2 className="text-balance text-[50px] font-extrabold leading-[1.2] tracking-tight text-slate-900">
             Lĩnh vực chức năng cốt lõi
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
@@ -152,7 +155,7 @@ export default function ChucNangNhiemVuSection() {
           transition={{ duration: 0.6, ease: EASE }}
           className="mx-auto mt-16 max-w-3xl text-center sm:mt-20"
         >
-          <h2 className="text-balance text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+          <h2 className="text-balance text-[50px] font-extrabold leading-[1.2] tracking-tight text-slate-900">
             Nhiệm vụ chiến lược
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
@@ -175,38 +178,50 @@ export default function ChucNangNhiemVuSection() {
 
           {roadmapSteps.map((step, index) => {
             const isLeft = index % 2 === 0;
+            const isOpen = openIndex === index;
+
+            const card = (
+              <button
+                type="button"
+                onClick={() => setOpenIndex(isOpen ? null : index)}
+                className="cursor-pointer rounded-2xl border border-slate-200/80 bg-white/95 p-5 text-center shadow-[0_12px_26px_-20px_rgba(15,23,42,0.45)] transition-shadow duration-300 hover:shadow-[0_20px_36px_-20px_rgba(15,23,42,0.35)] sm:p-6"
+              >
+                <h3 className="text-xl font-bold leading-tight text-slate-900 sm:text-[1.65rem]">
+                  {step.title}
+                </h3>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.p
+                      key="desc"
+                      initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                      animate={{ opacity: 1, height: "auto", marginTop: 12 }}
+                      exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                      transition={{ duration: 0.28, ease: EASE }}
+                      className="overflow-hidden text-sm leading-relaxed text-slate-600 sm:text-[15px]"
+                    >
+                      {step.desc}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </button>
+            );
 
             return (
               <motion.article
-                key={step.num}
+                key={step.title}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.55, delay: index * 0.08, ease: EASE }}
                 className="relative grid grid-cols-1 gap-4 py-5 pl-14 md:grid-cols-[1fr_auto_1fr] md:items-center md:gap-8 md:py-9 md:pl-0"
               >
-                <div
-                  className={[
-                    "rounded-2xl border border-slate-200/80 bg-white/95 p-5 shadow-[0_12px_26px_-20px_rgba(15,23,42,0.45)] sm:p-6",
-                    isLeft ? "md:col-start-1 md:ml-auto md:text-right" : "md:col-start-3",
-                  ].join(" ")}
-                >
-                  <div className={["mb-3 flex items-end gap-3", isLeft ? "md:justify-end" : "md:justify-start"].join(" ")}>
-                    <span className="text-4xl font-black leading-none tracking-tight text-slate-300 sm:text-5xl">
-                      {step.num}
-                    </span>
-                    <h3 className="text-xl font-bold leading-tight text-slate-900 sm:text-[1.65rem]">
-                      {step.title}
-                    </h3>
-                  </div>
-                  <p className="text-sm leading-relaxed text-slate-600 sm:text-[15px]">
-                    {step.desc}
-                  </p>
+                {isLeft ? <div className="md:flex md:justify-end">{card}</div> : <div className="hidden md:block" />}
+
+                <div className="absolute left-5 top-9 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border-2 border-red-200 bg-red-600 text-sm font-bold text-white shadow-[0_0_0_6px_rgba(254,242,242,0.96)] md:static md:mx-auto md:translate-x-0">
+                  {index + 1}
                 </div>
 
-                <div className="absolute left-5 top-9 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border-2 border-red-200 bg-red-600 text-sm font-bold text-white shadow-[0_0_0_6px_rgba(254,242,242,0.96)] md:static md:col-start-2 md:mx-auto md:translate-x-0">
-                  {step.num}
-                </div>
+                {!isLeft ? <div>{card}</div> : <div className="hidden md:block" />}
               </motion.article>
             );
           })}
