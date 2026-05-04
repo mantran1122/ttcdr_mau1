@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useInView, useAnimation } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import {
   BookOpen,
   MessageSquare,
@@ -83,18 +83,10 @@ const thongBao = [
 /* ─── WiggleLink ────────────────────────────────────────────── */
 
 function WiggleLink({ href, className, style, children }: { href: string; className: string; style?: React.CSSProperties; children: React.ReactNode }) {
-  const controls = useAnimation();
   return (
-    <motion.a
-      href={href}
-      className={className}
-      style={style}
-      animate={controls}
-      onHoverStart={() => controls.start({ rotate: [0, -7, 7, -7, 7, 0], transition: { type: "tween", duration: 0.45 } })}
-      onHoverEnd={() => controls.start({ rotate: 0, transition: { duration: 0.15 } })}
-    >
+    <a href={href} className={`wiggle-icon ${className}`} style={style}>
       {children}
-    </motion.a>
+    </a>
   );
 }
 
@@ -177,6 +169,16 @@ export default function ThongTinV3() {
 
   return (
     <section className="relative overflow-hidden py-24 bg-background-alt">
+      <style>{`
+        @keyframes wiggle-shake {
+          0%,100% { transform: rotate(0deg); }
+          20%      { transform: rotate(-7deg); }
+          40%      { transform: rotate(7deg); }
+          60%      { transform: rotate(-7deg); }
+          80%      { transform: rotate(7deg); }
+        }
+        .wiggle-icon:hover { animation: wiggle-shake 0.45s ease-in-out; }
+      `}</style>
 
       {/* ══ Decoratives ══════════════════════════════════════════ */}
 
