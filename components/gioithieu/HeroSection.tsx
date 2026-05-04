@@ -4,57 +4,62 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
+const HERO_BANNER_HEIGHT = "h-[105vh]";
 
 export default function HeroSection() {
   return (
-    <section className="relative pb-10 lg:pb-14">
-
+    <section className={`relative overflow-hidden ${HERO_BANNER_HEIGHT}`}>
       {/* Banner – full bleed, absolute from top */}
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.65, ease: EASE }}
-        className="absolute inset-x-0 top-0 overflow-hidden"
+        className="h-full w-full overflow-hidden"
       >
         <Image
-          src="/banner.png"
+          src="/courses/banner_2.png"
           alt="Banner Trung tâm Chuẩn đầu ra"
           width={1920}
-          height={600}
-          className="h-[280px] w-full object-cover sm:h-[400px] lg:h-[500px]"
+          height={1080}
+          className="h-full w-full object-cover object-center"
+          sizes="100vw"
           priority
         />
       </motion.div>
 
-      {/* Title */}
-      <div className="container relative mx-auto px-4 pt-[300px] sm:pt-[420px] lg:pt-[530px]">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.18, ease: EASE }}
-          className="mt-10 text-center"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
-            className="mb-5 inline-flex items-center gap-2.5 rounded-full border border-slate-200 bg-white/80 px-4 py-2 shadow-sm backdrop-blur-md sm:px-5 sm:py-2.5"
-          >
-            <Image src="/logo_don.png" alt="" width={20} height={20} className="h-5 w-auto shrink-0 rounded-sm" />
-            <span className="text-xs font-semibold text-slate-700 sm:text-sm">
-              Giới thiệu
-            </span>
-          </motion.div>
+      {/* Bottom transition: fade + wave để nối mượt sang section tiếp theo */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-10"
+        style={{
+          height: "clamp(120px, 20vw, 260px)",
+          background:
+            "linear-gradient(to bottom, transparent 0%, rgba(247,241,228,0.35) 40%, rgba(247,241,228,0.82) 72%, #F7F1E4 100%)",
+        }}
+      />
 
-          <h1 className="text-[clamp(2.4rem,4vw,3.8rem)] font-black leading-[1.3] tracking-[-0.05em] text-slate-950">
-            Kiến tạo Nền tảng Vững chắc Chuyên môn
-          </h1>
-{/* 
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
-            Trung tâm Chuẩn đầu ra &amp; Phát triển nguồn nhân lực — Đại học Nam Cần Thơ
-          </p> */}
-        </motion.div>
-      </div>
+      <svg
+        className="pointer-events-none absolute inset-x-0 bottom-[28px] z-20 w-full sm:bottom-[36px] md:bottom-[44px]"
+        viewBox="0 0 1440 70"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M0,42 C200,14 440,62 720,35 C1000,8 1240,56 1440,30 L1440,70 L0,70 Z"
+          fill="rgba(254,202,202,0.32)"
+        />
+      </svg>
+
+      <svg
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-30 w-full"
+        viewBox="0 0 1440 60"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M0,20 C280,56 560,4 860,28 C1080,46 1280,12 1440,24 L1440,60 L0,60 Z"
+          fill="#F7F1E4"
+        />
+      </svg>
 
     </section>
   );
