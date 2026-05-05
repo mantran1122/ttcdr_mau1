@@ -1,12 +1,12 @@
 import HeroSection from "@/components/lichkiemtra/HeroSection";
-import NoticeSection from "@/components/lichkiemtra/NoticeSection";
 import ExamListSection from "@/components/lichkiemtra/ExamListSection";
+import Breadcrumb from "@/components/layout/Breadcrumb";
 
 export default function LichKiemTraPage() {
   return (
     <div className="min-h-screen bg-background">
       <HeroSection />
-      <NoticeSection />
+      <Breadcrumb items={[{ label: "Thông tin" }, { label: "Lịch kiểm tra" }]} />
       <ExamListSection />
     </div>
   );

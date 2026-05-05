@@ -54,7 +54,7 @@ export default function HeroSection() {
         style={{
           height: "clamp(84px, 16vw, 210px)",
           background:
-            "linear-gradient(to bottom, transparent 0%, rgba(247,241,228,0.35) 40%, rgba(247,241,228,0.82) 72%, #F7F1E4 100%)",
+            "linear-gradient(to bottom, transparent 0%, rgba(248,249,251,0.35) 40%, rgba(248,249,251,0.82) 72%, #F8F9FB 100%)",
         }}
       />
 
@@ -78,7 +78,7 @@ export default function HeroSection() {
       >
         <path
           d="M0,20 C280,56 560,4 860,28 C1080,46 1280,12 1440,24 L1440,60 L0,60 Z"
-          fill="#F7F1E4"
+          fill="#F8F9FB"
         />
       </svg>
     </section>

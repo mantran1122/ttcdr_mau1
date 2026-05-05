@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import { BookOpen, Globe, GraduationCap, Handshake, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
@@ -13,6 +14,7 @@ type AccentSide = "left" | "right";
 type RoadmapStep = {
   num: string;
   title: string;
+  detail: string;
   icon: LucideIcon;
   colorClass: string;
   accentClass: string;
@@ -28,6 +30,8 @@ const roadmapSteps: RoadmapStep[] = [
   {
     num: "01",
     title: "Bồi dưỡng",
+    detail:
+      "Tổ chức các khóa bồi dưỡng chuyên môn định kỳ, giúp đội ngũ giảng viên nắm bắt phương pháp giảng dạy hiện đại và cập nhật kiến thức chuyên ngành.",
     icon: BookOpen,
     colorClass: "text-[#d72c2e]",
     accentClass: "bg-[#d72c2e]",
@@ -41,6 +45,8 @@ const roadmapSteps: RoadmapStep[] = [
   {
     num: "02",
     title: "Khai giảng lớp",
+    detail:
+      "Mở các lớp học đảm bảo sĩ số phù hợp, trang thiết bị hiện đại và giáo trình chuẩn hóa theo khung chương trình của Bộ GD&ĐT.",
     icon: GraduationCap,
     colorClass: "text-[#ec8f31]",
     accentClass: "bg-[#ec8f31]",
@@ -54,6 +60,8 @@ const roadmapSteps: RoadmapStep[] = [
   {
     num: "03",
     title: "Liên kết",
+    detail:
+      "Xây dựng mối quan hệ đối tác chiến lược, tạo cơ hội thực tập và việc làm cho sinh viên thông qua các chương trình liên kết đào tạo.",
     icon: Handshake,
     colorClass: "text-[#2f78cc]",
     accentClass: "bg-[#2f78cc]",
@@ -67,6 +75,8 @@ const roadmapSteps: RoadmapStep[] = [
   {
     num: "04",
     title: "Cải tiến",
+    detail:
+      "Thu thập phản hồi từ người học, áp dụng công nghệ giảng dạy mới và điều chỉnh chương trình để đáp ứng nhu cầu thực tiễn.",
     icon: TrendingUp,
     colorClass: "text-[#a276c7]",
     accentClass: "bg-[#a276c7]",
@@ -80,6 +90,8 @@ const roadmapSteps: RoadmapStep[] = [
   {
     num: "05",
     title: "Hợp tác",
+    detail:
+      "Tham gia các dự án giáo dục quốc tế, trao đổi sinh viên và giảng viên, tiếp cận chuẩn mực đào tạo tiên tiến trên thế giới.",
     icon: Globe,
     colorClass: "text-[#0f3a79]",
     accentClass: "bg-[#0f3a79]",
@@ -91,24 +103,6 @@ const roadmapSteps: RoadmapStep[] = [
     pattern: "accentDots",
   },
 ];
-
-function AcademicCrest() {
-  return (
-    <svg viewBox="0 0 90 78" className="h-16 w-20" aria-hidden="true">
-      <path d="M17 58C9 52 4 43 4 34" fill="none" stroke="#dabc8f" strokeWidth="2" strokeLinecap="round" />
-      <path d="M73 58C81 52 86 43 86 34" fill="none" stroke="#dabc8f" strokeWidth="2" strokeLinecap="round" />
-      <path d="M15 53c-4-4-7-9-8-14" fill="none" stroke="#dabc8f" strokeWidth="2" strokeLinecap="round" />
-      <path d="M75 53c4-4 7-9 8-14" fill="none" stroke="#dabc8f" strokeWidth="2" strokeLinecap="round" />
-
-      <path d="M22 58h46" stroke="#0f2b70" strokeWidth="3" strokeLinecap="round" />
-      <path d="M25 30 45 16 65 30" fill="none" stroke="#0f2b70" strokeWidth="3" strokeLinejoin="round" />
-      <path d="M30 30v20M45 30v20M60 30v20" stroke="#0f2b70" strokeWidth="2.8" strokeLinecap="round" />
-      <path d="M28 50h34" stroke="#0f2b70" strokeWidth="3" strokeLinecap="round" />
-
-      <path d="M45 11.2 46.9 15h4.1l-3.2 2.4 1.2 3.8L45 18.8l-4 2.4 1.2-3.8L39 15h4.1z" fill="#d72c2e" />
-    </svg>
-  );
-}
 
 function AccentPattern({ pattern, side }: { pattern: Pattern; side: AccentSide }) {
   if (pattern === "accentDots") {
@@ -140,47 +134,96 @@ function RoadmapAccent({ step }: { step: RoadmapStep }) {
   );
 }
 
-function RoadmapCard({ step }: { step: RoadmapStep }) {
+function RoadmapCard({ step, isFlipped, onToggle }: { step: RoadmapStep; isFlipped: boolean; onToggle: () => void }) {
   const Icon = step.icon;
 
   return (
-    <motion.article
-      whileHover={{ y: -7, rotate: 0 }}
-      transition={{ duration: 0.28 }}
-      className={`group relative z-10 h-[16.2rem] rounded-[1.95rem] border border-[#ebe3d7] bg-[#fffcf8] px-6 pb-8 pt-10 text-center text-[#0d245f] shadow-[0_26px_34px_-24px_rgba(19,33,79,0.55),0_10px_18px_-14px_rgba(19,33,79,0.35)] transition-all duration-300 hover:shadow-[0_36px_40px_-24px_rgba(19,33,79,0.58),0_15px_20px_-14px_rgba(19,33,79,0.35)] sm:px-7 ${step.tiltClass}`}
+    <div
+      className={`group relative z-10 cursor-pointer ${step.tiltClass}`}
+      style={{ perspective: "1000px" }}
+      onClick={onToggle}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") onToggle();
+      }}
     >
-      {step.decoration === "pin" ? (
-        <div className={`absolute left-1/2 top-2 z-20 h-6 w-6 -translate-x-1/2 rounded-full border border-black/10 ${step.pinClass} shadow-[0_8px_10px_-6px_rgba(0,0,0,0.5)]`}>
-          <span className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/50" />
+      <div
+        className="relative h-[18rem] w-full"
+        style={{
+          transformStyle: "preserve-3d",
+          transition: "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)",
+          transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+        }}
+      >
+        {/* ── Front face ── */}
+        <div
+          className="absolute inset-0 overflow-hidden rounded-[1.95rem] border border-[#ebe3d7] bg-[#fffcf8] px-6 pb-8 pt-10 text-center text-[#0d245f] shadow-[0_26px_34px_-24px_rgba(19,33,79,0.55),0_10px_18px_-14px_rgba(19,33,79,0.35)] transition-shadow duration-300 group-hover:shadow-[0_36px_40px_-24px_rgba(19,33,79,0.58),0_15px_20px_-14px_rgba(19,33,79,0.35)] sm:px-7"
+          style={{ backfaceVisibility: "hidden" }}
+        >
+          {step.decoration === "pin" ? (
+            <div className={`absolute left-1/2 top-2 z-20 h-6 w-6 -translate-x-1/2 rounded-full border border-black/10 ${step.pinClass} shadow-[0_8px_10px_-6px_rgba(0,0,0,0.5)]`}>
+              <span className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/50" />
+            </div>
+          ) : (
+            <div className={`absolute left-1/2 top-2 z-20 h-6 w-24 -translate-x-1/2 rotate-[-8deg] rounded-sm border border-[#dcccb8] ${step.tapeClass} opacity-95 shadow-sm`} />
+          )}
+
+          <p className={`font-serif text-[2.8rem] font-semibold leading-none tracking-tight ${step.colorClass}`}>
+            {step.num}
+          </p>
+
+          <div className="mx-auto mt-2 flex w-20 items-center gap-2">
+            <span className={`h-px flex-1 ${step.colorClass} bg-current/35`} />
+            <span className={`h-2 w-2 rounded-full ${step.colorClass} bg-current`} />
+            <span className={`h-px flex-1 ${step.colorClass} bg-current/35`} />
+          </div>
+
+          <Icon className={`mx-auto mt-4 h-9 w-9 ${step.colorClass}`} strokeWidth={1.9} />
+
+          <h3 className="mt-3 font-serif text-[1.2rem] font-semibold leading-[0.95] tracking-tight text-[#0b1f58] sm:text-[1.8rem]">
+            {step.title}
+          </h3>
+
+          {step.pattern === "cardDots" ? (
+            <div className={`pointer-events-none absolute bottom-4 right-5 grid grid-cols-4 gap-1 ${step.colorClass}`}>
+              {Array.from({ length: 12 }).map((_, index) => (
+                <span key={index} className="h-1 w-1 rounded-full bg-current/35" />
+              ))}
+            </div>
+          ) : null}
         </div>
-      ) : (
-        <div className={`absolute left-1/2 top-2 z-20 h-6 w-24 -translate-x-1/2 rotate-[-8deg] rounded-sm border border-[#dcccb8] ${step.tapeClass} opacity-95 shadow-sm`} />
-      )}
 
-      <p className={`font-serif text-[2.8rem] font-semibold leading-none tracking-tight ${step.colorClass}`}>
-        {step.num}
-      </p>
+        {/* ── Back face ── */}
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden rounded-[1.95rem] border border-[#ebe3d7] bg-[#fffcf8] px-6 py-8 text-center shadow-[0_26px_34px_-24px_rgba(19,33,79,0.55),0_10px_18px_-14px_rgba(19,33,79,0.35)] sm:px-7"
+          style={{
+            backfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
+          }}
+        >
+          <p className={`font-serif text-[2.2rem] font-semibold leading-none tracking-tight ${step.colorClass}`}>
+            {step.num}
+          </p>
 
-      <div className="mx-auto mt-2 flex w-20 items-center gap-2">
-        <span className={`h-px flex-1 ${step.colorClass} bg-current/35`} />
-        <span className={`h-2 w-2 rounded-full ${step.colorClass} bg-current`} />
-        <span className={`h-px flex-1 ${step.colorClass} bg-current/35`} />
+          <Icon className={`mx-auto mt-3 h-7 w-7 ${step.colorClass}`} strokeWidth={1.9} />
+
+          <h4 className="mt-2 font-serif text-base font-bold leading-snug text-[#0b1f58] sm:text-lg">
+            {step.title}
+          </h4>
+
+          <div className="mx-auto mt-2 flex w-16 items-center gap-1.5">
+            <span className={`h-px flex-1 ${step.colorClass} bg-current/35`} />
+            <span className={`h-1.5 w-1.5 rounded-full ${step.colorClass} bg-current`} />
+            <span className={`h-px flex-1 ${step.colorClass} bg-current/35`} />
+          </div>
+
+          <p className="mx-auto mt-4 max-w-[22ch] text-xs leading-relaxed text-slate-600 sm:text-sm">
+            {step.detail}
+          </p>
+        </div>
       </div>
-
-      <Icon className={`mx-auto mt-4 h-9 w-9 ${step.colorClass}`} strokeWidth={1.9} />
-
-      <h3 className="mt-4 font-serif text-[1.2rem] font-semibold leading-[0.95] tracking-tight text-[#0b1f58] sm:text-[1.8rem]">
-        {step.title}
-      </h3>
-
-      {step.pattern === "cardDots" ? (
-        <div className={`pointer-events-none absolute bottom-4 right-5 grid grid-cols-4 gap-1 ${step.colorClass}`}>
-          {Array.from({ length: 12 }).map((_, index) => (
-            <span key={index} className="h-1 w-1 rounded-full bg-current/35" />
-          ))}
-        </div>
-      ) : null}
-    </motion.article>
+    </div>
   );
 }
 
@@ -205,8 +248,14 @@ function Connector() {
 }
 
 export function DevelopmentRoadmapSection() {
+  const [flippedIndex, setFlippedIndex] = useState<number | null>(null);
+
+  const toggleCard = (index: number) => {
+    setFlippedIndex((prev) => (prev === index ? null : index));
+  };
+
   return (
-    <section className="overflow-hidden bg-transparent py-20 lg:py-24">
+    <section className="overflow-hidden bg-background py-20 lg:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
@@ -215,19 +264,11 @@ export function DevelopmentRoadmapSection() {
           transition={{ duration: 0.6, ease: EASE }}
           className="mx-auto mb-14 max-w-5xl text-center"
         >
-          {/* <div className="mx-auto mb-2 w-fit text-[#0f2b70]">
-            <AcademicCrest />
-          </div> */}
-
-          <h2 className="text-[50px] font-black leading-[1.2] tracking-[-0.05em] text-slate-950">
+          <h2 className="text-[50px] font-black leading-[1.2] tracking-[-0.05em] text-slate-900">
             Định hướng phát triển
           </h2>
 
           <div className="mx-auto mt-4 h-1 w-[4.8rem] rounded-full bg-[#d72c2e]" />
-
-          {/* <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
-            Chiến lược phát triển toàn diện, hướng tới nâng cao chất lượng đào tạo và hội nhập quốc tế.
-          </p> */}
         </motion.div>
 
         <div className="hidden lg:block">
@@ -243,7 +284,11 @@ export function DevelopmentRoadmapSection() {
               >
                 <RoadmapAccent step={step} />
                 {index < roadmapSteps.length - 1 ? <Connector /> : null}
-                <RoadmapCard step={step} />
+                <RoadmapCard
+                  step={step}
+                  isFlipped={flippedIndex === index}
+                  onToggle={() => toggleCard(index)}
+                />
               </motion.li>
             ))}
           </ol>
@@ -262,10 +307,14 @@ export function DevelopmentRoadmapSection() {
               >
                 <RoadmapAccent step={step} />
                 {index < roadmapSteps.length - 1 ? (
-                  <span className="pointer-events-none absolute left-[16px] top-[147px] h-[calc(100%-84px)] border-l-2 border-dashed border-[#0f3a79]/35" />
+                  <span className="pointer-events-none absolute left-[16px] top-[167px] h-[calc(100%-84px)] border-l-2 border-dashed border-[#0f3a79]/35" />
                 ) : null}
-                <span className="absolute left-[11px] top-[130px] h-3 w-3 rounded-full border-2 border-[#0f3a79] bg-background" />
-                <RoadmapCard step={step} />
+                <span className="absolute left-[11px] top-[150px] h-3 w-3 rounded-full border-2 border-[#0f3a79] bg-background" />
+                <RoadmapCard
+                  step={step}
+                  isFlipped={flippedIndex === index}
+                  onToggle={() => toggleCard(index)}
+                />
               </motion.li>
             ))}
           </ol>

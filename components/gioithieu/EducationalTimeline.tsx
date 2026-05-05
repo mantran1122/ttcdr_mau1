@@ -1,8 +1,14 @@
-"use client";
+﻿"use client";
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Brain, Laptop, MessageCircle, Users, Briefcase } from "lucide-react";
+import {
+  CalendarDays,
+  BookOpen,
+  MessageCircle,
+  Award,
+  Target,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -17,61 +23,58 @@ const headerItem = {
   },
 };
 
-type StatItem = {
-  number: string;
-  label: string;
+/* ── Floating pills data ── */
+type PillItem = {
+  title: string;
   Icon: LucideIcon;
   iconGradient: string;
-  numberColor: string;
+  titleColor: string;
   positionClassName: string;
   delay: number;
 };
 
-const statItems: StatItem[] = [
+const pills: PillItem[] = [
   {
-    number: "2015",
-    label: "Năm thành lập",
-    Icon: Brain,
-    iconGradient: "linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)",
-    numberColor: "#6D28D9",
-    positionClassName: "left-0 top-[140px]",
+    title: "Đào tạo Anh văn theo chuẩn Trường và khung 6 bậc VSTEP",
+    Icon: CalendarDays,
+    iconGradient: "linear-gradient(135deg, #DC2626 0%, #F87171 100%)",
+    titleColor: "#DC2626",
+    positionClassName: "left-0 top-[120px]",
     delay: 0.12,
   },
   {
-    number: "5+",
-    label: "Nhóm học phần",
-    Icon: Laptop,
+    title: "Đào tạo tin học cơ bản và nâng cao",
+    Icon: BookOpen,
     iconGradient: "linear-gradient(135deg, #2563EB 0%, #38BDF8 100%)",
-    numberColor: "#1D4ED8",
-    positionClassName: "right-0 top-[140px]",
+    titleColor: "#1D4ED8",
+    positionClassName: "right-0 top-[120px]",
     delay: 0.2,
   },
   {
-    number: "50.000+",
-    label: "Học viên",
+    title: "Rèn luyện kỹ năng giao tiếp, thuyết trình, làm việc nhóm",
     Icon: MessageCircle,
-    iconGradient: "linear-gradient(135deg, #DC2626 0%, #F87171 100%)",
-    numberColor: "#DC2626",
-    positionClassName: "left-[30px] top-[390px]",
+    iconGradient: "linear-gradient(135deg, #0D9488 0%, #34D399 100%)",
+    titleColor: "#0D9488",
+    positionClassName: "left-[30px] top-[370px]",
     delay: 0.28,
   },
   {
-    number: "85%",
-    label: "Đạt chuẩn đầu ra",
-    Icon: Users,
-    iconGradient: "linear-gradient(135deg, #0D9488 0%, #34D399 100%)",
-    numberColor: "#0D9488",
-    positionClassName: "right-[30px] top-[390px]",
+    title: "Đào tạo kỹ năng nghề nghiệp thiết yếu cho sinh viên",
+    Icon: Award,
+    iconGradient: "linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)",
+    titleColor: "#6D28D9",
+    positionClassName: "right-[30px] top-[370px]",
     delay: 0.36,
   },
 ];
 
-type StatPillProps = {
-  item: StatItem;
+/* ── Pill component ── */
+type PillProps = {
+  item: PillItem;
   className?: string;
 };
 
-function StatPill({ item, className = "" }: StatPillProps) {
+function Pill({ item, className = "" }: PillProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 28, scale: 0.96, filter: "blur(8px)" }}
@@ -80,7 +83,7 @@ function StatPill({ item, className = "" }: StatPillProps) {
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.7, delay: item.delay, ease: EASE }}
       className={[
-        "flex h-[120px] items-center gap-5 rounded-full bg-white px-8",
+        "flex min-h-[120px] items-center gap-5 rounded-full bg-white px-8 py-5",
         "border border-black/[0.05] shadow-[0_8px_32px_rgba(15,23,42,0.08)]",
         "cursor-default transition-shadow duration-500 hover:shadow-[0_16px_48px_rgba(15,23,42,0.13)]",
         className,
@@ -94,67 +97,68 @@ function StatPill({ item, className = "" }: StatPillProps) {
       </div>
       <div className="min-w-0">
         <p
-          className="text-[36px] font-black leading-none tracking-tight"
-          style={{ color: item.numberColor }}
+          className="text-[15px] font-bold leading-snug tracking-tight sm:text-base"
+          style={{ color: item.titleColor }}
         >
-          {item.number}
+          {item.title}
         </p>
-        <p className="mt-1.5 text-[14px] font-medium text-slate-500">{item.label}</p>
       </div>
     </motion.div>
   );
 }
 
-export default function LearningGroupsSection() {
+export default function EducationalTimeline() {
   const titleRef = useRef<HTMLDivElement>(null);
   const titleInView = useInView(titleRef, { once: true, amount: 0.35 });
 
   return (
     <section className="relative isolate overflow-hidden bg-background py-24 xl:py-28">
-      <div className="container relative mx-auto h-auto px-4 xl:h-[700px]">
+      <div className="container relative mx-auto h-auto px-4 xl:h-[680px]">
 
-        {/* Desktop: absolutely positioned floating pills */}
+        {/* ── Desktop: floating pills ── */}
         <div className="hidden xl:block">
-          {statItems.map((item) => (
-            <StatPill
-              key={item.label}
+          {pills.map((item) => (
+            <Pill
+              key={item.title}
               item={item}
-              className={["absolute w-[360px]", item.positionClassName].join(" ")}
+              className={["absolute w-[420px]", item.positionClassName].join(" ")}
             />
           ))}
 
-          {/* Featured pill — centered at bottom */}
+          {/* Featured pill — center bottom */}
           <motion.div
             initial={{ opacity: 0, y: 36, scale: 0.95, filter: "blur(10px)" }}
             whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             whileHover={{ y: -4 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.75, delay: 0.48, ease: EASE }}
-            className="absolute left-1/2 top-[510px] flex h-[130px] w-[440px] -translate-x-1/2 cursor-default items-center gap-6 rounded-full px-9 shadow-[0_16px_56px_rgba(37,99,235,0.32)] transition-shadow duration-500 hover:shadow-[0_20px_64px_rgba(37,99,235,0.45)]"
+            className="absolute left-1/2 top-[510px] flex min-h-[130px] w-[480px] -translate-x-1/2 cursor-default items-center gap-6 rounded-full px-9 py-5 shadow-[0_16px_56px_rgba(37,99,235,0.32)] transition-shadow duration-500 hover:shadow-[0_20px_64px_rgba(37,99,235,0.45)]"
             style={{ background: "linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%)" }}
           >
             <div
               className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full shadow-lg"
               style={{ background: "linear-gradient(135deg, #F59E0B 0%, #FCD34D 100%)" }}
             >
-              <Briefcase size={26} color="white" strokeWidth={2} />
+              <Target size={26} color="white" strokeWidth={2} />
             </div>
             <div className="h-12 w-px bg-white/20" />
             <div className="min-w-0">
-              <p className="text-[38px] font-black leading-none tracking-tight text-white">
-                100%
+              <p className="text-[15px] font-bold leading-snug tracking-tight text-white sm:text-base">
+                Thành lập theo Quyết định số 23/QĐ-CTHĐQT-ĐHNCT
               </p>
-              <p className="mt-1.5 whitespace-nowrap text-[14px] font-medium text-blue-100">Chương trình đạt chuẩn Bộ GD&ĐT</p>
+              <p className="mt-1.5 text-[13px] font-medium text-blue-100">
+                Ngày 25 tháng 06 năm 2015
+              </p>
             </div>
           </motion.div>
         </div>
 
-        {/* Centered heading — shown on all breakpoints */}
+        {/* ── Heading ── */}
         <motion.div
           ref={titleRef}
           initial="hidden"
           animate={titleInView ? "visible" : "hidden"}
-          className="relative z-10 mx-auto flex max-w-[540px] flex-col items-center text-center xl:absolute xl:left-1/2 xl:top-[200px] xl:-translate-x-1/2"
+          className="relative z-10 mx-auto flex max-w-[560px] flex-col items-center text-center xl:absolute xl:left-1/2 xl:top-[200px] xl:-translate-x-1/2"
         >
           <motion.div
             variants={headerItem}
@@ -170,7 +174,7 @@ export default function LearningGroupsSection() {
               transition={{ duration: 0.4, delay: 0.35, type: "spring", stiffness: 300 }}
               className="h-2 w-2 bg-red-500"
             />
-            <span className="text-center">Thống kê nổi bật</span>
+            <span className="text-center">Hành trình phát triển</span>
             <motion.span
               animate={titleInView ? { scale: 1, rotate: 45 } : { scale: 0, rotate: 0 }}
               transition={{ duration: 0.4, delay: 0.4, type: "spring", stiffness: 300 }}
@@ -185,43 +189,46 @@ export default function LearningGroupsSection() {
 
           <motion.h2
             variants={headerItem}
-            className="text-[46px] font-black leading-[1.2] tracking-[-0.04em] text-[#0B1A3B] sm:text-[50px]"
+            className="text-[40px] font-black leading-[1.2] tracking-[-0.04em] text-slate-900 sm:text-[46px]"
           >
-            Những con số
+            Những cột mốc
             <br />
-            ấn tượng
+            phát triển
           </motion.h2>
         </motion.div>
 
-        {/* Mobile / Tablet: stacked grid */}
+        {/* ── Mobile / Tablet: stacked pills + AI ── */}
         <div className="mt-12 grid gap-4 sm:grid-cols-2 xl:hidden">
-          {statItems.map((item, index) => (
-            <StatPill
-              key={item.label}
+          {pills.map((item, index) => (
+            <Pill
+              key={item.title}
               item={{ ...item, delay: index * 0.08 }}
-              className="w-full rounded-full"
+              className="w-full"
             />
           ))}
 
-          {/* Mobile featured pill */}
           <motion.div
             initial={{ opacity: 0, y: 28, scale: 0.96, filter: "blur(8px)" }}
             whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, delay: 0.32, ease: EASE }}
-            className="flex h-[120px] items-center gap-5 rounded-full px-8 shadow-[0_12px_40px_rgba(37,99,235,0.28)] sm:col-span-2"
+            className="flex min-h-[120px] items-center gap-5 rounded-full px-8 py-5 shadow-[0_12px_40px_rgba(37,99,235,0.28)] sm:col-span-2"
             style={{ background: "linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%)" }}
           >
             <div
               className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full shadow-md"
               style={{ background: "linear-gradient(135deg, #F59E0B 0%, #FCD34D 100%)" }}
             >
-              <Briefcase size={24} color="white" strokeWidth={2} />
+              <Target size={24} color="white" strokeWidth={2} />
             </div>
             <div className="h-10 w-px bg-white/20" />
             <div className="min-w-0">
-              <p className="text-[34px] font-black leading-none tracking-tight text-white">100%</p>
-              <p className="mt-1.5 text-[14px] font-medium text-blue-100">Chuẩn Bộ GD&ĐT</p>
+              <p className="text-[15px] font-bold leading-snug text-white sm:text-base">
+                Thành lập theo Quyết định số 23/QĐ-CTHĐQT-ĐHNCT
+              </p>
+              <p className="mt-1.5 text-[13px] font-medium text-blue-100">
+                Ngày 25 tháng 06 năm 2015
+              </p>
             </div>
           </motion.div>
         </div>

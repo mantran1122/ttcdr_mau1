@@ -21,7 +21,7 @@ const courses = [
     title: "Trí tuệ nhân tạo (AI)",
     tag: "Công nghệ",
     badge: "Khóa học nổi bật",
-    image: "/courses/ai.png",
+    image: "/Tạo hình ảnh web/Trí tuệ nhân tạo AI.png",
     href: "/khoa-hoc/tri-tue-nhan-tao",
     col: "lg:col-span-7",
     rowH: "h-[340px]",
@@ -29,7 +29,7 @@ const courses = [
   {
     title: "Ngoại ngữ",
     tag: "Giao tiếp",
-    image: "/courses/ngoai-ngu.png",
+    image: "/Tạo hình ảnh web/Khóa học tiếng anh.png",
     href: "/khoa-hoc/ngoai-ngu",
     col: "lg:col-span-5",
     rowH: "h-[340px]",
@@ -37,7 +37,7 @@ const courses = [
   {
     title: "Tin học",
     tag: "Kỹ năng số",
-    image: "/courses/tin-hoc.png",
+    image: "/Tạo hình ảnh web/Khóa học tin học.jpeg",
     href: "/khoa-hoc/tin-hoc",
     col: "lg:col-span-4",
     rowH: "h-[280px]",
@@ -45,7 +45,7 @@ const courses = [
   {
     title: "Kỹ năng mềm",
     tag: "Phát triển bản thân",
-    image: "/courses/ky-nang-mem_v2.png",
+    image: "/Tạo hình ảnh web/Khóa học kỹ năng mềm.jpeg",
     href: "/khoa-hoc/ky-nang-mem",
     col: "lg:col-span-4",
     rowH: "h-[280px]",
@@ -53,7 +53,7 @@ const courses = [
   {
     title: "Kỹ năng nghề nghiệp",
     tag: "Định hướng nghề",
-    image: "/courses/ky-nang-nghe-nghiep.png",
+    image: "/Tạo hình ảnh web/Khóa học kỹ năng nghề.jpeg",
     href: "/khoa-hoc/ky-nang-nghe-nghiep",
     col: "lg:col-span-4",
     rowH: "h-[280px]",

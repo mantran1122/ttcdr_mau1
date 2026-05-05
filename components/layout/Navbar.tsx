@@ -90,6 +90,7 @@ export default function Navbar() {
           />
           <span
             className="hidden text-[15px] font-bold leading-[20px] text-[#ED1F25] md:block lg:text-[18px] lg:leading-[24px]"
+            style={{ fontFamily: "'Google Sans Flex', sans-serif" }}
           >
             Trung tâm Chuẩn đầu ra <br />& Phát triển nguồn nhân lực
           </span>
@@ -162,16 +163,6 @@ export default function Navbar() {
           >
             <i className="bi bi-search text-[20px]" />
           </a>
-
-          {/* Language flag (decorative) */}
-          <button
-            className={[
-              "hidden lg:flex w-12 h-12 items-center justify-center rounded-full transition-colors",
-              scrolled ? "text-gray-600 hover:bg-gray-100" : "text-[#1C2B5E] hover:bg-gray-100",
-            ].join(" ")}
-          >
-            <i className="bi bi-translate text-[20px]" />
-          </button>
 
           {/* Đăng ký */}
           <a
