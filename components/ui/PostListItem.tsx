@@ -17,7 +17,7 @@ export default function PostListItem({ href, title, date, isNew, subLinks }: Pos
             {isNew && (
               <span
                 className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[#ED1F25] text-xs px-2 py-0.5 rounded-full whitespace-nowrap"
-                style={{ fontSize: "14px" }}
+                style={{ fontSize: "18px" }}
               >
                 Mới
               </span>

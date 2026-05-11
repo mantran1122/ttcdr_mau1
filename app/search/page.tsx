@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
@@ -178,6 +179,11 @@ function ResultCard({ item, query, index }: { item: SearchItem; query: string; i
 /* ─── Page ──────────────────────────────────────────────────────────────── */
 
 export default function SearchPage() {
+  const router = useRouter();
+  const goBack = () => {
+    if (window.history.length > 1) router.back();
+    else router.push("/");
+  };
   const [query, setQuery]         = useState("");
   const [submitted, setSubmitted] = useState("");
   const [filter, setFilter]       = useState<SearchItem["category"] | "all">("all");
@@ -217,8 +223,16 @@ export default function SearchPage() {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, y: -24, filter: "blur(6px)" }}
             transition={{ duration: 0.4, ease: EASE }}
-            className="flex min-h-screen flex-col items-center justify-center px-4 pb-24"
+            className="relative flex min-h-screen flex-col items-center justify-center px-4 pb-24"
           >
+            <button
+              type="button"
+              onClick={() => goBack()}
+              aria-label="Đóng tìm kiếm"
+              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 sm:right-6 sm:top-6"
+            >
+              <i className="bi bi-x-lg text-[18px]" />
+            </button>
             {/* Logo / brand */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -343,11 +357,11 @@ export default function SearchPage() {
                 </form>
                 <button
                   type="button"
-                  onClick={clearSearch}
-                  className="shrink-0 hidden sm:flex items-center gap-1.5 rounded-full px-4 py-2.5 text-[13px] text-slate-500 hover:bg-slate-100 transition-colors"
+                  onClick={() => goBack()}
+                  aria-label="Đóng tìm kiếm"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
                 >
-                  <i className="bi bi-house text-[14px]" />
-                  {/* Trang chủ tìm kiếm */}
+                  <i className="bi bi-x-lg text-[18px]" />
                 </button>
               </div>
             </div>

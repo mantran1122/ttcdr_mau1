@@ -12,22 +12,22 @@ const ACCENT = "#2F5BFF";
 const leaders = [
   {
     name: "TS. Trần Thị Thùy",
-    role: "GIÁM ĐỐC TRUNG TÂM",
+    role: "Giám đốc Trung tâm",
     image: "/nhansu/gdtt.png",
   },
   {
     name: "ThS. Huỳnh Bá Lộc",
-    role: "PHÓ GIÁM ĐỐC",
+    role: "Phó Giám đốc",
     image: "/nhansu/pgd.png",
   },
   {
     name: "ThS. Ngô Thị Tú Uyên",
-    role: "PHÓ GIÁM ĐỐC",
+    role: "Phó Giám đốc",
     image: "/nhansu/pgd2.png",
   },
   {
     name: "Chuyên viên",
-    role: "QUẢN LÝ CHƯƠNG TRÌNH TRÍ TUỆ NHÂN TẠO (AI) CHUẨN ĐẦU RA",
+    role: "Quản lý chương trình Trí tuệ Nhân tạo (AI) Chuẩn đầu ra",
     image: "/nhansu/clone.png",
   },
 ];
@@ -36,22 +36,22 @@ const leaders = [
 const staff = [
   {
     name: "Chuyên viên",
-    role: "QUẢN LÍ CHƯƠNG TRÌNH ANH VĂN CHUẨN ĐẦU RA",
+    role: "Quản lý chương trình Anh văn Chuẩn đầu ra",
     image: "/nhansu/clone.png",
   },
   {
     name: "Chuyên viên",
-    role: "QUẢN LÍ CHƯƠNG TRÌNH TIN HỌC CHUẨN ĐẦU RA",
+    role: "Quản lý chương trình Tin học Chuẩn đầu ra",
     image: "/nhansu/clone.png",
   },
   {
     name: "Chuyên viên",
-    role: "QUẢN LÍ CHƯƠNG TRÌNH KỸ NĂNG MỀM CHUẨN ĐẦU RA",
+    role: "Quản lý chương trình Kỹ năng mềm Chuẩn đầu ra",
     image: "/nhansu/clone.png",
   },
   {
     name: "Chuyên viên",
-    role: "QUẢN LÍ CHƯƠNG TRÌNH TIẾNG ANH (VSTEP)",
+    role: "Quản lý chương trình Tiếng Anh (VSTEP)",
     image: "/nhansu/clone.png",
   },
 ];
@@ -90,19 +90,14 @@ function TeamCard({
   name,
   role,
   image,
-  size = "md",
   index,
 }: {
   name: string;
   role: string;
   image: string;
-  size?: "lg" | "md";
   index: number;
 }) {
-  const imgSize =
-    size === "lg"
-      ? "h-28 w-28 sm:h-32 sm:w-32"
-      : "h-20 w-20 sm:h-24 sm:w-24";
+  const imgSize = "h-28 w-28 sm:h-32 sm:w-32";
 
   return (
     <motion.div
@@ -111,7 +106,7 @@ function TeamCard({
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.55, delay: index * 0.08, ease: EASE }}
       whileHover={{ y: -6 }}
-      className="group flex flex-col items-center rounded-[2rem] p-6 text-center transition-shadow duration-300 hover:shadow-[0_20px_50px_-16px_rgba(47,91,255,0.18)] sm:p-8"
+      className="group flex h-full min-h-[23.5rem] flex-col items-center rounded-[2rem] p-6 text-center transition-shadow duration-300 hover:shadow-[0_20px_50px_-16px_rgba(47,91,255,0.18)] sm:p-8"
       style={{ backgroundColor: CARD_BG }}
     >
       {/* Avatar */}
@@ -133,12 +128,14 @@ function TeamCard({
       </h3>
 
       {/* Role */}
-      <p className="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500 sm:text-xs">
+      <p className="mt-1.5 min-h-[5.5rem] text-[12px] font-medium leading-snug tracking-wide text-slate-500 sm:text-[13px]">
         {role}
       </p>
 
       {/* Socials */}
-      <Socials />
+      <div className="mt-auto">
+        <Socials />
+      </div>
     </motion.div>
   );
 }
@@ -153,7 +150,7 @@ export default function NhanSuSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.6, ease: EASE }}
-          className="mb-14 text-center sm:mb-18"
+          className="mb-14 text-center"
         >
           <h2 className="text-[clamp(1.8rem,3.5vw,2.8rem)] font-extrabold leading-tight tracking-tight">
             <span className="text-slate-900">Nhân sự</span>
@@ -168,7 +165,6 @@ export default function NhanSuSection() {
               name={member.name}
               role={member.role}
               image={member.image}
-              size="lg"
               index={i}
             />
           ))}
@@ -182,7 +178,6 @@ export default function NhanSuSection() {
               name={member.name}
               role={member.role}
               image={member.image}
-              size="md"
               index={i}
             />
           ))}

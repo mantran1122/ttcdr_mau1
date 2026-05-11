@@ -1,144 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
+import { CalendarDays, ChevronDown, ChevronUp, Clock3, DoorOpen, Users2 } from "lucide-react";
+import { EXAMS, EXAM_TYPE_LABEL, EXAM_TYPE_STYLE } from "@/data/exams";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-
-type ExamType = "ngoaingu" | "tinhoc" | "kynang" | "ai" | "chungchi";
-type ExamStatus = "upcoming" | "completed";
-
-type Exam = {
-  subject: string;
-  kind: string;
-  type: ExamType;
-  groups: string;
-  date: string;
-  session: string;
-  room: string;
-  status: ExamStatus;
-  note?: string;
-};
-
-const TYPE_LABEL: Record<ExamType, string> = {
-  ngoaingu: "Ngoại ngữ",
-  tinhoc: "Tin học",
-  kynang: "Kỹ năng",
-  ai: "AI",
-  chungchi: "Chứng chỉ",
-};
-
-const TYPE_STYLE: Record<ExamType, string> = {
-  ngoaingu: "bg-blue-50 text-blue-700 ring-blue-200",
-  tinhoc: "bg-green-50 text-green-700 ring-green-200",
-  kynang: "bg-amber-50 text-amber-700 ring-amber-200",
-  ai: "bg-orange-50 text-orange-700 ring-orange-200",
-  chungchi: "bg-red-50 text-red-700 ring-red-200",
-};
-
-const EXAMS: Exam[] = [
-  {
-    subject: "TOEIC Mock Test",
-    kind: "Thi thử",
-    type: "ngoaingu",
-    groups: "TN01, TN02",
-    date: "20/05/2025",
-    session: "Ca 1 (7:30 – 9:30)",
-    room: "A201, A202",
-    status: "upcoming",
-  },
-  {
-    subject: "VSTEP B1",
-    kind: "Kiểm tra giữa khóa",
-    type: "ngoaingu",
-    groups: "TN03, TN04",
-    date: "22/05/2025",
-    session: "Ca 2 (9:30 – 11:30)",
-    room: "A202",
-    status: "upcoming",
-  },
-  {
-    subject: "Tin học IC3",
-    kind: "Kiểm tra cuối khóa",
-    type: "tinhoc",
-    groups: "TH05, TH06",
-    date: "24/05/2025",
-    session: "Ca 3 (13:30 – 15:30)",
-    room: "Lab01",
-    status: "upcoming",
-  },
-  {
-    subject: "AI cơ bản",
-    kind: "Kiểm tra giữa khóa",
-    type: "ai",
-    groups: "AI02, AI05",
-    date: "27/05/2025",
-    session: "Ca 4 (15:30 – 17:30)",
-    room: "Lab02",
-    status: "upcoming",
-  },
-  {
-    subject: "Kỹ năng mềm",
-    kind: "Kiểm tra cuối khóa",
-    type: "kynang",
-    groups: "KN02, KN03",
-    date: "29/05/2025",
-    session: "Ca 5 (17:30 – 19:30)",
-    room: "A101",
-    status: "upcoming",
-  },
-  {
-    subject: "TOEIC Chính thức (ĐGNLNN)",
-    kind: "Thi chứng chỉ",
-    type: "chungchi",
-    groups: "Tất cả thí sinh đã đăng ký",
-    date: "31/05/2025",
-    session: "Ca 1 (7:30 – 9:30)",
-    room: "Hội đồng thi – B Block",
-    status: "upcoming",
-    note: "Mang CCCD/CMND và phiếu dự thi",
-  },
-  {
-    subject: "VSTEP B2",
-    kind: "Kiểm tra cuối khóa",
-    type: "ngoaingu",
-    groups: "TN07, TN08",
-    date: "03/06/2025",
-    session: "Ca 2 (9:30 – 11:30)",
-    room: "A202",
-    status: "upcoming",
-  },
-  {
-    subject: "Tin học MOS",
-    kind: "Kiểm tra cuối khóa",
-    type: "tinhoc",
-    groups: "TH01",
-    date: "15/04/2025",
-    session: "Ca 3 (13:30 – 15:30)",
-    room: "Lab01",
-    status: "completed",
-  },
-  {
-    subject: "TOEIC Cơ bản",
-    kind: "Kiểm tra giữa khóa",
-    type: "ngoaingu",
-    groups: "TN01",
-    date: "10/04/2025",
-    session: "Ca 1 (7:30 – 9:30)",
-    room: "A201",
-    status: "completed",
-  },
-  {
-    subject: "Kỹ năng nghề nghiệp",
-    kind: "Kiểm tra cuối khóa",
-    type: "kynang",
-    groups: "KN06",
-    date: "05/04/2025",
-    session: "Ca 4 (15:30 – 17:30)",
-    room: "A101",
-    status: "completed",
-  },
-];
+const PAGE_SIZE = 6;
+const SCROLL_KEYS = new Set([
+  "ArrowDown",
+  "ArrowUp",
+  "PageDown",
+  "PageUp",
+  "Home",
+  "End",
+  " ",
+]);
 
 const FILTERS = [
   { key: "all", label: "Tất cả" },
@@ -150,144 +28,215 @@ type FilterKey = (typeof FILTERS)[number]["key"];
 
 export default function ExamListSection() {
   const [filter, setFilter] = useState<FilterKey>("all");
+  const [page, setPage] = useState(1);
+  const [hasUserScrolled, setHasUserScrolled] = useState(false);
 
-  const visible = EXAMS.filter(
-    (e) => filter === "all" || e.status === filter
-  );
+  useEffect(() => {
+    if (hasUserScrolled) return;
+
+    let isMousePressed = false;
+    let lastScrollY = window.scrollY;
+
+    const reveal = () => {
+      setHasUserScrolled(true);
+    };
+
+    const onWheel = (event: WheelEvent) => {
+      if (event.deltaX !== 0 || event.deltaY !== 0) reveal();
+    };
+
+    const onTouchMove = () => {
+      reveal();
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (SCROLL_KEYS.has(event.key)) reveal();
+    };
+
+    const onMouseDown = () => {
+      isMousePressed = true;
+    };
+
+    const onMouseUp = () => {
+      isMousePressed = false;
+    };
+
+    const onWindowBlur = () => {
+      isMousePressed = false;
+    };
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+      const hasMoved = currentScrollY !== lastScrollY;
+      lastScrollY = currentScrollY;
+      if (isMousePressed && hasMoved) reveal();
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("blur", onWindowBlur);
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("mouseup", onMouseUp);
+      window.removeEventListener("blur", onWindowBlur);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [hasUserScrolled]);
+
+  const filtered = EXAMS.filter((exam) => filter === "all" || exam.status === filter);
+  const visible = filtered.slice(0, page * PAGE_SIZE);
+  const hasMore = visible.length < filtered.length;
+  const canCollapse = page > 1 && filtered.length > PAGE_SIZE;
 
   return (
     <section className="pb-24 lg:pb-32">
-      <div className="container mx-auto px-4">
-        <div className="mx-auto max-w-4xl">
-          {/* Filter tabs */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
+            animate={hasUserScrolled ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
             transition={{ duration: 0.45, ease: EASE }}
-            className="mb-6 flex gap-2"
+            className="mb-8 flex flex-wrap justify-center gap-6 sm:gap-8"
           >
-            {FILTERS.map((f) => (
+            {FILTERS.map((tab) => (
               <button
-                key={f.key}
-                onClick={() => setFilter(f.key)}
+                key={tab.key}
+                onClick={() => {
+                  setFilter(tab.key);
+                  setPage(1);
+                }}
                 className={[
-                  "rounded-xl px-4 py-2 text-sm font-semibold transition-all duration-200",
-                  filter === f.key
-                    ? "bg-red-600 text-white shadow-sm"
-                    : "bg-white text-slate-600 ring-1 ring-slate-200 hover:ring-red-300",
+                  "relative pb-2 text-sm font-semibold transition-colors duration-200",
+                  filter === tab.key ? "text-red-600" : "text-slate-500 hover:text-slate-700",
                 ].join(" ")}
               >
-                {f.label}
+                {tab.label}
+                {filter === tab.key && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-red-600" />
+                )}
               </button>
             ))}
           </motion.div>
 
-          {/* Exam cards */}
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {visible.map((exam, i) => (
               <motion.div
-                key={`${exam.subject}-${exam.date}`}
+                key={exam.slug}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.45, delay: i * 0.06, ease: EASE }}
-                className="relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-900/5"
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.45, delay: i * 0.05, ease: EASE }}
               >
-                {/* Left accent stripe by type */}
-                <div
-                  className={[
-                    "absolute left-0 top-0 h-full w-1",
-                    exam.type === "ngoaingu"
-                      ? "bg-blue-400"
-                      : exam.type === "tinhoc"
-                      ? "bg-green-400"
-                      : exam.type === "ai"
-                      ? "bg-orange-400"
-                      : exam.type === "chungchi"
-                      ? "bg-red-500"
-                      : "bg-amber-400",
-                  ].join(" ")}
-                />
+                <Link
+                  href={`/thong-tin/lich-kiem-tra/${exam.slug}`}
+                  className="group flex h-[352px] flex-col overflow-hidden rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-900/5 transition-shadow hover:shadow-md"
+                >
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span
+                      className={[
+                        "rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.06em] ring-1",
+                        EXAM_TYPE_STYLE[exam.type],
+                      ].join(" ")}
+                    >
+                      {EXAM_TYPE_LABEL[exam.type]}
+                    </span>
+                    <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-semibold text-slate-500 ring-1 ring-slate-200">
+                      {exam.kind}
+                    </span>
+                  </div>
 
-                <div className="flex flex-col gap-3 px-6 py-4 sm:flex-row sm:items-start sm:justify-between">
-                  {/* Left: subject info */}
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span
-                        className={[
-                          "rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide ring-1",
-                          TYPE_STYLE[exam.type],
-                        ].join(" ")}
-                      >
-                        {TYPE_LABEL[exam.type]}
-                      </span>
-                      <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-medium text-slate-500 ring-1 ring-slate-200">
-                        {exam.kind}
-                      </span>
-                      {exam.status === "completed" && (
-                        <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-medium text-slate-400 ring-1 ring-slate-200">
-                          Đã kết thúc
-                        </span>
-                      )}
-                    </div>
+                  <h3 className="mt-3 min-h-[66px] line-clamp-2 text-[27px] font-bold leading-[1.24] tracking-[-0.02em] text-slate-900 transition-colors group-hover:text-red-600 sm:text-[28px]">
+                    {exam.subject}
+                  </h3>
 
-                    <h3 className="mt-2 text-base font-bold text-slate-900">
-                      {exam.subject}
-                    </h3>
+                  <div className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-xl bg-red-50 px-3 py-2 text-base font-extrabold text-red-600">
+                    <CalendarDays className="h-4 w-4" />
+                    {exam.date}
+                  </div>
 
-                    <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-500">
-                      <span className="flex items-center gap-1.5">
-                        <i className="bi bi-people text-slate-400" />
-                        Nhóm: {exam.groups}
-                      </span>
-                      <span className="flex items-center gap-1.5">
-                        <i className="bi bi-clock text-slate-400" />
-                        {exam.session}
-                      </span>
-                      <span className="flex items-center gap-1.5">
-                        <i className="bi bi-door-open text-slate-400" />
-                        {exam.room}
-                      </span>
-                    </div>
+                  <span className="mt-4 h-px w-full bg-slate-100" />
 
+                  <div className="mt-4 space-y-2.5 text-sm text-slate-500">
+                    <p className="flex items-start gap-2">
+                      <Users2 className="mt-0.5 h-4 w-4 text-slate-400" />
+                      <span className="line-clamp-1">
+                        <span className="font-semibold text-slate-600">Nhóm:</span> {exam.groups}
+                      </span>
+                    </p>
+                    <p className="flex items-start gap-2">
+                      <Clock3 className="mt-0.5 h-4 w-4 text-slate-400" />
+                      <span className="line-clamp-1">{exam.session}</span>
+                    </p>
+                    <p className="flex items-start gap-2">
+                      <DoorOpen className="mt-0.5 h-4 w-4 text-slate-400" />
+                      <span className="line-clamp-1">{exam.room}</span>
+                    </p>
+                  </div>
+
+                  <div className="mt-auto min-h-[48px] pt-4">
                     {exam.note && (
-                      <p className="mt-2 text-[11px] text-amber-700">
-                        <i className="bi bi-exclamation-triangle mr-1" />
+                      <p className="line-clamp-2 rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-700">
                         {exam.note}
                       </p>
                     )}
+                    {!exam.note && exam.status === "completed" && (
+                      <span className="inline-flex w-fit rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.06em] text-slate-500">
+                        Đã kết thúc
+                      </span>
+                    )}
                   </div>
-
-                  {/* Right: date */}
-                  <div className="flex shrink-0 items-center gap-2 sm:flex-col sm:items-end sm:gap-1 sm:text-right">
-                    <div
-                      className={[
-                        "inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-black",
-                        exam.status === "upcoming"
-                          ? "bg-red-50 text-red-700"
-                          : "bg-slate-100 text-slate-500",
-                      ].join(" ")}
-                    >
-                      <i className="bi bi-calendar-event text-[13px]" />
-                      {exam.date}
-                    </div>
-                  </div>
-                </div>
+                </Link>
               </motion.div>
             ))}
 
             {visible.length === 0 && (
-              <div className="rounded-2xl bg-white py-16 text-center shadow-sm ring-1 ring-slate-900/5">
-                <i className="bi bi-calendar-x text-4xl text-slate-300" />
+              <div className="col-span-full rounded-2xl bg-white py-16 text-center shadow-sm ring-1 ring-slate-900/5">
+                <CalendarDays className="mx-auto h-10 w-10 text-slate-300" />
                 <p className="mt-3 text-sm text-slate-400">Không có lịch kiểm tra.</p>
               </div>
             )}
           </div>
 
-          <p className="mt-4 text-right text-[11px] text-slate-400">
+          {(hasMore || canCollapse) && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, ease: EASE }}
+              className="mt-6 flex flex-wrap items-center justify-center gap-3"
+            >
+              {hasMore && (
+                <button
+                  onClick={() => setPage((prev) => prev + 1)}
+                  className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 transition-all hover:text-red-600 hover:ring-red-300"
+                >
+                  <ChevronDown className="h-4 w-4" />
+                  Xem thêm lịch kiểm tra
+                </button>
+              )}
+              {canCollapse && (
+                <button
+                  onClick={() => setPage(1)}
+                  className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 transition-all hover:text-red-600 hover:ring-red-300"
+                >
+                  <ChevronUp className="h-4 w-4" />
+                  Thu gọn
+                </button>
+              )}
+            </motion.div>
+          )}
+
+          {/* <p className="mt-5 text-right text-[11px] text-slate-400">
             * Lịch có thể thay đổi. Theo dõi thông báo từ Trung tâm để cập nhật kịp thời.
-          </p>
+          </p> */}
         </div>
       </div>
     </section>

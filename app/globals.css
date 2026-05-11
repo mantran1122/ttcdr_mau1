@@ -23,12 +23,13 @@
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 html {
   background: var(--background);
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -36,6 +37,50 @@ body {
   color: var(--foreground);
   min-height: 100vh;
   overflow-x: hidden;
+  overflow-x: clip;
+}
+
+/* Readability floor: keep font-size >= 18px on all screens */
+:root {
+  --text-xs: 1.125rem;
+  --text-sm: 1.125rem;
+  --text-base: 1.125rem;
+  --text-xs--line-height: calc(1.75 / 1.125);
+  --text-sm--line-height: calc(1.75 / 1.125);
+  --text-base--line-height: calc(1.75 / 1.125);
+}
+
+:where(
+  [class*="text-[9px]"],
+  [class*="text-[9.5px]"],
+  [class*="text-[10px]"],
+  [class*="text-[10.5px]"],
+  [class*="text-[11px]"],
+  [class*="text-[11.5px]"],
+  [class*="text-[12px]"],
+  [class*="text-[12.5px]"],
+  [class*="text-[13px]"],
+  [class*="text-[13.5px]"],
+  [class*="text-[14px]"],
+  [class*="text-[14.5px]"],
+  [class*="text-[15px]"],
+  [class*="text-[15.5px]"],
+  [class*="text-[16px]"],
+  [class*="text-[16.5px]"],
+  [class*="text-[17px]"],
+  [class*="text-[17.5px]"],
+  [class*="text-[0.8rem]"],
+  [class*="text-[0.85rem]"],
+  [class*="text-[0.87rem]"],
+  [class*="text-[0.9rem]"],
+  [class*="text-[0.93rem]"],
+  [class*="text-[0.95rem]"],
+  [class*="text-[0.98rem]"],
+  [class*="text-[1rem]"],
+  [class*="text-[1.0625rem]"],
+  [class*="text-[1.0rem]"]
+):not([class*="sm:text-"]):not([class*="md:text-"]):not([class*="lg:text-"]):not([class*="xl:text-"]):not([class*="2xl:text-"]) {
+  font-size: 1.125rem;
 }
 
 img,
@@ -43,6 +88,50 @@ video,
 canvas,
 svg {
   max-width: 100%;
+}
+
+/* ── Keyframes dùng chung ── */
+@keyframes tcFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  30%       { transform: translate3d(4px, -16px, 0) scale(1.04); }
+  70%       { transform: translate3d(-4px, -22px, 0) scale(1.06); }
+}
+@keyframes tcPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%       { opacity: 1; transform: scale(1.15); }
+}
+@keyframes tcDrift {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-5deg); }
+  50%       { transform: translate3d(8px, -6px, 0) rotate(1deg); }
+}
+@keyframes tcRotate {
+  0%, 100% { transform: rotate(-2deg); }
+  50%      { transform: rotate(2deg); }
+}
+@keyframes tcOpacityPulse {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 0.5; }
+}
+
+@keyframes courseHeroFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+.floating-card {
+  animation: courseHeroFloat 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+.floating-delay-1 { animation-delay: 0s; }
+.floating-delay-2 { animation-delay: 1.1s; }
+.floating-delay-3 { animation-delay: 2.1s; }
+.floating-delay-4 { animation-delay: 2.9s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-card {
+    animation: none;
+  }
 }
 
 /* ── Scroll reveal ── */

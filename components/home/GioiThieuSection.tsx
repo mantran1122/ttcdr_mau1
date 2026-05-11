@@ -36,7 +36,7 @@ export default function GioiThieuSection() {
               Chi tiết
               <span
                 className="ml-4 w-6 h-6 rounded-full bg-white text-[#ED1F25] flex items-center justify-center"
-                style={{ fontSize: "13px" }}
+                style={{ fontSize: "18px" }}
               >
                 ›
               </span>

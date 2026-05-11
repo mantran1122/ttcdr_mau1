@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
+import SectionTitle from "@/components/ui/SectionTitle";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -21,42 +22,42 @@ const courses = [
     title: "Trí tuệ nhân tạo (AI)",
     tag: "Công nghệ",
     badge: "Khóa học nổi bật",
-    image: "/Tạo hình ảnh web/Trí tuệ nhân tạo AI.png",
+    image: "/NewCourse/AI.jpeg",
     href: "/khoa-hoc/tri-tue-nhan-tao",
     col: "lg:col-span-7",
-    rowH: "h-[340px]",
+    rowH: "h-[375px]",
   },
   {
     title: "Ngoại ngữ",
     tag: "Giao tiếp",
-    image: "/Tạo hình ảnh web/Khóa học tiếng anh.png",
+    image: "/NewCourse/Khóa học tiếng anh.png",
     href: "/khoa-hoc/ngoai-ngu",
     col: "lg:col-span-5",
-    rowH: "h-[340px]",
+    rowH: "h-[375px]",
   },
   {
     title: "Tin học",
     tag: "Kỹ năng số",
-    image: "/Tạo hình ảnh web/Khóa học tin học.jpeg",
+    image: "/NewCourse/Tin học.jpeg",
     href: "/khoa-hoc/tin-hoc",
     col: "lg:col-span-4",
-    rowH: "h-[280px]",
+    rowH: "h-[375px]",
   },
   {
     title: "Kỹ năng mềm",
     tag: "Phát triển bản thân",
-    image: "/Tạo hình ảnh web/Khóa học kỹ năng mềm.jpeg",
+    image: "/NewCourse/Kỹ năng mềm.png",
     href: "/khoa-hoc/ky-nang-mem",
-    col: "lg:col-span-4",
-    rowH: "h-[280px]",
+    col: "lg:col-span-5",
+    rowH: "h-[375px]",
   },
   {
     title: "Kỹ năng nghề nghiệp",
     tag: "Định hướng nghề",
-    image: "/Tạo hình ảnh web/Khóa học kỹ năng nghề.jpeg",
+    image: "/NewCourse/Kỹ năng nghề.png",
     href: "/khoa-hoc/ky-nang-nghe-nghiep",
-    col: "lg:col-span-4",
-    rowH: "h-[280px]",
+    col: "lg:col-span-3",
+    rowH: "h-[375px]",
   },
 ];
 
@@ -66,7 +67,7 @@ export default function CoursesShowcaseSection() {
 
   return (
     <section className="relative py-24 xl:py-28 bg-background">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <motion.div
@@ -75,42 +76,19 @@ export default function CoursesShowcaseSection() {
           animate={titleInView ? "visible" : "hidden"}
           className="mb-14 text-center"
         >
-          <motion.div
-            variants={headerItem}
-            className="mb-8 flex items-center justify-center gap-4 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700 sm:text-sm"
-          >
-            <motion.span
-              animate={titleInView ? { scaleX: 1 } : { scaleX: 0 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-              className="hidden h-px w-16 origin-right bg-slate-300 sm:block"
-            />
-            <motion.span
-              animate={titleInView ? { scale: 1, rotate: 45 } : { scale: 0, rotate: 0 }}
-              transition={{ duration: 0.4, delay: 0.35, type: "spring", stiffness: 300 }}
-              className="h-2 w-2 bg-red-500"
-            />
-            <span className="text-center">Khóa học tại Trung tâm</span>
-            <motion.span
-              animate={titleInView ? { scale: 1, rotate: 45 } : { scale: 0, rotate: 0 }}
-              transition={{ duration: 0.4, delay: 0.4, type: "spring", stiffness: 300 }}
-              className="h-2 w-2 bg-red-500"
-            />
-            <motion.span
-              animate={titleInView ? { scaleX: 1 } : { scaleX: 0 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-              className="hidden h-px w-16 origin-left bg-slate-300 sm:block"
-            />
+          <motion.div variants={headerItem} className="mb-6">
+            <SectionTitle title="Khóa học tại Trung tâm" />
           </motion.div>
           <motion.h2
             variants={headerItem}
-            className="text-[50px] font-black leading-[1.15] tracking-[-0.05em] text-[#0B1A3B]"
+            className="text-[50px] font-medium leading-[1.35] tracking-[-0.05em] text-[#0B1A3B]"
           >
             Khoá học cho sinh viên
           </motion.h2>
         </motion.div>
 
         {/* Bento grid */}
-        <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12">
           {courses.map((course) => (
             <a
               key={course.title}
@@ -135,14 +113,14 @@ export default function CoursesShowcaseSection() {
               <div className="absolute inset-0 " />
 
               {/* Badge top-left */}
-              {course.badge && (
+              {/* {course.badge && (
                 <span
                   className="absolute left-4 top-4 z-10 flex items-center gap-1.5 rounded-full px-3 py-1 text-[12px] font-semibold"
                   style={{ background: "rgba(255,255,255,0.88)", color: "#374151", backdropFilter: "blur(6px)" }}
                 >
                   ★ {course.badge}
                 </span>
-              )}
+              )} */}
 
               {/* Floating navigation pill button — bottom-left */}
               <div className="absolute bottom-4 left-4 z-10">

@@ -2,9 +2,11 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
+import { Home, ChevronRight } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const HERO_BANNER_HEIGHT = "aspect-video max-h-[95vh] lg:aspect-auto lg:h-[92vh]";
+const HERO_BANNER_HEIGHT = "aspect-video max-h-[95vh] lg:aspect-auto lg:h-[66vh]";
 
 export default function HeroSection() {
   return (
@@ -16,7 +18,7 @@ export default function HeroSection() {
         className="h-full w-full overflow-hidden"
       >
         <Image
-          src="/courses/bannerthongtin4.png"
+          src="/courses/bannerthongtin16.png"
           alt="Banner trang lịch kiểm tra"
           width={1920}
           height={1080}
@@ -27,26 +29,37 @@ export default function HeroSection() {
         />
       </motion.div>
 
-      <div className="container relative z-40 mx-auto flex h-full items-end justify-center px-4 pb-16 sm:pb-20 md:pb-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+      <div className="absolute inset-0 z-40 flex flex-col items-start justify-start pt-16 sm:pt-20 md:pt-32">
+        <div className="container mx-auto flex flex-col px-4 sm:px-6 lg:px-8">
+        <motion.h1
+          initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.18, ease: EASE }}
-          className="text-center"
+          className="text-[clamp(1.7rem,4vw,3.6rem)] font-black leading-[1.25] tracking-[-0.03em] text-slate-800"
         >
-          <div className="mb-3 flex items-center justify-center gap-3">
-            <span className="hidden h-px w-12 bg-slate-300/80 sm:block" />
-            <span className="h-2 w-2 rotate-45 bg-red-500" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-red-600">
-              Thông tin &amp; Lịch
-            </span>
-            <span className="h-2 w-2 rotate-45 bg-red-500" />
-            <span className="hidden h-px w-12 bg-slate-300/80 sm:block" />
-          </div>
-          <h1 className="text-[clamp(1.7rem,4vw,3.6rem)] font-black leading-[1.25] tracking-[-0.05em] text-slate-950">
-            Lịch kiểm tra
-          </h1>
-        </motion.div>
+          Thông tin lịch kiểm tra
+        </motion.h1>
+        <motion.ol
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.30, ease: EASE }}
+          className="mt-2 flex items-center ml-6 gap-2 text-sm text-slate-500"
+        >
+          <li>
+            <Link href="/" className="flex items-center transition-colors text-red-500 hover:text-red-600">
+              <Home className="h-4 w-4" strokeWidth={2} />
+            </Link>
+          </li>
+          <li className="flex items-center gap-2 text-red-500">
+            <ChevronRight className="h-4 w-4 text-red-500" strokeWidth={2} />
+            <span>Thông tin</span>
+          </li>
+          <li className="flex items-center gap-2">
+            <ChevronRight className="h-4 w-4 text-slate-300" strokeWidth={2} />
+            <span className="font-medium text-slate-700 hover:text-red-500">Lịch kiểm tra</span>
+          </li>
+        </motion.ol>
+        </div>
       </div>
 
       <div

@@ -139,7 +139,7 @@ function RoadmapCard({ step, isFlipped, onToggle }: { step: RoadmapStep; isFlipp
 
   return (
     <div
-      className={`group relative z-10 cursor-pointer ${step.tiltClass}`}
+      className={`group relative z-20 cursor-pointer ${step.tiltClass}`}
       style={{ perspective: "1000px" }}
       onClick={onToggle}
       role="button"
@@ -229,7 +229,7 @@ function RoadmapCard({ step, isFlipped, onToggle }: { step: RoadmapStep; isFlipp
 
 function Connector() {
   return (
-    <div className="pointer-events-none absolute -right-[5.2rem] top-[11.2rem] z-30 w-[7.3rem]">
+    <div className="pointer-events-none absolute -right-[5.2rem] top-[11.2rem] z-[2] w-[7.3rem]">
       <svg viewBox="0 0 124 68" className="h-14 w-full">
         <path
           d="M5 44 C 30 6, 82 66, 118 28"
@@ -264,11 +264,11 @@ export function DevelopmentRoadmapSection() {
           transition={{ duration: 0.6, ease: EASE }}
           className="mx-auto mb-14 max-w-5xl text-center"
         >
-          <h2 className="text-[50px] font-black leading-[1.2] tracking-[-0.05em] text-slate-900">
+          <h2 className="text-[50px] font-medium leading-[1.2] tracking-[-0.05em] text-slate-900">
             Định hướng phát triển
           </h2>
-
-          <div className="mx-auto mt-4 h-1 w-[4.8rem] rounded-full bg-[#d72c2e]" />
+{/* 
+          <div className="mx-auto mt-4 h-1 w-[4.8rem] rounded-full bg-[#d72c2e]" /> */}
         </motion.div>
 
         <div className="hidden lg:block">

@@ -1,49 +1,42 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import SearchOverlay from "./SearchOverlay";
 
 const navItems = [
-  { label: "Giới thiệu",       href: "/gioi-thieu",                  icon: "bi-house-door" },
-  { label: "Hướng dẫn",        href: "/huong-dan-dang-ky",           icon: "bi-book" },
+  { label: "Giới thiệu", href: "/gioi-thieu", icon: "bi-house-door" },
+  { label: "Hướng dẫn", href: "/huong-dan-dang-ky", icon: "bi-book" },
   {
     label: "Thông tin & Lịch",
     href: "/thong-tin/thoi-khoa-bieu",
     icon: "bi-calendar3",
     dropdown: [
       { label: "Thời khóa biểu", href: "/thong-tin/thoi-khoa-bieu" },
-      { label: "Lịch kiểm tra",  href: "/thong-tin/lich-kiem-tra" },
-      { label: "Thông báo",      href: "/thong-tin/thong-bao" },
+      { label: "Lịch kiểm tra", href: "/thong-tin/lich-kiem-tra" },
+      { label: "Thông báo", href: "/thong-tin/thong-bao" },
     ],
   },
   {
     label: "Tra cứu",
-    href: "#",
+    href: "/kqthi",
     icon: "bi-search",
-    dropdown: [
-      { label: "Thông tin thí sinh",  href: "/thisinh" },
-      { label: "Kết quả thi ĐGNLNN", href: "/kqthi" },
-    ],
   },
   {
     label: "VSTEP",
     href: "https://vstep.nctu.edu.vn/",
     icon: "bi-mortarboard",
-    dropdown: [
-      { label: "Lịch kiểm tra", href: "https://vstep.nctu.edu.vn/lich-thi/" },
-      { label: "Thông báo",     href: "https://vstep.nctu.edu.vn/thong-bao-vstep/" },
-      { label: "Kế hoạch năm", href: "https://vstep.nctu.edu.vn/ke-hoach-nam/" },
-    ],
   },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled]     = useState(false);
-  const [activeDD, setActiveDD]     = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeDD, setActiveDD] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileSub, setMobileSub]   = useState<string | null>(null);
+  const [mobileSub, setMobileSub] = useState<string | null>(null);
+  const [searchOpen, setSearchOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -76,28 +69,28 @@ export default function Navbar() {
       ].join(" ")}
     >
       <div className="container mx-auto flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
-
         {/* Logo */}
         <Link href="/" className="flex shrink-0 items-center gap-3 sm:gap-5">
           <Image
-            src="/logo_don.png"
+            src="/logo_truong_3.png"
             alt="Logo NCT"
-            width={64}
+            width={220}
             height={64}
-            className="h-12 w-auto sm:h-16"
-            sizes="64px"
+            className="h-12 w-auto object-contain sm:h-16"
+            sizes="(min-width: 640px) 220px, 165px"
+            quality={100}
             priority
           />
-          <span
-            className="hidden text-[15px] font-bold leading-[20px] text-[#ED1F25] md:block lg:text-[18px] lg:leading-[24px]"
+          {/* <span
+            className="hidden text-[22px] font-bold leading-[26px] text-[#ED1F25] md:block lg:text-[22px] lg:leading-[28px]"
             style={{ fontFamily: "'Google Sans Flex', sans-serif" }}
           >
-            Trung tâm Chuẩn đầu ra <br />& Phát triển nguồn nhân lực
-          </span>
+            Trung tâm <br/> Chuẩn đầu ra 
+          </span> */}
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-2">
+        <nav className="ml-auto mr-3 hidden items-center gap-2 lg:flex xl:mr-8">
           {navItems.map((item) => (
             <div
               key={item.label}
@@ -108,7 +101,7 @@ export default function Navbar() {
               <a
                 href={item.href}
                 className={[
-                  "flex items-center gap-2 px-5 py-4 rounded-lg text-[16px] font-semibold transition-colors",
+                  "flex items-center gap-2 px-5 py-4 rounded-lg text-[21px] font-semibold transition-colors",
                   scrolled
                     ? "text-gray-700 hover:text-[#ED1F25] hover:bg-gray-50"
                     : "text-[#1C2B5E] hover:text-[#ED1F25] hover:bg-gray-50",
@@ -116,7 +109,9 @@ export default function Navbar() {
               >
                 {item.label}
                 {item.dropdown && (
-                  <i className={`bi bi-chevron-down text-[12px] transition-transform duration-200 ${activeDD === item.label ? "rotate-180" : ""}`} />
+                  <i
+                    className={`bi bi-chevron-down text-[12px] transition-transform duration-200 ${activeDD === item.label ? "rotate-180" : ""}`}
+                  />
                 )}
               </a>
 
@@ -154,44 +149,57 @@ export default function Navbar() {
         {/* Right actions */}
         <div className="flex items-center gap-2 sm:gap-4">
           {/* Search */}
-          <a
-            href="/search"
-            className={[
-              "hidden lg:flex w-12 h-12 items-center justify-center rounded-full transition-colors",
-              scrolled ? "text-gray-600 hover:bg-gray-100" : "text-[#1C2B5E] hover:bg-gray-100",
-            ].join(" ")}
+          <button
+            type="button"
+            onClick={() => setSearchOpen(true)}
+            className="hidden h-10 w-10 items-center justify-center rounded-full text-slate-600 transition-colors lg:flex hover:text-[#ED1F25]"
           >
-            <i className="bi bi-search text-[20px]" />
-          </a>
+            <i className="bi bi-search text-[22px]" />
+          </button>
 
           {/* Đăng ký */}
           <a
             href="https://dkhp.nctu.edu.vn/"
-            className="hidden lg:flex items-center gap-2 px-6 py-4 rounded-full text-[16px] font-semibold text-white transition-all hover:opacity-90"
-            style={{ background: "#ED1F25" }}
+            className="hidden min-w-[164px] items-center justify-center rounded-full bg-[#ED1F25] px-9 py-2.5 text-[21px] font-semibold text-white transition-colors hover:bg-[#c41920] lg:inline-flex"
           >
-            <i className="bi bi-person-plus text-[18px]" />
             Đăng ký
           </a>
 
           {/* Mobile hamburger */}
           <button
-            onClick={() => { setMobileOpen(!mobileOpen); setMobileSub(null); }}
+            onClick={() => {
+              setMobileOpen(!mobileOpen);
+              setMobileSub(null);
+            }}
             className={[
               "lg:hidden flex h-11 w-11 flex-col items-center justify-center gap-[6px] rounded-full transition-all sm:h-14 sm:w-14 sm:gap-[8px]",
-              scrolled ? "bg-gray-100" : "bg-gray-100",
+              "bg-gray-100",
             ].join(" ")}
             aria-label="Menu"
           >
             <motion.span
               animate={mobileOpen ? { width: "14px", y: 5, rotate: 45 } : { width: "20px", y: 0, rotate: 0 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              style={{ borderRadius: "10px", backgroundColor: scrolled ? "#111" : "#1C2B5E", height: "1.5px", display: "block", originX: "50%", originY: "50%" }}
+              style={{
+                borderRadius: "10px",
+                backgroundColor: scrolled ? "#111" : "#1C2B5E",
+                height: "1.5px",
+                display: "block",
+                originX: "50%",
+                originY: "50%",
+              }}
             />
             <motion.span
               animate={mobileOpen ? { width: "14px", y: -5, rotate: -45 } : { width: "20px", y: 0, rotate: 0 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              style={{ borderRadius: "10px", backgroundColor: scrolled ? "#111" : "#1C2B5E", height: "1.5px", display: "block", originX: "50%", originY: "50%" }}
+              style={{
+                borderRadius: "10px",
+                backgroundColor: scrolled ? "#111" : "#1C2B5E",
+                height: "1.5px",
+                display: "block",
+                originX: "50%",
+                originY: "50%",
+              }}
             />
           </button>
         </div>
@@ -227,11 +235,13 @@ export default function Navbar() {
                     className="flex w-full items-center gap-3 px-4 py-4 text-left transition-colors hover:bg-gray-50 sm:gap-5 sm:px-6 sm:py-5"
                   >
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-100 sm:h-12 sm:w-12">
-                      <i className={`bi ${item.icon} text-[18px] text-gray-600`} />
+                      <i className={`bi ${item.icon} text-[24px] text-gray-600`} />
                     </span>
                     <span className="flex-1 text-[15px] font-semibold text-gray-800 sm:text-[17px]">{item.label}</span>
                     {item.dropdown && (
-                      <i className={`bi ${mobileSub === item.label ? "bi-chevron-up" : "bi-chevron-down"} text-base text-gray-400`} />
+                      <i
+                        className={`bi ${mobileSub === item.label ? "bi-chevron-up" : "bi-chevron-down"} text-base text-gray-400`}
+                      />
                     )}
                   </button>
 
@@ -264,16 +274,22 @@ export default function Navbar() {
                 className="mx-4 my-3 flex items-center gap-3 rounded-xl px-4 py-4 transition-opacity hover:opacity-90 sm:mx-5 sm:gap-5 sm:px-6 sm:py-5"
                 style={{ background: "#FFF0F0" }}
               >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg sm:h-12 sm:w-12" style={{ background: "#FFE0E0" }}>
-                  <i className="bi bi-person-plus text-[18px]" style={{ color: "#ED1F25" }} />
+                <span
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg sm:h-12 sm:w-12"
+                  style={{ background: "#FFE0E0" }}
+                >
+                  <i className="bi bi-person-plus text-[24px]" style={{ color: "#ED1F25" }} />
                 </span>
-                <span className="flex-1 text-[15px] font-semibold sm:text-[17px]" style={{ color: "#ED1F25" }}>Đăng ký</span>
+                <span className="flex-1 text-[15px] font-semibold sm:text-[17px]" style={{ color: "#ED1F25" }}>
+                  Đăng ký
+                </span>
                 <i className="bi bi-arrow-right text-[#ED1F25]" />
               </a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </div>
   );
 }

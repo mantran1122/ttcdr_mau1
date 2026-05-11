@@ -1,21 +1,16 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const VIDEO_SRC = "/videos/huong-dan-dang-ky.mp4";
-
-type Step = {
-  num: string;
-  heading: string;
-  subtext?: string;
-};
-
-const SECTION_TITLE = "Quy trình đăng ký học tại Trung tâm CĐR&PTNNL";
-const SECTION_SUBTITLE = "Thực hiện theo 4 bước đơn giản và xem video hướng dẫn bên dưới";
-const VIDEO_LABEL = "VIDEO HƯỚNG DẪN";
 const VIDEO_FALLBACK = "Trình duyệt của bạn không hỗ trợ phát video.";
+
+const BLUE_DEEP = "#408fd9";
+const BLUE = "#2848a8";
+const LIME_BG = "#e53e3e";
+
+type Step = { num: string; heading: string; subtext?: string };
 
 const STEPS: Step[] = [
   {
@@ -23,155 +18,227 @@ const STEPS: Step[] = [
     heading: "Nhận phiếu đăng ký học tại Trung tâm ĐTCĐR&PTNNL",
     subtext: "Có thể đăng ký cá nhân, theo nhóm hoặc theo lớp",
   },
-  {
-    num: "02",
-    heading: "Điền đầy đủ thông tin và dán 2 ảnh 3x4 vào phiếu đăng ký",
-  },
-  {
-    num: "03",
-    heading: "Đóng lệ phí học tại phòng Tài chính – Kế hoạch và nộp lại phiếu cho Trung tâm",
-  },
-  {
-    num: "04",
-    heading:
-      "Sau khi đóng lệ phí, sinh viên cập nhật lịch học tại website của Trung tâm vào mỗi tuần",
-  },
+  { num: "02", heading: "Điền đầy đủ thông tin và dán 2 ảnh 3x4 vào phiếu đăng ký" },
+  { num: "03", heading: "Đóng lệ phí học tại phòng Tài chính – Kế hoạch và nộp lại phiếu cho Trung tâm" },
+  { num: "04", heading: "Sau khi đóng lệ phí, sinh viên cập nhật lịch học tại website của Trung tâm vào mỗi tuần" },
 ];
 
+
+function StepIcon01() {
+  return (
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+      <rect x="5" y="3" width="15" height="21" rx="2.5" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M10 4V2.5H16V4" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9 11H17" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M9 15H15" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M9 19H13" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
+      <circle cx="22" cy="22" r="5" stroke="white" strokeWidth="1.4" />
+      <path d="M19.5 22L21.5 24L25 20.5" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function StepIcon02() {
+  return (
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+      <rect x="4" y="7" width="20" height="15" rx="2.5" stroke="white" strokeWidth="1.4" />
+      <circle cx="10" cy="13" r="3" stroke="white" strokeWidth="1.4" />
+      <path d="M5 22C5 19 7.2 17 10 17H13" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M16 10H22" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M16 14H20" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function StepIcon03() {
+  return (
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+      <rect x="4" y="8" width="22" height="14" rx="3" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="15" cy="15" r="4" stroke="white" strokeWidth="1.4" />
+      <path d="M15 13V13.3M15 16.7V17" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M13.5 13.9C13.5 13.3 14.2 12.8 15 12.8C15.8 12.8 16.5 13.3 16.5 13.9C16.5 14.5 15.8 14.9 15 15C14.2 15.1 13.5 15.5 13.5 16.1C13.5 16.7 14.2 17.2 15 17.2C15.8 17.2 16.5 16.7 16.5 16.1" stroke="white" strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M7 15H9M21 15H23" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function StepIcon04() {
+  return (
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+      <rect x="4" y="5" width="19" height="17" rx="2.5" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M4 10H23" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M9 5V8M18 5V8" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
+      <circle cx="22" cy="22" r="5" stroke="white" strokeWidth="1.4" />
+      <path d="M22 19.5V22H24.5" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+const STEP_ICONS = [StepIcon01, StepIcon02, StepIcon03, StepIcon04];
+
 function StepCard({ step, index }: { step: Step; index: number }) {
+  const Icon = STEP_ICONS[index];
   return (
     <motion.article
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.5, delay: index * 0.07, ease: EASE }}
-      className="relative grid grid-cols-[auto_1fr] gap-3 rounded-2xl bg-background p-3 sm:gap-4 sm:p-4"
+      initial={{ opacity: 0, x: 36 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.18 }}
+      transition={{ duration: 0.52, delay: index * 0.1, ease: EASE }}
+      whileHover={{ y: -4 }}
+      className="relative flex items-start gap-4 p-5"
+      style={{ transition: "transform 0.3s ease" }}
     >
-      <div className="flex items-start">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full border border-slate-200 bg-white text-[1.5rem] font-black leading-none tracking-[-0.03em] text-red-600 sm:h-16 sm:w-16 sm:text-[1.75rem]">
-          {step.num}
-        </div>
+      {/* Lime badge */}
+      <div
+        className="relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full text-[0.95rem] font-black leading-none"
+        style={{ background: LIME_BG, color: "white" }}
+        aria-label={`Bước ${step.num}`}
+      >
+        {step.num}
       </div>
 
-      <div className="relative border-l border-slate-200 pl-3 sm:pl-4">
-        <span className="absolute -left-[0.28rem] top-2 h-2.5 w-2.5 rounded-full bg-red-500" />
-        <h3 className="text-[0.95rem] font-extrabold leading-snug text-slate-900 sm:text-[1.06rem]">
+      {/* Text */}
+      <div className="relative z-10 min-w-0 flex-1">
+        <h3 className="text-[0.93rem] font-bold leading-snug text-slate-900 sm:text-[0.98rem]">
           {step.heading}
         </h3>
         {step.subtext && (
-          <p className="mt-1.5 text-[0.84rem] leading-relaxed text-slate-600 sm:text-[0.92rem]">
+          <p className="mt-1.5 text-[0.8rem] leading-relaxed text-slate-500 sm:text-[0.85rem]">
             {step.subtext}
           </p>
         )}
+      </div>
+
+      {/* Step icon */}
+      <div className="relative z-10 mt-0.5 flex-shrink-0 opacity-40" style={{ color: BLUE }}>
+        <Icon />
       </div>
     </motion.article>
   );
 }
 
 export default function GuideSection() {
-  const videoLabelRef = useRef<HTMLDivElement>(null);
-  const videoLabelInView = useInView(videoLabelRef, { once: true, amount: 0.5 });
-
   return (
     <motion.section
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 22 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.65, ease: EASE }}
-      className="relative overflow-hidden rounded-[28px] border border-slate-200 bg-white px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-9"
+      className="relative isolate overflow-visible bg-transparent px-0 py-0 shadow-none"
     >
-      <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-red-500" />
-      <div className="pointer-events-none absolute left-8 top-8 hidden gap-2 lg:grid lg:grid-cols-5">
-        {Array.from({ length: 25 }).map((_, index) => (
-          <span key={`dot-left-${index}`} className="h-1.5 w-1.5 rounded-full bg-slate-300" />
-        ))}
-      </div>
-      <div className="pointer-events-none absolute right-7 top-24 hidden gap-2 lg:grid lg:grid-cols-4">
-        {Array.from({ length: 16 }).map((_, index) => (
-          <span key={`dot-right-${index}`} className="h-1.5 w-1.5 rounded-full bg-slate-300" />
-        ))}
-      </div>
-
-      <motion.header
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.55, delay: 0.05, ease: EASE }}
-        className="relative z-10 text-center"
+      {/* ── Decorative background blobs ── */}
+      <div
+        className="pointer-events-none absolute -inset-x-20 -inset-y-20 -z-10 overflow-visible"
+        aria-hidden="true"
       >
-        <h2 className="text-[clamp(1.45rem,2.3vw,2.7rem)] font-black leading-[1.12] tracking-[-0.02em] text-slate-900">
-          {SECTION_TITLE}
-        </h2>
-        <p className="mx-auto mt-2 max-w-4xl text-[clamp(0.9rem,1.25vw,1.3rem)] text-slate-600">
-          {SECTION_SUBTITLE}
-        </p>
-        <div className="mx-auto mt-3 h-1 w-28 rounded-full bg-red-500" />
-      </motion.header>
+        <div
+          className="absolute -right-28 -top-28 h-80 w-80 rounded-full opacity-[0.07] blur-[80px]"
+          style={{ background: BLUE }}
+        />
+        <div
+          className="absolute -bottom-20 -left-24 h-72 w-72 rounded-full opacity-[0.06] blur-[72px]"
+          style={{ background: BLUE_DEEP }}
+        />
+        <div
+          className="absolute right-1/3 top-2/3 h-52 w-52 rounded-full opacity-[0.04] blur-[60px]"
+          style={{ background: LIME_BG }}
+        />
 
-      <div className="relative z-10 mt-6 grid gap-5 lg:grid-cols-[220px_1fr] lg:gap-6">
-        <div className="relative hidden lg:block">
-          <div className="absolute left-0 top-6 h-[72%] w-[92%] rounded-[999px] bg-gradient-to-b from-slate-200 via-slate-100 to-slate-50" />
-          <div className="relative mt-8 ml-5 w-[170px] rounded-[28px] border border-slate-200 bg-white p-4 shadow-[0_14px_30px_rgba(35,27,18,0.16)]">
-            <div className="mb-3 h-6 w-16 rounded-xl bg-slate-200" />
-            <div className="mb-2 h-12 rounded-2xl border border-slate-200 bg-background" />
-            <div className="space-y-2">
-              <div className="h-2 rounded-full bg-slate-200" />
-              <div className="h-2 rounded-full bg-slate-200" />
-              <div className="h-2 w-4/5 rounded-full bg-slate-200" />
+      </div>
+
+      {/* ── Main 2-column grid ── */}
+      <div className="relative z-10 grid gap-10 lg:grid-cols-2 lg:gap-8 xl:gap-12">
+
+        {/* ═══════════════════════════════
+            LEFT COLUMN
+        ═══════════════════════════════ */}
+        <div className="flex flex-col gap-7">
+          {/* Video preview card */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.58, delay: 0.14, ease: EASE }}
+          >
+            {/* Video label */}
+            <div className="flex items-center justify-center gap-3 mb-3.5">
+              <div className="h-px w-12 rounded-full bg-slate-200" />
+              <div
+                className="flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em]"
+                style={{
+                  color: "#0f172a",
+                  border: "1.5px solid #0f172a",
+                  background: "transparent",
+                }}
+              >
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.2" />
+                  <path d="M4.5 4L8.5 6L4.5 8V4Z" fill="currentColor" />
+                </svg>
+                VIDEO HƯỚNG DẪN
+              </div>
+              <div className="h-px w-12 rounded-full bg-slate-200" />
             </div>
-            <div className="mt-3 h-6 w-6 rounded-lg border border-slate-200 bg-background" />
-          </div>
+
+            <div
+              className="overflow-hidden rounded-2xl"
+              style={{
+                boxShadow:
+                  "0 10px 40px -8px rgba(10,77,255,0.18), 0 2px 8px -2px rgba(10,77,255,0.08)",
+                outline: "1px solid rgba(10,77,255,0.10)",
+              }}
+            >
+              <div className="relative w-full bg-slate-900" style={{ aspectRatio: "16/9" }}>
+                <video
+                  className="h-full w-full object-cover"
+                  controls
+                  preload="metadata"
+                  aria-label="Video hướng dẫn đăng ký học tại Trung tâm CĐR&PTNNL"
+                >
+                  <source src={VIDEO_SRC} type="video/mp4" />
+                  <p className="absolute inset-0 flex items-center justify-center px-4 text-center text-sm text-slate-300">
+                    {VIDEO_FALLBACK}
+                  </p>
+                </video>
+              </div>
+            </div>
+          </motion.div>
         </div>
 
-        <div className="relative grid gap-3 md:grid-cols-2 md:gap-4">
-          <div className="pointer-events-none absolute inset-x-1 top-1/2 hidden h-px -translate-y-1/2 bg-slate-200 md:block" />
-          <div className="pointer-events-none absolute left-1/2 top-2 hidden h-[calc(100%-1rem)] w-px -translate-x-1/2 bg-slate-200 md:block" />
-          {STEPS.map((step, index) => (
-            <StepCard key={step.num} step={step} index={index} />
-          ))}
+        {/* ═══════════════════════════════
+            RIGHT COLUMN — step cards
+        ═══════════════════════════════ */}
+        <div className="flex flex-col gap-4">
+          {/* Subtle right-column header */}
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.45, ease: EASE }}
+            className="mb-1 text-sm font-semibold uppercase tracking-[0.18em] text-slate-900"
+          >
+            4 bước thực hiện
+          </motion.p>
+
+          <div className="relative flex flex-col gap-4">
+            {/* Vertical connecting line */}
+            <div
+              className="pointer-events-none absolute left-11 top-11 bottom-11 w-0.5 rounded-full"
+              style={{ background: `linear-gradient(to bottom, ${LIME_BG}, ${BLUE_DEEP})` }}
+              aria-hidden="true"
+            />
+            {STEPS.map((step, index) => (
+              <StepCard key={step.num} step={step} index={index} />
+            ))}
+          </div>
+
         </div>
       </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.55, delay: 0.07, ease: EASE }}
-        className="relative z-10 mt-6 rounded-3xl border border-slate-200 bg-background p-3 sm:p-4 lg:p-5"
-      >
-        <div ref={videoLabelRef} className="mb-4 flex items-center justify-center gap-4 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700 sm:text-sm">
-          <motion.span
-            animate={videoLabelInView ? { scaleX: 1 } : { scaleX: 0 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-            className="hidden h-px w-16 origin-right bg-slate-300 sm:block"
-          />
-          <motion.span
-            animate={videoLabelInView ? { scale: 1, rotate: 45 } : { scale: 0, rotate: 0 }}
-            transition={{ duration: 0.4, delay: 0.35, type: "spring", stiffness: 300 }}
-            className="h-2 w-2 bg-red-500"
-          />
-          <span>{VIDEO_LABEL}</span>
-          <motion.span
-            animate={videoLabelInView ? { scale: 1, rotate: 45 } : { scale: 0, rotate: 0 }}
-            transition={{ duration: 0.4, delay: 0.4, type: "spring", stiffness: 300 }}
-            className="h-2 w-2 bg-red-500"
-          />
-          <motion.span
-            animate={videoLabelInView ? { scaleX: 1 } : { scaleX: 0 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-            className="hidden h-px w-16 origin-left bg-slate-300 sm:block"
-          />
-        </div>
-
-        <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-[0_16px_28px_rgba(25,19,14,0.2)]">
-          <div className="relative w-full aspect-[16/9]">
-            <video className="h-full w-full object-cover" controls preload="metadata">
-              <source src={VIDEO_SRC} type="video/mp4" />
-              <p className="flex h-full w-full items-center justify-center px-4 text-center text-sm text-slate-600">
-                {VIDEO_FALLBACK}
-              </p>
-            </video>
-          </div>
-        </div>
-      </motion.div>
     </motion.section>
   );
 }

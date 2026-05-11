@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -9,6 +9,8 @@ type RoadmapStep = {
   num: string;
   title: string;
   desc: string;
+  image: string;
+  subItems: string[];
 };
 
 const roadmapSteps: RoadmapStep[] = [
@@ -16,109 +18,171 @@ const roadmapSteps: RoadmapStep[] = [
     num: "01",
     title: "Khảo sát & Đánh giá",
     desc: "Đánh giá năng lực đầu vào và xác định nhu cầu phát triển theo từng nhóm sinh viên.",
+    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80",
+    subItems: [
+      "→ Kiểm tra trình độ đầu vào bằng bài thi chuẩn hóa theo khung năng lực",
+      "→ Phân nhóm sinh viên theo mức độ và định hướng phát triển cá nhân",
+      "→ Lập báo cáo năng lực chi tiết làm cơ sở thiết kế lộ trình học tập",
+    ],
   },
   {
     num: "02",
     title: "Tổ chức đào tạo",
     desc: "Triển khai lộ trình học theo chuẩn đầu ra với phương pháp phù hợp cho từng chương trình.",
+    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80",
+    subItems: [
+      "→ Xây dựng giáo trình bám sát chuẩn đầu ra quốc gia và quốc tế",
+      "→ Ứng dụng phương pháp giảng dạy tích cực, kết hợp thực hành và lý thuyết",
+      "→ Theo dõi tiến độ học tập định kỳ và điều chỉnh nội dung kịp thời",
+    ],
   },
   {
     num: "03",
     title: "Kiểm tra & Cấp chứng chỉ",
     desc: "Đo lường mức độ đạt chuẩn, hoàn thiện hồ sơ năng lực và cấp chứng nhận theo quy định.",
+    image: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=800&q=80",
+    subItems: [
+      "→ Tổ chức kỳ thi đánh giá năng lực theo đúng quy trình và tiêu chuẩn",
+      "→ Cấp chứng chỉ được công nhận chính thức, lưu hành trong hệ thống quốc gia",
+      "→ Hoàn thiện hồ sơ năng lực cá nhân để phục vụ xét tốt nghiệp và tuyển dụng",
+    ],
   },
   {
     num: "04",
     title: "Câu lạc bộ & Tuyển sinh",
     desc: "Mở rộng hoạt động cộng đồng học thuật, kết nối truyền thông và hỗ trợ tuyển sinh bền vững.",
+    image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80",
+    subItems: [
+      "→ Vận hành câu lạc bộ học thuật tạo môi trường thực hành và giao lưu",
+      "→ Xây dựng kênh truyền thông, chia sẻ thành tích và lan tỏa giá trị đào tạo",
+      "→ Hỗ trợ công tác tuyển sinh qua mạng lưới cựu học viên và đối tác chiến lược",
+    ],
   },
 ];
 
-export default function NhiemVuSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
+function RoadmapCard({ step }: { step: RoadmapStep }) {
   return (
-    <section className="bg-background py-16 sm:py-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.6, ease: EASE }}
-          className="mx-auto max-w-3xl text-center"
-        >
-          <h2 className="text-balance text-[50px] font-extrabold leading-[1.2] tracking-tight text-slate-900">
-            Nhiệm vụ chiến lược
-          </h2>
-          {/* <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
-            Lộ trình triển khai theo từng bước, có đo lường và cải tiến liên tục.
-          </p> */}
-        </motion.div>
+    <motion.article
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.7, ease: EASE }}
+      className="py-20 lg:py-24"
+    >
+      <h3 className="relative mt-2 text-[38px] font-medium leading-tight tracking-tight text-slate-950 lg:text-[44px]">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute top-1/2 hidden h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-[#2563EB] shadow-[0_0_0_6px_rgba(37,99,235,0.10)] sm:block sm:-left-[45px] lg:-left-[61px]"
+        />
+        <span className="inline-block bg-gradient-to-r from-[#2563EB] to-[#38BDF8] bg-clip-text font-semibold tabular-nums text-transparent">
+          {step.num}
+        </span>
+        <span
+          aria-hidden="true"
+          className="mx-2 inline-block h-[0.9em] w-px translate-y-[0.06em] bg-slate-300"
+        />
+        <span>{step.title}</span>
+      </h3>
 
-        <div className="relative mt-10 overflow-hidden rounded-[28px] border border-slate-200 bg-white px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
-        <div className="relative mx-auto max-w-5xl before:absolute before:bottom-8 before:left-5 before:top-8 before:w-px before:bg-slate-300/90 before:content-[''] md:before:hidden">
-          <div className="pointer-events-none absolute inset-y-8 left-1/2 hidden w-24 -translate-x-1/2 md:block">
-            <svg viewBox="0 0 96 1000" preserveAspectRatio="none" className="h-full w-full">
-              <path
-                d="M48 0 C82 120 14 220 48 340 C82 460 14 560 48 680 C82 800 14 900 48 1000"
-                fill="none"
-                stroke="rgb(203 213 225 / 0.85)"
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
-            </svg>
+      <div className="group mt-6 aspect-[16/9] overflow-hidden rounded-2xl shadow-[0_18px_45px_rgba(15,23,42,0.08)] ring-1 ring-slate-900/5">
+        <Image
+          src={step.image}
+          alt={step.title}
+          width={800}
+          height={450}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      </div>
+
+      <p className="mt-5 text-[16px] leading-relaxed text-slate-600">{step.desc}</p>
+
+      {/* <ul className="mt-5 space-y-2.5">
+        {step.subItems.map((item) => (
+          <li key={item} className="flex items-start gap-2.5">
+            <span className="mt-[2px] shrink-0 text-[#2563EB]">→</span>
+            <span className="text-[15px] leading-relaxed text-slate-600">
+              {item.includes(" ") ? item.slice(item.indexOf(" ") + 1) : item}
+            </span>
+          </li>
+        ))}
+      </ul> */}
+    </motion.article>
+  );
+}
+
+export default function NhiemVuSection() {
+  return (
+    <section className="relative overflow-visible bg-[#F8FAFC]">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="sm:hidden">
+          <div className="pt-8 pb-8">
+            <h2 className="text-[46px] font-medium leading-[1.15] tracking-tight text-slate-950">
+              Nhiệm vụ chiến lược
+            </h2>
           </div>
 
-          {roadmapSteps.map((step, index) => {
-            const isLeft = index % 2 === 0;
-            const isOpen = openIndex === index;
-
-            const card = (
-              <button
-                type="button"
-                onClick={() => setOpenIndex(isOpen ? null : index)}
-                className="cursor-pointer rounded-2xl border border-slate-200/80 bg-white/95 p-5 text-center shadow-[0_12px_26px_-20px_rgba(15,23,42,0.45)] transition-shadow duration-300 hover:shadow-[0_20px_36px_-20px_rgba(15,23,42,0.35)] sm:p-6"
-              >
-                <h3 className="text-xl font-bold leading-tight text-slate-900 sm:text-[1.65rem]">
-                  {step.title}
-                </h3>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.p
-                      key="desc"
-                      initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                      animate={{ opacity: 1, height: "auto", marginTop: 12 }}
-                      exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                      transition={{ duration: 0.28, ease: EASE }}
-                      className="overflow-hidden text-sm leading-relaxed text-slate-600 sm:text-[15px]"
-                    >
-                      {step.desc}
-                    </motion.p>
-                  )}
-                </AnimatePresence>
-              </button>
-            );
-
-            return (
-              <motion.article
-                key={step.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.55, delay: index * 0.08, ease: EASE }}
-                className="relative grid grid-cols-1 gap-4 py-5 pl-14 md:grid-cols-[1fr_auto_1fr] md:items-center md:gap-8 md:py-9 md:pl-0"
-              >
-                {isLeft ? <div className="md:flex md:justify-end">{card}</div> : <div className="hidden md:block" />}
-
-                <div className="absolute left-5 top-9 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border-2 border-red-200 bg-red-600 text-sm font-bold text-white shadow-[0_0_0_6px_rgba(254,242,242,0.96)] md:static md:mx-auto md:translate-x-0">
-                  {index + 1}
-                </div>
-
-                {!isLeft ? <div>{card}</div> : <div className="hidden md:block" />}
-              </motion.article>
-            );
-          })}
+          <div className="pb-8">
+            {roadmapSteps.map((step) => (
+              <RoadmapCard key={step.num} step={step} />
+            ))}
+          </div>
         </div>
+
+        <div className="hidden sm:block">
+          <div className="flex items-start gap-0">
+            <div className="w-[38%] shrink-0 self-start sticky top-20 z-10 lg:w-[36%]">
+              <div className="flex h-[calc(100vh-5rem)] flex-col justify-start pt-30 pr-10 lg:pr-14">
+                {/* <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: 0, ease: EASE }}
+                  className="mb-3 text-[13px] uppercase tracking-widest text-[#2563EB]"
+                >
+                  Lộ trình triển khai
+                </motion.p> */}
+
+                <motion.h2
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
+                  className="text-[46px] font-medium leading-[1.15] tracking-tight text-slate-950 lg:whitespace-nowrap lg:text-[52px]"
+                >
+                  Nhiệm vụ chiến lược
+                </motion.h2>
+
+                {/* <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: 0.3, ease: EASE }}
+                  className="mt-4 max-w-xs text-[15px] text-slate-500"
+                >
+                  Từ đánh giá đầu vào đến phát triển cộng đồng học thuật bền vững.
+                </motion.p> */}
+
+                {/* <motion.a
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: 0.3, ease: EASE }}
+                  href="#"
+                  className="mt-8 inline-block w-fit rounded-full bg-[#2563EB] px-6 py-3 text-sm text-white shadow-[0_12px_30px_rgba(37,99,235,0.25)] transition-opacity hover:opacity-90"
+                >
+                  Xem chi tiết
+                </motion.a> */}
+              </div>
+            </div>
+
+            <div className="my-20 w-px shrink-0 self-stretch bg-blue-200/60 lg:my-24" />
+
+            <div className="flex-1 pl-10 lg:pl-14">
+              {roadmapSteps.map((step) => (
+                <RoadmapCard key={step.num} step={step} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -43,7 +43,7 @@ export default function DownloadSection() {
           className="mx-auto max-w-5xl"
         >
           {/* Section heading */}
-          <div className="mb-5 flex items-center gap-3">
+          {/* <div className="mb-5 flex items-center gap-3">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-50">
               <i className="bi bi-download text-[17px] text-red-600" />
             </span>
@@ -51,11 +51,11 @@ export default function DownloadSection() {
               <p className="text-xs font-bold uppercase tracking-widest text-red-600">
                 Tải về
               </p>
-              <h2 className="text-lg font-black tracking-tight text-slate-900">
+              <h2 className="text-lg font-medium tracking-tight text-slate-900">
                 Thời khóa biểu dạng file
               </h2>
             </div>
-          </div>
+          </div> */}
 
           <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-900/5">
             {files.map((f, i) => (
@@ -70,7 +70,7 @@ export default function DownloadSection() {
                   i < files.length - 1 ? "border-b border-slate-100" : "",
                 ].join(" ")}
               >
-                {/* PDF icon */}
+                PDF icon
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-50 text-red-600">
                   <i className="bi bi-file-earmark-pdf text-[20px]" />
                 </span>
@@ -121,7 +121,7 @@ export default function DownloadSection() {
               </div>
 
               <a
-                href="https://ttcdr.nctu.edu.vn/thong-tin/thoi-khoa-bieu"
+                href="https://nctu.edu.vn/cong-thong-tin-sinh-vien"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-2 inline-flex shrink-0 items-center gap-2 rounded-xl bg-red-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700 sm:mt-0"

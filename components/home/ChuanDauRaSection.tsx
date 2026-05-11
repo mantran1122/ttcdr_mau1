@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import SectionTitle from "@/components/ui/SectionTitle";
 
 const outcomeCards = [
   {
@@ -192,48 +193,15 @@ export default function ChuanDauRaSection() {
           animate={titleInView ? "visible" : "hidden"}
           className="relative z-10 mx-auto flex max-w-[860px] flex-col items-center text-center"
         >
-          <motion.div
-            variants={headerItem}
-            className="mb-8 flex items-center justify-center gap-4 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700 sm:text-sm"
-          >
-            <motion.span
-              animate={titleInView ? { scaleX: 1 } : { scaleX: 0 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-              className="hidden h-px w-16 origin-right bg-slate-300 sm:block"
-            />
-            <motion.span
-              animate={
-                titleInView
-                  ? { scale: 1, rotate: 45 }
-                  : { scale: 0, rotate: 0 }
-              }
-              transition={{ duration: 0.4, delay: 0.35, type: "spring", stiffness: 300 }}
-              className="h-2 w-2 bg-red-500"
-            />
-            <span className="text-center">Chuẩn đầu ra học phần</span>
-            <motion.span
-              animate={
-                titleInView
-                  ? { scale: 1, rotate: 45 }
-                  : { scale: 0, rotate: 0 }
-              }
-              transition={{ duration: 0.4, delay: 0.4, type: "spring", stiffness: 300 }}
-              className="h-2 w-2 bg-red-500"
-            />
-            <motion.span
-              animate={titleInView ? { scaleX: 1 } : { scaleX: 0 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-              className="hidden h-px w-16 origin-left bg-slate-300 sm:block"
-            />
+          <motion.div variants={headerItem} className="mb-6">
+            <SectionTitle title="Chuẩn đầu ra học phần" />
           </motion.div>
 
           <motion.h2
             variants={headerItem}
-            className="text-center text-[50px] font-black leading-[1.35] tracking-[-0.055em] text-[#0B1A3B]"
+            className="text-center text-[50px] font-medium leading-[1.35] tracking-[-0.055em] text-[#0B1A3B]"
           >
             Yêu cầu năng lực
-            <br />
-            theo chuẩn đầu ra
           </motion.h2>
         </motion.div>
 
@@ -327,7 +295,7 @@ export default function ChuanDauRaSection() {
                         ease: EASE,
                       }}
                       className={[
-                        "font-black tracking-[-0.06em] text-slate-950 transition-all duration-500",
+                        "font-medium tracking-[-0.06em] text-slate-950 transition-all duration-500",
                         isActive ? "text-6xl" : "text-5xl",
                       ].join(" ")}
                     >
@@ -363,10 +331,10 @@ export default function ChuanDauRaSection() {
                         animate={{
                           opacity: desktopInView ? 1 : 0,
                           y: desktopInView ? 0 : 16,
-                          fontSize: isActive ? "1.75rem" : "1.1rem",
+                          fontSize: isActive ? "2.375rem" : "2.1rem",
                         }}
                         transition={{ duration: 0.4, ease: EASE }}
-                        className="font-black leading-tight tracking-[-0.04em] text-slate-950"
+                        className="font-medium leading-tight tracking-[-0.04em] text-slate-950"
                       >
                         {card.label}
                       </motion.p>
@@ -377,7 +345,7 @@ export default function ChuanDauRaSection() {
                         transition={{ duration: 0.3, ease: EASE }}
                       >
                         <span className="mx-auto mt-4 block h-0.5 w-10 rounded-full bg-red-500" />
-                        <p className="mt-4 text-sm leading-6 text-slate-600">
+                        <p className={`mt-4 leading-6 text-slate-600 transition-[font-size] duration-300 ${isActive ? "text-[20px]" : "text-sm"}`}>
                           {isActive ? card.regulationText : card.description}
                         </p>
                       </motion.div>
@@ -425,7 +393,7 @@ export default function ChuanDauRaSection() {
                       : { opacity: 0, x: -12 }
                   }
                   transition={{ duration: 0.5, delay: 0.2 + index * 0.06 }}
-                  className="text-4xl font-black tracking-[-0.05em] text-slate-950"
+                  className="text-4xl font-medium tracking-[-0.05em] text-slate-950"
                 >
                   {card.number}
                 </motion.span>
@@ -460,7 +428,7 @@ export default function ChuanDauRaSection() {
                 transition={{ duration: 0.5, delay: 0.3 + index * 0.06 }}
                 className="mt-10"
               >
-                <p className="text-2xl font-black leading-tight tracking-[-0.04em] text-slate-950">
+                <p className="text-[1.575rem] font-medium leading-tight tracking-[-0.04em] text-slate-950">
                   {card.label}
                 </p>
 
@@ -472,7 +440,7 @@ export default function ChuanDauRaSection() {
                   className="mt-4 block h-0.5 w-8 origin-left rounded-full bg-red-500"
                 />
 
-                <p className="mt-5 text-sm leading-7 text-slate-600">
+                <p className={`mt-5 leading-7 text-slate-600 transition-[font-size] duration-300 ${activeIndex === index ? "text-[20px]" : "text-sm"}`}>
                   {activeIndex === index ? card.regulationText : card.description}
                 </p>
               </motion.div>

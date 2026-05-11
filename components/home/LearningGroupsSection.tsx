@@ -1,229 +1,260 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect, type CSSProperties } from "react";
 import { motion, useInView } from "framer-motion";
-import { Brain, Laptop, MessageCircle, Users, Briefcase } from "lucide-react";
+import { Brain, Briefcase, Laptop, MessageCircle, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import SectionTitle from "@/components/ui/SectionTitle";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 const headerItem = {
-  hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.65, ease: EASE },
-  },
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
 };
 
-type StatItem = {
+// Parse "148.000+" → { value: 148000, suffix: "+", dotted: true }
+function parseNumber(str: string): { value: number; suffix: string; dotted: boolean } {
+  const dotted = /\d\.\d{3}/.test(str);
+  const suffix = str.replace(/[\d.]/g, "");
+  const raw = str.replace(/\./g, "").replace(/\D/g, "");
+  return { value: parseInt(raw, 10), suffix, dotted };
+}
+
+// 148000 → "148.000"
+function formatDotted(n: number): string {
+  return new Intl.NumberFormat("de-DE").format(n);
+}
+
+function useCountUp(target: number, inView: boolean, duration = 1800): number {
+  const [count, setCount] = useState(0);
+  const started = useRef(false);
+
+  useEffect(() => {
+    if (!inView || started.current) return;
+    started.current = true;
+
+    const startTime = performance.now();
+    const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    function tick(now: number) {
+      const progress = Math.min((now - startTime) / duration, 1);
+      setCount(Math.round(easeOut(progress) * target));
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(tick);
+  }, [inView, target, duration]);
+
+  return count;
+}
+
+type StatCardItem = {
   number: string;
   label: string;
   Icon: LucideIcon;
+  accent: string;
+  accentBorder: string;
   iconGradient: string;
-  numberColor: string;
-  positionClassName: string;
-  delay: number;
+  surfaceGradient?: string;
+  surfaceShadow?: string;
+  dividerColor?: string;
+  iconShadow?: string;
+  featured?: boolean;
 };
 
-const statItems: StatItem[] = [
+const topCards: StatCardItem[] = [
   {
     number: "2015",
     label: "Năm thành lập",
     Icon: Brain,
-    iconGradient: "linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)",
-    numberColor: "#6D28D9",
-    positionClassName: "left-0 top-[140px]",
-    delay: 0.12,
+    accent: "#E11D48",
+    accentBorder: "rgba(253, 164, 175, 0.85)",
+    iconGradient: "linear-gradient(135deg, #FB7185 0%, #E11D48 100%)",
+    surfaceGradient: "linear-gradient(180deg, #FFF1F2 0%, #FFE4E6 100%)",
+    surfaceShadow: "0 8px 26px rgba(225, 29, 72, 0.12)",
+    dividerColor: "rgba(225, 29, 72, 0.3)",
+    iconShadow: "0 8px 22px rgba(225, 29, 72, 0.27)",
   },
   {
-    number: "5+",
-    label: "Nhóm học phần",
+    number: "100%",
+    label: "Theo chuẩn Bộ GD&ĐT",
+    Icon: Briefcase,
+    accent: "#FFFFFF",
+    accentBorder: "rgba(76, 118, 226, 0.36)",
+    iconGradient: "linear-gradient(135deg, #4E7EE7 0%, #7EA3EE 100%)",
+    featured: true,
+  },
+  {
+    number: "10",
+    label: "Nội dung đào tạo/thi",
     Icon: Laptop,
-    iconGradient: "linear-gradient(135deg, #2563EB 0%, #38BDF8 100%)",
-    numberColor: "#1D4ED8",
-    positionClassName: "right-0 top-[140px]",
-    delay: 0.2,
-  },
-  {
-    number: "50.000+",
-    label: "Học viên",
-    Icon: MessageCircle,
-    iconGradient: "linear-gradient(135deg, #DC2626 0%, #F87171 100%)",
-    numberColor: "#DC2626",
-    positionClassName: "left-[30px] top-[390px]",
-    delay: 0.28,
-  },
-  {
-    number: "85%",
-    label: "Đạt chuẩn đầu ra",
-    Icon: Users,
-    iconGradient: "linear-gradient(135deg, #0D9488 0%, #34D399 100%)",
-    numberColor: "#0D9488",
-    positionClassName: "right-[30px] top-[390px]",
-    delay: 0.36,
+    accent: "#EA580C",
+    accentBorder: "rgba(253, 186, 116, 0.85)",
+    iconGradient: "linear-gradient(135deg, #FDBA74 0%, #F97316 100%)",
+    surfaceGradient: "linear-gradient(180deg, #FFF7ED 0%, #FFEDD5 100%)",
+    surfaceShadow: "0 8px 26px rgba(194, 65, 12, 0.12)",
+    dividerColor: "rgba(234, 88, 12, 0.3)",
+    iconShadow: "0 8px 22px rgba(234, 88, 12, 0.28)",
   },
 ];
 
-type StatPillProps = {
-  item: StatItem;
-  className?: string;
+const bottomCards: StatCardItem[] = [
+  {
+    number: "148.000+",
+    label: "Lượt dự thi",
+    Icon: MessageCircle,
+    accent: "#059669",
+    accentBorder: "rgba(110, 231, 183, 0.85)",
+    iconGradient: "linear-gradient(135deg, #6EE7B7 0%, #10B981 100%)",
+    surfaceGradient: "linear-gradient(180deg, #ECFDF5 0%, #D1FAE5 100%)",
+    surfaceShadow: "0 8px 26px rgba(5, 150, 105, 0.11)",
+    dividerColor: "rgba(5, 150, 105, 0.32)",
+    iconShadow: "0 8px 22px rgba(5, 150, 105, 0.26)",
+  },
+  {
+    number: "119.000+",
+    label: "Lượt SV đăng ký học",
+    Icon: Users,
+    accent: "#E11D48",
+    accentBorder: "rgba(253, 164, 175, 0.85)",
+    iconGradient: "linear-gradient(135deg, #FB7185 0%, #E11D48 100%)",
+    surfaceGradient: "linear-gradient(180deg, #FFF1F2 0%, #FFE4E6 100%)",
+    surfaceShadow: "0 8px 26px rgba(225, 29, 72, 0.12)",
+    dividerColor: "rgba(225, 29, 72, 0.3)",
+    iconShadow: "0 8px 22px rgba(225, 29, 72, 0.27)",
+  },
+];
+
+type StatCardProps = {
+  item: StatCardItem;
+  delay?: number;
 };
 
-function StatPill({ item, className = "" }: StatPillProps) {
+function StatCard({ item, delay = 0 }: StatCardProps) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.25 });
+
+  const { value, suffix, dotted } = parseNumber(item.number);
+  const count = useCountUp(value, inView);
+  const displayNumber = `${dotted ? formatDotted(count) : count}${suffix}`;
+
+  const cardStyle: CSSProperties = {
+    borderColor: item.accentBorder,
+    background: item.featured
+      ? "linear-gradient(135deg, #2f63df 0%, #7ea2ed 100%)"
+      : item.surfaceGradient ?? "linear-gradient(180deg, #f6f8fc 0%, #eff3f9 100%)",
+    boxShadow: item.featured
+      ? "0 18px 44px rgba(41, 87, 190, 0.26)"
+      : item.surfaceShadow ?? "0 8px 26px rgba(23, 48, 97, 0.07)",
+  };
+
+  const iconStyle: CSSProperties = item.featured
+    ? {
+        background: "rgba(255, 255, 255, 0.15)",
+        border: "1px solid rgba(255, 255, 255, 0.3)",
+      }
+    : {
+        background: item.iconGradient,
+        boxShadow: item.iconShadow ?? "0 8px 22px rgba(47, 103, 232, 0.25)",
+      };
+
+  const dividerStyle: CSSProperties = item.featured
+    ? { background: "rgba(255, 255, 255, 0.36)" }
+    : { background: item.dividerColor ?? "rgba(47, 103, 232, 0.28)" };
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 28, scale: 0.96, filter: "blur(8px)" }}
-      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-      whileHover={{ y: -4 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.7, delay: item.delay, ease: EASE }}
+    <motion.article
+      ref={ref}
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ duration: 0.5, delay, ease: EASE }}
+      whileHover={{ y: -2 }}
+      style={cardStyle}
       className={[
-        "flex h-[120px] items-center gap-5 rounded-full bg-white px-8",
-        "border border-black/[0.05] shadow-[0_8px_32px_rgba(15,23,42,0.08)]",
-        "cursor-default transition-shadow duration-500 hover:shadow-[0_16px_48px_rgba(15,23,42,0.13)]",
-        className,
+        "w-full rounded-full border transition-[box-shadow,transform] duration-300",
+        "flex min-h-[120px] items-center gap-3 px-4 py-3 sm:min-h-[150px] sm:gap-4 sm:px-6 sm:py-4",
+        "xl:min-h-[176px] xl:gap-5 xl:px-[30px] xl:py-5",
+        item.featured ? "xl:min-h-[184px]" : "",
       ].join(" ")}
     >
-      <div
-        className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full shadow-md"
-        style={{ background: item.iconGradient }}
-      >
-        <item.Icon size={24} color="white" strokeWidth={2} />
+      <div className="shrink-0">
+        <span
+          style={iconStyle}
+          className="inline-flex h-[42px] w-[42px] items-center justify-center rounded-full sm:h-14 sm:w-14 xl:h-[72px] xl:w-[72px]"
+        >
+          <item.Icon size={23} strokeWidth={2.1} color="white" />
+        </span>
       </div>
+
+      <span style={dividerStyle} className="h-14 w-px shrink-0 opacity-85 sm:h-[74px] xl:h-[98px]" />
+
       <div className="min-w-0">
         <p
-          className="text-[36px] font-black leading-none tracking-tight"
-          style={{ color: item.numberColor }}
+          style={{ color: item.featured ? "#F8FAFC" : "#0F172A" }}
+          className="text-[clamp(1.8rem,8.8vw,2.5rem)] font-medium leading-none tracking-[-0.03em] sm:text-[2.2rem] xl:text-[50px]"
         >
-          {item.number}
+          {displayNumber}
         </p>
-        <p className="mt-1.5 text-[14px] font-medium text-slate-500">{item.label}</p>
+        <p
+          style={{ color: item.featured ? "#F8FAFC" : "#0F172A" }}
+          className="mt-1 text-[0.95rem] font-medium leading-[1.3] sm:mt-1.5 sm:text-[1rem] xl:mt-[9px] xl:text-[clamp(1rem,1.35vw,2.12rem)] xl:leading-[1.28]"
+        >
+          {item.label}
+        </p>
       </div>
-    </motion.div>
+    </motion.article>
   );
 }
 
 export default function LearningGroupsSection() {
-  const titleRef = useRef<HTMLDivElement>(null);
-  const titleInView = useInView(titleRef, { once: true, amount: 0.35 });
+  const titleRef = useRef(null);
+  const titleInView = useInView(titleRef, { once: true });
 
   return (
-    <section className="relative isolate overflow-hidden bg-background py-24 xl:py-28">
-      <div className="container relative mx-auto h-auto px-4 xl:h-[700px]">
-
-        {/* Desktop: absolutely positioned floating pills */}
-        <div className="hidden xl:block">
-          {statItems.map((item) => (
-            <StatPill
-              key={item.label}
-              item={item}
-              className={["absolute w-[360px]", item.positionClassName].join(" ")}
-            />
-          ))}
-
-          {/* Featured pill — centered at bottom */}
+    <section className="w-full bg-background py-16 sm:py-20 lg:py-24 xl:py-28">
+      <div className="container mx-auto w-full px-4 sm:px-6 lg:px-8">
+        <header ref={titleRef} className="mb-7 text-center sm:mb-8 lg:mb-10 xl:mb-12" aria-label="Thống kê nổi bật">
           <motion.div
-            initial={{ opacity: 0, y: 36, scale: 0.95, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-            whileHover={{ y: -4 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.75, delay: 0.48, ease: EASE }}
-            className="absolute left-1/2 top-[510px] flex h-[130px] w-[440px] -translate-x-1/2 cursor-default items-center gap-6 rounded-full px-9 shadow-[0_16px_56px_rgba(37,99,235,0.32)] transition-shadow duration-500 hover:shadow-[0_20px_64px_rgba(37,99,235,0.45)]"
-            style={{ background: "linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%)" }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={titleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+            transition={{ duration: 0.5, ease: EASE }}
+            className="mb-6"
           >
-            <div
-              className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full shadow-lg"
-              style={{ background: "linear-gradient(135deg, #F59E0B 0%, #FCD34D 100%)" }}
-            >
-              <Briefcase size={26} color="white" strokeWidth={2} />
-            </div>
-            <div className="h-12 w-px bg-white/20" />
-            <div className="min-w-0">
-              <p className="text-[38px] font-black leading-none tracking-tight text-white">
-                100%
-              </p>
-              <p className="mt-1.5 whitespace-nowrap text-[14px] font-medium text-blue-100">Chương trình đạt chuẩn Bộ GD&ĐT</p>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Centered heading — shown on all breakpoints */}
-        <motion.div
-          ref={titleRef}
-          initial="hidden"
-          animate={titleInView ? "visible" : "hidden"}
-          className="relative z-10 mx-auto flex max-w-[540px] flex-col items-center text-center xl:absolute xl:left-1/2 xl:top-[200px] xl:-translate-x-1/2"
-        >
-          <motion.div
-            variants={headerItem}
-            className="mb-8 flex items-center justify-center gap-4 text-xs font-semibold uppercase tracking-[0.24em] text-slate-700 sm:text-sm"
-          >
-            <motion.span
-              animate={titleInView ? { scaleX: 1 } : { scaleX: 0 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-              className="hidden h-px w-16 origin-right bg-slate-300 sm:block"
-            />
-            <motion.span
-              animate={titleInView ? { scale: 1, rotate: 45 } : { scale: 0, rotate: 0 }}
-              transition={{ duration: 0.4, delay: 0.35, type: "spring", stiffness: 300 }}
-              className="h-2 w-2 bg-red-500"
-            />
-            <span className="text-center">Thống kê nổi bật</span>
-            <motion.span
-              animate={titleInView ? { scale: 1, rotate: 45 } : { scale: 0, rotate: 0 }}
-              transition={{ duration: 0.4, delay: 0.4, type: "spring", stiffness: 300 }}
-              className="h-2 w-2 bg-red-500"
-            />
-            <motion.span
-              animate={titleInView ? { scaleX: 1 } : { scaleX: 0 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-              className="hidden h-px w-16 origin-left bg-slate-300 sm:block"
-            />
+            <SectionTitle title="Thống kê nổi bật" />
           </motion.div>
 
           <motion.h2
             variants={headerItem}
-            className="text-[46px] font-black leading-[1.2] tracking-[-0.04em] text-[#0B1A3B] sm:text-[50px]"
+            initial="hidden"
+            animate={titleInView ? "visible" : "hidden"}
+            className="text-[clamp(2rem,10vw,2.8rem)] font-medium leading-[1.35] tracking-[-0.035em] text-[#0b1a3b] sm:text-[50px]"
           >
-            Những con số
-            <br />
-            ấn tượng
+            Những con số ấn tượng
           </motion.h2>
-        </motion.div>
+        </header>
 
-        {/* Mobile / Tablet: stacked grid */}
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 xl:hidden">
-          {statItems.map((item, index) => (
-            <StatPill
-              key={item.label}
-              item={{ ...item, delay: index * 0.08 }}
-              className="w-full rounded-full"
-            />
-          ))}
+        <div className="grid justify-items-center gap-[14px] sm:gap-5 lg:gap-[26px]" role="list" aria-label="Các số liệu thống kê">
+          <div className="grid w-full grid-cols-1 gap-[14px] sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+            {topCards.map((item, index) => (
+              <div
+                key={`${item.number}-${item.label}`}
+                className={[
+                  "w-full",
+                  item.featured ? "sm:col-span-2 sm:mx-auto sm:max-w-[452px] lg:col-span-1 lg:max-w-none" : "",
+                ].join(" ")}
+              >
+                <StatCard item={item} delay={index * 0.08} />
+              </div>
+            ))}
+          </div>
 
-          {/* Mobile featured pill */}
-          <motion.div
-            initial={{ opacity: 0, y: 28, scale: 0.96, filter: "blur(8px)" }}
-            whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, delay: 0.32, ease: EASE }}
-            className="flex h-[120px] items-center gap-5 rounded-full px-8 shadow-[0_12px_40px_rgba(37,99,235,0.28)] sm:col-span-2"
-            style={{ background: "linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%)" }}
-          >
-            <div
-              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full shadow-md"
-              style={{ background: "linear-gradient(135deg, #F59E0B 0%, #FCD34D 100%)" }}
-            >
-              <Briefcase size={24} color="white" strokeWidth={2} />
-            </div>
-            <div className="h-10 w-px bg-white/20" />
-            <div className="min-w-0">
-              <p className="text-[34px] font-black leading-none tracking-tight text-white">100%</p>
-              <p className="mt-1.5 text-[14px] font-medium text-blue-100">Chuẩn Bộ GD&ĐT</p>
-            </div>
-          </motion.div>
+          <div className="grid w-full max-w-[860px] grid-cols-1 gap-[14px] sm:grid-cols-2 sm:gap-[14px] lg:gap-7">
+            {bottomCards.map((item, index) => (
+              <StatCard key={`${item.number}-${item.label}`} item={item} delay={0.18 + index * 0.08} />
+            ))}
+          </div>
         </div>
       </div>
     </section>

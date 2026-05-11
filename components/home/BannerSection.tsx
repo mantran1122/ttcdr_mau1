@@ -34,7 +34,7 @@ export default function BannerSection() {
         style={{
           height: "clamp(84px, 16vw, 210px)",
           background:
-            "linear-gradient(to bottom, transparent 0%, rgba(248,249,251,0.35) 40%, rgba(248,249,251,0.82) 72%, #F8F9FB 100%)",
+            "linear-gradient(to bottom, transparent 0%, color-mix(in srgb, var(--background) 35%, transparent) 40%, color-mix(in srgb, var(--background) 82%, transparent) 72%, var(--background) 100%)",
         }}
       />
 
@@ -60,7 +60,7 @@ export default function BannerSection() {
       >
         <path
           d="M0,20 C280,56 560,4 860,28 C1080,46 1280,12 1440,24 L1440,60 L0,60 Z"
-          fill="#F8F9FB"
+          fill="var(--background)"
         />
       </svg>
     </section>

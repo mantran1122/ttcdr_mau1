@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -29,6 +30,12 @@ const DATA: Candidate[] = [
   { mssv: "2051060089", name: "Lý Thị Lan", dob: "16/05/2003", group: "TN04", subject: "VSTEP B1", session: "Ca 1 – 7:30", room: "A202", sbd: "089", status: "confirmed" },
 ];
 
+const EXAM_PERIOD_OPTIONS = [
+  { value: "2025-08", label: "Tháng 08 (27-28/08/2025)" },
+  { value: "2025-09", label: "Tháng 09 (26-27/09/2025)" },
+  { value: "2025-10", label: "Tháng 10 (24-25/10/2025)" },
+];
+
 type ThiSinhSectionProps = {
   query: string;
   submitted: string;
@@ -42,6 +49,8 @@ export default function ThiSinhSection({
   onQueryChange,
   onSearch,
 }: ThiSinhSectionProps) {
+  const [selectedPeriod, setSelectedPeriod] = useState(EXAM_PERIOD_OPTIONS[0].value);
+
   const results = submitted
     ? DATA.filter(
         (c) =>
@@ -55,52 +64,66 @@ export default function ThiSinhSection({
   return (
     <div>
       <section className="pb-8">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.05, ease: EASE }}
-            className="mx-auto max-w-2xl"
+            className="max-w-[1040px]"
           >
+            <div className="mb-2 grid grid-cols-1 gap-1 text-sm font-semibold text-slate-700 lg:grid-cols-[320px_minmax(0,1fr)_180px] lg:gap-3">
+              <label htmlFor="thi-sinh-period">Kỳ thi / Tháng</label>
+              <label htmlFor="thi-sinh-query">MSSV hoặc Họ và tên</label>
+              <span className="hidden lg:block" aria-hidden="true" />
+            </div>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 onSearch(query);
               }}
-              className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-900/5"
+              className="grid grid-cols-1 gap-3 lg:grid-cols-[320px_minmax(0,1fr)_180px]"
             >
-              <div className="p-6 sm:p-8">
-                <label className="mb-2 block text-sm font-semibold text-slate-700">
-                  MSSV hoặc Họ và tên
-                </label>
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <input
-                    type="text"
-                    value={query}
-                    onChange={(e) => onQueryChange(e.target.value)}
-                    placeholder="Nhập MSSV hoặc họ tên thí sinh..."
-                    className="w-full flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-red-400 focus:ring-2 focus:ring-red-100"
-                  />
-                  <button
-                    type="submit"
-                    className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700 sm:w-auto"
-                  >
-                    <i className="bi bi-search" />
-                    <span>Tra cứu</span>
-                  </button>
-                </div>
-                <p className="mt-3 text-[11px] text-slate-400">
-                  Ví dụ: Nhập MSSV 2051060001 hoặc tên Nguyễn Văn An
-                </p>
+              <div className="relative">
+                <select
+                  id="thi-sinh-period"
+                  value={selectedPeriod}
+                  onChange={(e) => setSelectedPeriod(e.target.value)}
+                  className="h-[52px] w-full appearance-none rounded-md bg-slate-200 px-4 pr-12 text-sm text-slate-800 outline-none transition-colors focus:bg-slate-300"
+                >
+                  {EXAM_PERIOD_OPTIONS.map((item) => (
+                    <option key={item.value} value={item.value}>
+                      {item.label}
+                    </option>
+                  ))}
+                </select>
+                <i className="bi bi-chevron-down pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-slate-500" />
               </div>
+              <input
+                id="thi-sinh-query"
+                type="text"
+                value={query}
+                onChange={(e) => onQueryChange(e.target.value)}
+                placeholder="Nhập MSSV hoặc họ tên thí sinh..."
+                className="h-[52px] w-full rounded-md bg-slate-200 px-4 text-sm text-slate-900 outline-none placeholder:text-slate-500 transition-colors focus:bg-slate-300"
+              />
+              <button
+                type="submit"
+                className="inline-flex h-[52px] w-full shrink-0 items-center justify-center gap-2 rounded-md bg-red-600 px-5 text-sm font-semibold text-white transition-colors hover:bg-red-700"
+              >
+                <i className="bi bi-search" />
+                <span>Tra cứu</span>
+              </button>
             </form>
+            <p className="mt-3 text-[11px] text-slate-400">
+              Ví dụ: Nhập MSSV 2051060001 hoặc tên Nguyễn Văn An
+            </p>
           </motion.div>
         </div>
       </section>
 
       <section className="pb-20 lg:pb-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-5xl">
+        <div className="w-full">
+          <div>
             {searched && results.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
@@ -249,19 +272,15 @@ export default function ThiSinhSection({
               transition={{ duration: 0.45, ease: EASE }}
               className={searched ? "mt-6" : ""}
             >
-              <div className="relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-900/5 sm:p-8">
-                <div className="absolute left-0 top-0 h-full w-1 bg-red-600" />
-                <div className="flex items-start gap-3">
-                  <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-red-50">
-                    <i className="bi bi-question-circle text-[18px] text-red-600" />
-                  </span>
+              <div className="rounded-xl border-l-4 border-red-200 bg-white/55 px-4 py-4 sm:px-5">
+                <div className="flex items-start gap-4">
+                  <i className="bi bi-question-circle text-[22px] text-red-400/80 [animation:tcFloat_3s_ease-in-out_infinite]" />
                   <div>
-                    <p className="text-sm font-bold text-slate-900 sm:text-base">
+                    <p className="text-base font-bold text-slate-900">
                       Không tìm thấy thông tin?
                     </p>
-                    <p className="mt-1 text-sm leading-relaxed text-slate-600">
-                      Nếu bạn đã đăng ký nhưng không tìm thấy thông tin, hãy liên
-                      hệ trực tiếp Trung tâm để được hỗ trợ sớm nhất.
+                    <p className="mt-1.5 text-sm text-slate-500">
+                      Nếu bạn đã đăng ký nhưng không tìm thấy thông tin, hãy liên hệ trực tiếp Trung tâm để được hỗ trợ sớm nhất.
                     </p>
                   </div>
                 </div>
@@ -273,5 +292,3 @@ export default function ThiSinhSection({
     </div>
   );
 }
-
-

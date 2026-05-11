@@ -134,7 +134,7 @@ export default function EducationFeatureSection() {
                 <div className="pt-8 sm:pt-10 lg:pt-10">
                   <h2
                     id="education-feature-heading"
-                    className="text-[50px] font-semibold leading-[0.92] tracking-[-0.03em] text-[#07142F]"
+                    className="text-[50px] font-medium leading-[0.92] tracking-[-0.03em] text-[#07142F]"
                     style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
                   >
                     <span className="block">Nâng cao</span>
