@@ -16,7 +16,7 @@ const STEPS: Step[] = [
   {
     num: "01",
     heading: "Nhận phiếu đăng ký học tại Trung tâm ĐTCĐR&PTNNL",
-    subtext: "Có thể đăng ký cá nhân, theo nhóm hoặc theo lớp",
+    subtext: "Có thể đăng ký cá nhân, theo nhóm hoặc theo lớp để nhận thêm ưu đãi.",
   },
   { num: "02", heading: "Điền đầy đủ thông tin và dán 2 ảnh 3x4 vào phiếu đăng ký" },
   { num: "03", heading: "Đóng lệ phí học tại phòng Tài chính – Kế hoạch và nộp lại phiếu cho Trung tâm" },
@@ -227,9 +227,13 @@ export default function GuideSection() {
 
           <div className="relative flex flex-col gap-4">
             {/* Vertical connecting line */}
-            <div
+            <motion.div
               className="pointer-events-none absolute left-11 top-11 bottom-11 w-0.5 rounded-full"
-              style={{ background: `linear-gradient(to bottom, ${LIME_BG}, ${BLUE_DEEP})` }}
+              style={{ background: `linear-gradient(to bottom, ${LIME_BG}, ${BLUE_DEEP})`, transformOrigin: "top" }}
+              initial={{ scaleY: 0, opacity: 0 }}
+              whileInView={{ scaleY: 1, opacity: 1 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 1.0, delay: 0.9, ease: EASE }}
               aria-hidden="true"
             />
             {STEPS.map((step, index) => (

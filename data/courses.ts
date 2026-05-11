@@ -40,7 +40,7 @@ export const courses: Course[] = [
     title: "Trí tuệ nhân tạo (AI)",
     description:
       "Khóa học giúp sinh viên làm chủ các công cụ AI để học tập, nghiên cứu và tối ưu hiệu suất công việc.",
-    image: "/Tạo hình ảnh web/Trí tuệ nhân tạo AI.png",
+    image: "/NewCourse/AI.jpeg",
     duration: "08 tuần",
     level: "Cơ bản đến trung cấp",
     format: "Hybrid (Online + Offline)",
@@ -111,7 +111,7 @@ export const courses: Course[] = [
     title: "Ngoại ngữ",
     description:
       "Khóa học nâng cao năng lực tiếng Anh học thuật và giao tiếp, giúp sinh viên đạt chuẩn đầu ra ngoại ngữ.",
-    image: "/Tạo hình ảnh web/Khóa học tiếng anh.png",
+    image: "/NewCourse/Khóa học tiếng anh.png",
     duration: "10 tuần",
     level: "Sơ cấp đến trung cấp",
     format: "Offline tại trung tâm",
@@ -182,7 +182,7 @@ export const courses: Course[] = [
     title: "Tin học",
     description:
       "Khóa học giúp học viên sử dụng thành thạo bộ công cụ văn phòng và kỹ năng số cần thiết cho học tập hiện đại.",
-    image: "/Tạo hình ảnh web/Khóa học tin học.jpeg",
+    image: "/NewCourse/Tin học.jpeg",
     duration: "07 tuần",
     level: "Cơ bản",
     format: "Offline kết hợp phòng máy",
@@ -253,7 +253,7 @@ export const courses: Course[] = [
     title: "Kỹ năng mềm",
     description:
       "Khóa học phát triển các năng lực quan trọng như giao tiếp, làm việc nhóm, tư duy phản biện và quản lý bản thân.",
-    image: "/Tạo hình ảnh web/knm.jpg",
+    image: "/NewCourse/Kỹ năng mềm.png",
     duration: "06 tuần",
     level: "Mọi cấp độ",
     format: "Offline tương tác cao",
@@ -324,7 +324,7 @@ export const courses: Course[] = [
     title: "Kỹ năng nghề nghiệp",
     description:
       "Khóa học chuẩn bị cho sinh viên năng lực làm việc thực tế: CV, phỏng vấn, tác phong chuyên nghiệp và tư duy nghề nghiệp.",
-    image: "/Tạo hình ảnh web/knnn2.jpg",
+    image: "/NewCourse/Kỹ năng nghề.png",
     duration: "08 tuần",
     level: "Trung cấp",
     format: "Hybrid (Workshop + Coaching)",

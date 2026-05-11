@@ -90,69 +90,89 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="ml-auto mr-3 hidden items-center gap-2 lg:flex xl:mr-8">
-          {navItems.map((item) => (
-            <div
-              key={item.label}
-              className="relative"
-              onMouseEnter={() => item.dropdown && setActiveDD(item.label)}
-              onMouseLeave={() => setActiveDD(null)}
-            >
-              <a
-                href={item.href}
-                className={[
-                  "flex items-center gap-2 px-5 py-4 rounded-lg text-[21px] font-semibold transition-colors",
-                  scrolled
-                    ? "text-gray-700 hover:text-[#ED1F25] hover:bg-gray-50"
-                    : "text-[#1C2B5E] hover:text-[#ED1F25] hover:bg-gray-50",
-                ].join(" ")}
-              >
-                {item.label}
-                {item.dropdown && (
-                  <i
-                    className={`bi bi-chevron-down text-[12px] transition-transform duration-200 ${activeDD === item.label ? "rotate-180" : ""}`}
-                  />
-                )}
-              </a>
+        <nav className="ml-auto hidden items-center gap-2 lg:flex">
+          {navItems.map((item) => {
+            const isFlipItem = item.label !== "Thông tin & Lịch";
+            const textClass = scrolled ? "text-gray-700" : "text-[#1C2B5E]";
+            const hoverTextClass = isFlipItem ? "" : "hover:text-[#ED1F25]";
+            const hoverBgClass = isFlipItem ? "hover:bg-transparent" : "hover:bg-gray-50";
 
-              {/* Hover dropdown */}
-              <AnimatePresence>
-                {item.dropdown && activeDD === item.label && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -8, scale: 0.97 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -8, scale: 0.97 }}
-                    transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute top-full left-0 mt-2 bg-white rounded-xl overflow-hidden"
-                    style={{
-                      minWidth: "240px",
-                      boxShadow: "0 8px 32px rgba(0,0,0,0.13)",
-                    }}
-                  >
-                    {item.dropdown.map((sub) => (
-                      <a
-                        key={sub.href}
-                        href={sub.href}
-                        className="flex items-center gap-4 px-5 py-4 text-[16px] text-gray-700 hover:text-[#ED1F25] hover:bg-gray-50 transition-colors"
-                      >
-                        <span className="w-2 h-2 rounded-full bg-gray-300 shrink-0" />
-                        {sub.label}
-                      </a>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
+            return (
+              <div
+                key={item.label}
+                className="relative"
+                onMouseEnter={() => item.dropdown && setActiveDD(item.label)}
+                onMouseLeave={() => setActiveDD(null)}
+              >
+                <a
+                  href={item.href}
+                  className={[
+                    "group/nav flex items-center gap-2 rounded-lg px-5 py-4 text-[21px] font-semibold transition-colors",
+                    textClass,
+                    hoverTextClass,
+                    hoverBgClass,
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                >
+                  {isFlipItem ? (
+                    <span className="relative inline-block h-[1.28em] overflow-hidden align-middle leading-[1.28em]">
+                      <span className="block whitespace-nowrap transition-transform duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform group-hover/nav:-translate-y-[calc(100%+12px)]">
+                        {item.label}
+                      </span>
+                      <span className="pointer-events-none absolute left-0 top-0 block whitespace-nowrap text-[#ED1F25] translate-y-[calc(100%+12px)] transition-transform duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform group-hover/nav:translate-y-0">
+                        {item.label}
+                      </span>
+                    </span>
+                  ) : (
+                    <span>{item.label}</span>
+                  )}
+                  {item.dropdown && (
+                    <i
+                      className={`bi bi-chevron-down text-[12px] transition-transform duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${activeDD === item.label ? "rotate-180" : ""}`}
+                    />
+                  )}
+                </a>
+
+                {/* Hover dropdown */}
+                <AnimatePresence>
+                  {item.dropdown && activeDD === item.label && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.97 }}
+                      transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+                      className="absolute top-full left-0 mt-2 overflow-hidden rounded-xl bg-white"
+                      style={{
+                        minWidth: "240px",
+                        boxShadow: "0 8px 32px rgba(0,0,0,0.13)",
+                      }}
+                    >
+                      {item.dropdown.map((sub) => (
+                        <a
+                          key={sub.href}
+                          href={sub.href}
+                          className="flex items-center gap-4 px-5 py-4 text-[16px] text-gray-700 transition-colors hover:bg-gray-50 hover:text-[#ED1F25]"
+                        >
+                          <span className="h-2 w-2 shrink-0 rounded-full bg-gray-300" />
+                          {sub.label}
+                        </a>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
         </nav>
 
         {/* Right actions */}
-        <div className="flex items-center gap-2 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-4 lg:gap-5 lg:pl-5">
           {/* Search */}
           <button
             type="button"
             onClick={() => setSearchOpen(true)}
-            className="hidden h-10 w-10 items-center justify-center rounded-full text-slate-600 transition-colors lg:flex hover:text-[#ED1F25]"
+            className="hidden h-10 w-10 items-center justify-center rounded-full text-slate-600 transition-colors hover:text-[#ED1F25] lg:flex"
           >
             <i className="bi bi-search text-[22px]" />
           </button>
@@ -160,7 +180,7 @@ export default function Navbar() {
           {/* Đăng ký */}
           <a
             href="https://dkhp.nctu.edu.vn/"
-            className="hidden min-w-[164px] items-center justify-center rounded-full bg-[#ED1F25] px-9 py-2.5 text-[21px] font-semibold text-white transition-colors hover:bg-[#c41920] lg:inline-flex"
+            className="hidden min-w-[164px] items-center justify-center rounded-full bg-[#ED1F25] px-9 py-2.5 text-[21px] font-semibold text-white transition-colors hover:bg-[#c41920] lg:ml-3 lg:inline-flex"
           >
             Đăng ký
           </a>

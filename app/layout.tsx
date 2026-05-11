@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import FloatingNctButtonClient from "@/components/layout/FloatingNctButtonClient";
 
 export const metadata: Metadata = {
   title: "Trung tâm Chuẩn đầu ra | Trường Đại học Nam Cần Thơ",
@@ -39,19 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         <main className="flex-1 pt-20">{children}</main>
         <Footer />
-
-        {/* Floating NCT button */}
-        <a
-          href="https://www.nctu.edu.vn/"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Trang chủ NCT"
-          className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-2xl shadow-lg transition-transform hover:scale-110 active:scale-95"
-          style={{ background: "#fff" }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo_don.png" alt="NCT" className="h-10 w-10 object-contain" />
-        </a>
+        <FloatingNctButtonClient />
       </body>
     </html>
   );

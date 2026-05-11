@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import type { ComponentType } from "react";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { useEffect, useRef, useState, type ComponentType } from "react";
+import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
 import {
   ArrowRight,
   BarChart3,
@@ -267,10 +267,10 @@ function StatItem({
     <motion.article
       variants={statItemVariants}
       custom={reduceMotion}
-      className="rounded-2xl bg-white/95 p-4 shadow-[0_8px_22px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-[3px] hover:shadow-[0_14px_28px_rgba(15,23,42,0.08)]"
+      className="rounded-full bg-white/95 px-5 py-4 shadow-[0_8px_22px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-[3px] hover:shadow-[0_14px_28px_rgba(15,23,42,0.08)]"
     >
       <div className="flex items-center gap-2.5">
-        <span className={["inline-flex h-8 w-8 items-center justify-center rounded-xl", iconClassName].join(" ")}>
+        <span className={["inline-flex h-8 w-8 items-center justify-center rounded-full", iconClassName].join(" ")}>
           <Icon className="h-4 w-4" strokeWidth={2.2} />
         </span>
         <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">{label}</p>
@@ -291,19 +291,7 @@ function CourseVisual({
   reduceMotion: boolean;
   reverse: boolean;
 }) {
-  const imageFolder = "/Tạo hình ảnh web";
-  const imageSrc =
-    course.slug === "tri-tue-nhan-tao"
-      ? `${imageFolder}/Trí tuệ nhân tạo AI.png`
-      : course.slug === "ngoai-ngu"
-        ? `${imageFolder}/Khóa học tiếng anh.png`
-        : course.slug === "tin-hoc"
-          ? `${imageFolder}/Khóa học tin học.jpeg`
-          : course.slug === "ky-nang-mem"
-            ? `${imageFolder}/knm.jpg`
-            : course.slug === "ky-nang-nghe-nghiep"
-              ? `${imageFolder}/knnn2.jpg`
-              : `${imageFolder}/Trí tuệ nhân tạo AI.png`;
+  const imageSrc = course.image || "/NewCourse/AI.jpeg";
 
   return (
     <motion.div
@@ -324,21 +312,21 @@ function CourseVisual({
       <motion.div
         variants={floatingTagVariants}
         custom={{ reduce: reduceMotion, tagIndex: 0 }}
-        className="absolute left-4 top-4 hidden rounded-2xl bg-white/85 px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-[0_10px_30px_rgba(15,23,42,0.09)] backdrop-blur-sm transition-transform duration-500 group-hover/course:-translate-y-1 sm:block"
+        className="absolute left-4 top-4 hidden rounded-full bg-white/85 px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-[0_10px_30px_rgba(15,23,42,0.09)] backdrop-blur-sm transition-transform duration-500 group-hover/course:-translate-y-1 sm:block"
       >
         {accent.floatingTags[0]}
       </motion.div>
       <motion.div
         variants={floatingTagVariants}
         custom={{ reduce: reduceMotion, tagIndex: 1 }}
-        className="absolute bottom-4 left-4 hidden rounded-2xl bg-white/85 px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-[0_10px_30px_rgba(15,23,42,0.09)] backdrop-blur-sm transition-transform duration-500 group-hover/course:translate-y-1 md:block"
+        className="absolute bottom-4 left-4 hidden rounded-full bg-white/85 px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-[0_10px_30px_rgba(15,23,42,0.09)] backdrop-blur-sm transition-transform duration-500 group-hover/course:translate-y-1 md:block"
       >
         {accent.floatingTags[1]}
       </motion.div>
       <motion.div
         variants={floatingTagVariants}
         custom={{ reduce: reduceMotion, tagIndex: 2 }}
-        className="absolute right-4 top-10 hidden rounded-2xl bg-white/85 px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-[0_10px_30px_rgba(15,23,42,0.09)] backdrop-blur-sm transition-transform duration-500 group-hover/course:-translate-y-1 lg:block"
+        className="absolute right-4 top-10 hidden rounded-full bg-white/85 px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-[0_10px_30px_rgba(15,23,42,0.09)] backdrop-blur-sm transition-transform duration-500 group-hover/course:-translate-y-1 lg:block"
       >
         {accent.floatingTags[2]}
       </motion.div>
@@ -440,13 +428,37 @@ function CourseBlock({
 
 export default function CourseGridSection({ courses }: CourseGridSectionProps) {
   const shouldReduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const sectionInView = useInView(sectionRef, { once: true, amount: 0.12 });
+  const [hasUserScrolled, setHasUserScrolled] = useState(false);
+
+  useEffect(() => {
+    const onUserScroll = () => {
+      if (window.scrollY > 0) {
+        setHasUserScrolled(true);
+      }
+    };
+
+    onUserScroll();
+    window.addEventListener("scroll", onUserScroll, { passive: true });
+    window.addEventListener("wheel", onUserScroll, { passive: true });
+    window.addEventListener("touchmove", onUserScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onUserScroll);
+      window.removeEventListener("wheel", onUserScroll);
+      window.removeEventListener("touchmove", onUserScroll);
+    };
+  }, []);
+
+  const shouldRenderCourses = hasUserScrolled && sectionInView;
 
   if (courses.length === 0) {
     return null;
   }
 
   return (
-    <section id="danh-sach-khoa-hoc" className="relative overflow-hidden bg-background py-20 md:py-28">
+    <section ref={sectionRef} id="danh-sach-khoa-hoc" className="relative overflow-hidden bg-background py-16 sm:py-20 lg:py-24 xl:py-28">
       <motion.div
         variants={backgroundBlobVariants}
         initial="hidden"
@@ -474,31 +486,34 @@ export default function CourseGridSection({ courses }: CourseGridSectionProps) {
           variants={sectionHeaderVariants}
           custom={shouldReduceMotion}
           initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT_ONCE}
+          animate={shouldRenderCourses ? "show" : "hidden"}
           className="mx-auto max-w-3xl text-center"
         >
-          <motion.p
+          {/* <motion.p
             variants={sectionHeaderItemVariants}
             custom={shouldReduceMotion}
             className="inline-flex items-center rounded-full border border-slate-200 bg-background-light px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-slate-700"
           >
             Danh mục khóa học
-          </motion.p>
+          </motion.p> */}
           <motion.h2
             variants={sectionHeaderItemVariants}
             custom={shouldReduceMotion}
-            className="mt-5 text-4xl font-medium leading-tight tracking-[-0.04em] text-slate-950 md:text-5xl"
+            className="text-4xl font-medium leading-tight tracking-[-0.04em] text-slate-950 md:text-5xl"
           >
-            Chọn khóa học phù hợp với mục tiêu của bạn
+            Các khóa học tại Trung tâm
           </motion.h2>
         </motion.div>
 
-        <div className="mt-12 overflow-hidden rounded-[36px] border border-black/[0.04] bg-background-light shadow-[0_22px_70px_rgba(15,23,42,0.07)] md:mt-14 lg:mt-16">
-          {courses.map((course, index) => (
-            <CourseBlock key={course.slug} course={course} index={index} reduceMotion={!!shouldReduceMotion} />
-          ))}
-        </div>
+        {shouldRenderCourses ? (
+          <div className="mt-12 overflow-hidden rounded-[36px] border border-black/[0.04] bg-background-light shadow-[0_22px_70px_rgba(15,23,42,0.07)] md:mt-14 lg:mt-16">
+            {courses.map((course, index) => (
+              <CourseBlock key={course.slug} course={course} index={index} reduceMotion={!!shouldReduceMotion} />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-12 h-[320px] rounded-[36px] border border-black/[0.04] bg-background-light/70 shadow-[0_22px_70px_rgba(15,23,42,0.04)] md:mt-14 lg:mt-16" />
+        )}
       </div>
     </section>
   );

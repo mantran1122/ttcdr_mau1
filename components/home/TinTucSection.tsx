@@ -143,7 +143,16 @@ export default function TinTucSection() {
 
   const slideByButton = (direction: "prev" | "next") => {
     const cw = containerRef.current?.clientWidth ?? 0;
-    const step = Math.max(260, Math.round(cw * 0.78));
+    const trackEl = trackRef.current;
+    const firstCard = trackEl?.querySelector("a");
+    const trackStyles = trackEl ? window.getComputedStyle(trackEl) : null;
+    const gap = Number.parseFloat(trackStyles?.columnGap || trackStyles?.gap || "0") || 0;
+    const firstCardWidth = firstCard?.getBoundingClientRect().width ?? 0;
+
+    // Prefer moving exactly one card per click for predictable, slower navigation.
+    const fallbackStep = Math.max(180, Math.round(cw * 0.42));
+    const step = firstCardWidth > 0 ? Math.round(firstCardWidth + gap) : fallbackStep;
+
     const delta = direction === "prev" ? step : -step;
     const next = Math.max(-maxDrag, Math.min(0, x.get() + delta));
     animate(x, next, { type: "spring", stiffness: 400, damping: 40 });

@@ -286,7 +286,7 @@ export default function KetQuaThiSection({
             >
               <div className="rounded-xl border-l-4 border-red-200 bg-white/55 px-4 py-4 sm:px-5">
                 <div className="flex items-start gap-4">
-                  <i className="bi bi-question-circle text-[22px] text-red-400/80 [animation:tcFloat_3s_ease-in-out_infinite]" />
+                  <i className="bi bi-question-circle text-[22px] text-red-400/80 [animation:tcPulse_4s_ease-in-out_infinite]" />
                   <div>
                     <p className="text-base font-bold text-slate-900">Không tìm thấy thông tin?</p>
                     <p className="mt-1.5 text-sm text-slate-500">

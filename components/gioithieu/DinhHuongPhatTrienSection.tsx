@@ -31,7 +31,7 @@ const roadmapSteps: RoadmapStep[] = [
     num: "01",
     title: "Bồi dưỡng",
     detail:
-      "Tổ chức các khóa bồi dưỡng chuyên môn định kỳ, giúp đội ngũ giảng viên nắm bắt phương pháp giảng dạy hiện đại và cập nhật kiến thức chuyên ngành.",
+      "Bồi dưỡng định kỳ giúp giảng viên cập nhật phương pháp giảng dạy hiện đại và kiến thức chuyên ngành.",
     icon: BookOpen,
     colorClass: "text-[#d72c2e]",
     accentClass: "bg-[#d72c2e]",
@@ -46,7 +46,7 @@ const roadmapSteps: RoadmapStep[] = [
     num: "02",
     title: "Khai giảng lớp",
     detail:
-      "Mở các lớp học đảm bảo sĩ số phù hợp, trang thiết bị hiện đại và giáo trình chuẩn hóa theo khung chương trình của Bộ GD&ĐT.",
+      "Mở lớp đúng sĩ số, trang bị hiện đại và giáo trình chuẩn theo khung Bộ GD&ĐT.",
     icon: GraduationCap,
     colorClass: "text-[#ec8f31]",
     accentClass: "bg-[#ec8f31]",
@@ -61,7 +61,7 @@ const roadmapSteps: RoadmapStep[] = [
     num: "03",
     title: "Liên kết",
     detail:
-      "Xây dựng mối quan hệ đối tác chiến lược, tạo cơ hội thực tập và việc làm cho sinh viên thông qua các chương trình liên kết đào tạo.",
+      "Liên kết đối tác chiến lược, mở rộng cơ hội thực tập và việc làm cho sinh viên.",
     icon: Handshake,
     colorClass: "text-[#2f78cc]",
     accentClass: "bg-[#2f78cc]",
@@ -76,7 +76,7 @@ const roadmapSteps: RoadmapStep[] = [
     num: "04",
     title: "Cải tiến",
     detail:
-      "Thu thập phản hồi từ người học, áp dụng công nghệ giảng dạy mới và điều chỉnh chương trình để đáp ứng nhu cầu thực tiễn.",
+      "Lắng nghe phản hồi, ứng dụng công nghệ mới và cập nhật chương trình theo nhu cầu thực tiễn.",
     icon: TrendingUp,
     colorClass: "text-[#a276c7]",
     accentClass: "bg-[#a276c7]",
@@ -91,7 +91,7 @@ const roadmapSteps: RoadmapStep[] = [
     num: "05",
     title: "Hợp tác",
     detail:
-      "Tham gia các dự án giáo dục quốc tế, trao đổi sinh viên và giảng viên, tiếp cận chuẩn mực đào tạo tiên tiến trên thế giới.",
+      "Tham gia dự án giáo dục quốc tế, trao đổi học thuật và tiếp cận chuẩn đào tạo tiên tiến.",
     icon: Globe,
     colorClass: "text-[#0f3a79]",
     accentClass: "bg-[#0f3a79]",
@@ -196,7 +196,7 @@ function RoadmapCard({ step, isFlipped, onToggle }: { step: RoadmapStep; isFlipp
 
         {/* ── Back face ── */}
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden rounded-[1.95rem] border border-[#ebe3d7] bg-[#fffcf8] px-6 py-8 text-center shadow-[0_26px_34px_-24px_rgba(19,33,79,0.55),0_10px_18px_-14px_rgba(19,33,79,0.35)] sm:px-7"
+          className="absolute inset-0 flex flex-col items-center justify-start overflow-hidden rounded-[1.95rem] border border-[#ebe3d7] bg-[#fffcf8] px-5 pb-5 pt-6 text-center shadow-[0_26px_34px_-24px_rgba(19,33,79,0.55),0_10px_18px_-14px_rgba(19,33,79,0.35)] sm:px-6"
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
@@ -206,9 +206,7 @@ function RoadmapCard({ step, isFlipped, onToggle }: { step: RoadmapStep; isFlipp
             {step.num}
           </p>
 
-          <Icon className={`mx-auto mt-3 h-7 w-7 ${step.colorClass}`} strokeWidth={1.9} />
-
-          <h4 className="mt-2 font-serif text-base font-bold leading-snug text-[#0b1f58] sm:text-lg">
+          <h4 className="mt-3 font-serif text-base font-bold leading-snug text-[#0b1f58] sm:text-lg">
             {step.title}
           </h4>
 
@@ -218,7 +216,7 @@ function RoadmapCard({ step, isFlipped, onToggle }: { step: RoadmapStep; isFlipp
             <span className={`h-px flex-1 ${step.colorClass} bg-current/35`} />
           </div>
 
-          <p className="mx-auto mt-4 max-w-[22ch] text-xs leading-relaxed text-slate-600 sm:text-sm">
+          <p className="mx-auto mt-3 max-w-[25ch] text-xs leading-relaxed text-slate-600 sm:text-sm">
             {step.detail}
           </p>
         </div>
